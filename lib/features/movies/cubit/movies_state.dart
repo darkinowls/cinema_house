@@ -6,38 +6,34 @@ enum MoviesStatus { loading, loaded }
 class MoviesState extends Equatable {
   final MoviesStatus status;
   final Iterable<Movie> searchedMovies;
-  final Iterable<Movie> todayMovies;
-  final Iterable<Movie> tomorrowMovies;
+  final Map<DateTime, Iterable<Movie>> moviesByDay;
   final Iterable<Movie> topMovies;
 
-  const MoviesState({this.status = MoviesStatus.loading,
+  const MoviesState({
+    this.status = MoviesStatus.loading,
     this.searchedMovies = const [],
     this.topMovies = const [],
-    this.todayMovies = const [],
-    this.tomorrowMovies = const []});
+    this.moviesByDay = const {},
+  });
 
   @override
-  List<Object> get props =>
-      [
+  List<Object> get props => [
         status,
         searchedMovies,
-        todayMovies,
-        tomorrowMovies,
+        moviesByDay,
         topMovies,
       ];
 
   MoviesState copyWith({
     MoviesStatus? status,
     Iterable<Movie>? searchedMovies,
-    Iterable<Movie>? todayMovies,
-    Iterable<Movie>? tomorrowMovies,
+    Map<DateTime, Iterable<Movie>>? moviesByDay,
     Iterable<Movie>? topMovies,
   }) {
     return MoviesState(
       status: status ?? this.status,
       searchedMovies: searchedMovies ?? this.searchedMovies,
-      todayMovies: todayMovies ?? this.todayMovies,
-      tomorrowMovies: tomorrowMovies ?? this.tomorrowMovies,
+      moviesByDay: moviesByDay ?? this.moviesByDay,
       topMovies: topMovies ?? this.topMovies,
     );
   }

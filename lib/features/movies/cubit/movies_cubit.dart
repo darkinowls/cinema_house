@@ -17,18 +17,33 @@ class MoviesCubit extends Cubit<MoviesState> {
   void _getMovies() async {
     final List<Movie> movies = await _moviesRepository.getMovies();
 
-    final Iterable<Movie> todayMovies =
-        await _moviesRepository.getMoviesToday();
-    final Iterable<Movie> tomorrowMovies =
-        await _moviesRepository.getMoviesTomorrow();
+    DateTime today = DateTime.now();
+    DateTime tomorrow = today.add(const Duration(days: 1));
+
+    final Map<DateTime, Iterable<Movie>> moviesByDay = {
+      today: await _moviesRepository.getMoviesByDay(today),
+      tomorrow: await _moviesRepository.getMoviesByDay(tomorrow),
+    };
 
     final Iterable<Movie> topMovies = _sortMoviesByRating(movies.toList());
 
     emit(state.copyWith(
         status: MoviesStatus.loaded,
-        tomorrowMovies: tomorrowMovies,
-        todayMovies: todayMovies,
+        moviesByDay: moviesByDay,
         topMovies: topMovies));
+  }
+
+  void loadMoreMoviesByDate() async {
+    DateTime lastDateTime = state.moviesByDay.keys.last.copyWith();
+
+    DateTime next = lastDateTime.add(const Duration(days: 1));
+    DateTime nextAfterNext = next.add(const Duration(days: 1));
+    Map<DateTime, Iterable<Movie>> map = {
+      next: await _moviesRepository.getMoviesByDay(next),
+      nextAfterNext: await _moviesRepository.getMoviesByDay(nextAfterNext)
+    };
+
+    emit(state.copyWith(moviesByDay: {...state.moviesByDay, ...map}));
   }
 
   Iterable<Movie> _sortMoviesByRating(List<Movie> movies) {
@@ -41,13 +56,10 @@ class MoviesCubit extends Cubit<MoviesState> {
   }
 
   void searchMovieByPlot(String plot) async {
+    emit(state.copyWith(status: MoviesStatus.loading));
+    Iterable<Movie> searchedMovies =
+        await _moviesRepository.getMoviesByPlot(plot);
     emit(state.copyWith(
-      status: MoviesStatus.loading
-    ));
-   Iterable<Movie> searchedMovies = await _moviesRepository.getMoviesByPlot(plot);
-   emit(state.copyWith(
-     status: MoviesStatus.loaded,
-     searchedMovies: searchedMovies
-   ));
+        status: MoviesStatus.loaded, searchedMovies: searchedMovies));
   }
 }

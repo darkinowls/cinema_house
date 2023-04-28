@@ -1,6 +1,6 @@
 class CommentEntity {
-  final String content;
   final int? id;
+  final String content;
   final int rating;
   final String? author;
 
@@ -11,11 +11,6 @@ class CommentEntity {
     required this.rating,
   });
 
-  CommentEntity.createInForm({
-    this.id,
-    required this.author,
-    required this.content,
-    required this.rating,
-  });
+
 
 }

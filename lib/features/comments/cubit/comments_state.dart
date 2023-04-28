@@ -1,6 +1,6 @@
 part of 'comments_cubit.dart';
 
-enum CommentsStatus { waiting, loading, loaded }
+enum CommentsStatus {loading, loaded }
 
 @immutable
 class CommentsState extends Equatable {
@@ -8,7 +8,7 @@ class CommentsState extends Equatable {
   final Iterable<CommentEntity> comments;
 
   const CommentsState({
-    this.status = CommentsStatus.waiting,
+    this.status = CommentsStatus.loading,
     this.comments = const [],
   });
 

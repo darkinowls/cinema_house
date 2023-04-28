@@ -14,7 +14,7 @@ class HorizontalMovieListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(15),
       scrollDirection: Axis.horizontal,
       itemCount: movies.length,
       itemBuilder: (context, index) {

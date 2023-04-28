@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
         // named routes
         routes: {
           '/login': (context) => const LoginScreen(),
-          '/home': (context) => const HomeScreen(),
+          '/home': (context) => HomeScreen(
+              BlocProvider.of<NetworkCubit>(context).state is NetworkExists),
           // global named routes
         },
       );

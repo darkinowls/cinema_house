@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/locator.dart';
 import '../../../../comments/data/repositories/i_comments_repository.dart';
-import '../../../../comments/widgets/comment_list_view.dart';
+import '../../../../comments/widgets/comments_section.dart';
 import '../../../data/models/movie.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
@@ -55,12 +55,12 @@ class _ScrollableMovieDetailsScreenState
   @override
   void didChangeDependencies() {
     _scrollController.addListener(_scrollListener);
-
     super.didChangeDependencies();
   }
 
   void _scrollListener() {
-    if (_scrollController.position.extentAfter == 0) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       BlocProvider.of<CommentsCubit>(context).loadComments(widget.movie.id);
       _scrollController.removeListener(_scrollListener);
     }
@@ -86,6 +86,7 @@ class _ScrollableMovieDetailsScreenState
           ]),
       body: SingleChildScrollView(
         controller: _scrollController,
+
         child: Column(
           children: [
             Container(
@@ -161,8 +162,11 @@ class _ScrollableMovieDetailsScreenState
                 ],
               ),
             ),
-            SizedBox(height: 25),
-            const CommentListView(),
+            const SizedBox(height: 25),
+
+            CommentsSection(widget.movie.id),
+
+            const SizedBox(height: 50)
           ],
         ),
       ),

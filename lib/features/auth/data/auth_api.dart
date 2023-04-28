@@ -6,11 +6,11 @@ import '../../../core/dio_client.dart';
 import 'models/otp.dart';
 import 'token_interceptor.dart';
 
-class UserApi {
+class AuthApi {
   final DioClient _dioClient;
   final String _authUrl = '/auth';
 
-  UserApi(this._dioClient);
+  AuthApi(this._dioClient);
 
   Future<bool> sendPhone(PhoneNumber phoneNumber) async {
     FormData formData = FormData.fromMap(phoneNumber.toJson()); // to Json

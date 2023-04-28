@@ -20,9 +20,11 @@ class CommentsCubit extends Cubit<CommentsState> {
   }
 
   void addComment(
-      String author, String content, int rating, int movieId) async {
-    final CommentEntity commentEntity = CommentEntity.createInForm(
-        author: author, content: content, rating: rating);
+      {required String content,
+      required int rating,
+      required int movieId}) async {
+    final CommentEntity commentEntity =
+        CommentEntity(content: content, rating: rating);
     bool success =
         await _commentsRepository.addCommentToMovie(commentEntity, movieId);
     if (success) {

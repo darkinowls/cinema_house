@@ -17,6 +17,8 @@ import '../features/movies/data/movies_api.dart';
 import '../features/movies/repositories/movies_repository.dart';
 import '../features/tickets/data/tickets_api.dart';
 import '../features/tickets/domain/repositories/tickets_repository.dart';
+import '../features/user/data/user_api.dart';
+import '../features/user/domain/user_repository.dart';
 
 final locator = GetIt.instance;
 
@@ -44,6 +46,11 @@ Future<void> setupLocator() async {
 
   locator.registerLazySingleton<ICommentsRepository>(
       () => CommentsRepository(locator<CommentsApi>()));
+
+  locator.registerLazySingleton<UserApi>(() => UserApi(locator<DioClient>()));
+
+  locator.registerLazySingleton<UserRepository>(
+      () => UserRepository(locator<UserApi>()));
 }
 
 // ---------------------------------------------------------------------
@@ -64,10 +71,10 @@ Future<void> _setupAtAppStart() async {
       LightModeCubit(locator<LightModeRepository>()));
 
   locator.registerSingleton<DioClient>(DioClient());
-  locator.registerSingleton<UserApi>(UserApi(locator<DioClient>()));
+  locator.registerSingleton<AuthApi>(AuthApi(locator<DioClient>()));
   Box<String> tokenBox = await Hive.openBox<String>("accessToken");
   locator.registerSingleton<AuthRepository>(
-      AuthRepository(tokenBox, locator<UserApi>()));
+      AuthRepository(tokenBox, locator<AuthApi>()));
 
   locator.registerSingleton<AuthCubit>(AuthCubit(locator<AuthRepository>()));
 }

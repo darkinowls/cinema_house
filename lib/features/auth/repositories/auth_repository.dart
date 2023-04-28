@@ -11,7 +11,7 @@ class AuthRepository {
   final Box<String> _tokenBox;
   final String _key = 'accessToken';
 
-  final UserApi _userApi;
+  final AuthApi _userApi;
 
   AuthRepository(this._tokenBox, this._userApi) {
     _userApi.addInterceptor(TokenInterceptor(this));

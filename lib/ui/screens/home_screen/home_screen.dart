@@ -5,14 +5,12 @@ import 'package:cinema_house/ui/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/locator.dart';
 import '../../../features/auth/cubit/auth_cubit.dart';
-import '../../../features/network/cubit/network_cubit.dart';
-import '../../../features/tickets/cubit/tickets_cubit.dart';
-import '../../../features/tickets/domain/repositories/tickets_repository.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final bool hasNetwork;
+
+  const HomeScreen(this.hasNetwork, {super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -26,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    _selectedIndex = (widget.hasNetwork)? 0 : 1;
     innerRoutes = [
       InnerRoute(tab: const MoviesTab(), _navigatorKeys),
       InnerRoute(tab: const MyTicketsTab(), _navigatorKeys),
@@ -33,6 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (BlocProvider.of<NetworkCubit>(context).state is NoNetwork) {
+  //     _selectedIndex = 1;
+  //   } else {
+  //     _selectedIndex = 0;
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {

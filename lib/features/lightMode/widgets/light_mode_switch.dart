@@ -11,7 +11,7 @@ class LightModeSwitch extends StatelessWidget {
         builder: (context, state) => SwitchListTile(
             title: const Text('Light Mode'), // Builds the tile
             value: state,
-            onChanged: (value) => BlocProvider.of<LightModeCubit>(context)
-                .toggleDarkMode(value)));
+            onChanged:
+                BlocProvider.of<LightModeCubit>(context).toggleDarkMode));
   }
 }

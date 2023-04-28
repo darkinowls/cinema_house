@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cinema_house/core/date_format_extention.dart';
 import 'package:cinema_house/features/tickets/cubit/tickets_cubit.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,16 +100,17 @@ class TicketList extends StatelessWidget {
       height: 25,
       color: Colors.black12,
       child:
-          Center(child: Text(DateFormat('yyyy MMMM(MM) dd').format(dateTime))),
+          Center(child: Text(dateTime.formatDate())),
     );
   }
 
   ListTile _generateListTile(BuildContext context, TicketEntity ticketEntity) {
     return ListTile(
+      // leading: CachedNetworkImage(imageUrl: ticketEntity.smallImage),
       title: Text(ticketEntity.name),
       subtitle: Text(
-          "Row index: ${ticketEntity.rowIndex} + Seat index: ${ticketEntity.seatIndex}"),
-      trailing: Text(DateFormat('HH:mm').format(ticketEntity.dateTime)),
+          "Row: ${ticketEntity.rowIndex} + Seat: ${ticketEntity.seatIndex}"),
+      trailing: Text(ticketEntity.dateTime.formatTime()),
       onTap: () => _showQRCode(context, ticketEntity),
     );
   }

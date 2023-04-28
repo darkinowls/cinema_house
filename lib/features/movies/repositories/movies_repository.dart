@@ -11,13 +11,8 @@ class MoviesRepository {
     return _moviesApi.getMovies();
   }
 
-  Future<Iterable<Movie>> getMoviesToday() async {
-    return _moviesApi.getMoviesByDate(DateTime.now());
-  }
-
-  Future<Iterable<Movie>> getMoviesTomorrow() async {
-    return _moviesApi
-        .getMoviesByDate(DateTime.now().add(const Duration(days: 1)));
+  Future<Iterable<Movie>> getMoviesByDay(DateTime dateTime) async {
+    return _moviesApi.getMoviesByDate(dateTime);
   }
 
   Future<Iterable<Movie>> getMoviesByPlot(String plot) async {
