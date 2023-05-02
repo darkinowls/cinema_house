@@ -18,5 +18,5 @@ final Map<bool, ThemeData> appThemes = {
       scaffoldBackgroundColor: Colors.white,
       indicatorColor: Colors.green,
       accentColor: Colors.green,
-      focusColor: Colors.black),
+      focusColor: Colors.blueGrey.shade900),
 };

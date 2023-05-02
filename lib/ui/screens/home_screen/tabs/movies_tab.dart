@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/locator.dart';
 import '../../../../features/movies/cubit/movies_cubit.dart';
 import '../../../../features/movies/ui/search_movie_delegate.dart';
-import '../../../../features/movies/ui/tabs/by_days_tab.dart';
-import '../../../../features/movies/ui/tabs/top_charts_tab.dart';
+import '../../../../features/movies/ui/tabs/by_days_tab/by_days_tab.dart';
+import '../../../../features/movies/ui/tabs/top_charts_tab/top_charts_tab.dart';
 import '../../../../features/network/widgets/no_network_sign.dart';
 
 class MoviesTab extends StatelessWidget {

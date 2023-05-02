@@ -34,6 +34,7 @@ class TicketList extends StatelessWidget {
           );
         }
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
               child: ListView.builder(
@@ -99,14 +100,16 @@ class TicketList extends StatelessWidget {
     return Container(
       height: 25,
       color: Colors.black12,
-      child:
-          Center(child: Text(dateTime.formatDate())),
+      child: Center(child: Text(dateTime.formatDate())),
     );
   }
 
-  ListTile _generateListTile(BuildContext context, TicketEntity ticketEntity) {
+  Widget _generateListTile(BuildContext context, TicketEntity ticketEntity) {
     return ListTile(
-      // leading: CachedNetworkImage(imageUrl: ticketEntity.smallImage),
+      leading: CachedNetworkImage(
+          imageUrl: ticketEntity.smallImage,
+          height: 100, width: 60,
+          fit: BoxFit.contain),
       title: Text(ticketEntity.name),
       subtitle: Text(
           "Row: ${ticketEntity.rowIndex} + Seat: ${ticketEntity.seatIndex}"),

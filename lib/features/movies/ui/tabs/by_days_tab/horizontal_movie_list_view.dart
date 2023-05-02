@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../data/models/movie.dart';
-import 'movie_details_screen.dart';
+import '../../screens/movie_details_screen.dart';
 
 class HorizontalMovieListView extends StatelessWidget {
   final Iterable<Movie> movies;

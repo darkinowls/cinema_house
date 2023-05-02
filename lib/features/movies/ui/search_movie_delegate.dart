@@ -1,5 +1,5 @@
-import 'package:cinema_house/features/movies/ui/tabs/widgets/movie_details_screen.dart';
-import 'package:cinema_house/features/movies/ui/tabs/widgets/vertical_movie_list_view.dart';
+import 'package:cinema_house/features/movies/ui/screens/movie_details_screen.dart';
+import 'package:cinema_house/features/movies/ui/tabs/top_charts_tab/vertical_movie_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

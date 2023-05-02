@@ -2,9 +2,9 @@ import 'package:cinema_house/core/date_format_extention.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../ui/widgets/loader.dart';
-import '../../cubit/movies_cubit.dart';
-import 'widgets/horizontal_movie_list_view.dart';
+import '../../../../../ui/widgets/loader.dart';
+import '../../../cubit/movies_cubit.dart';
+import 'horizontal_movie_list_view.dart';
 
 class ByDaysTab extends StatefulWidget {
   const ByDaysTab({Key? key}) : super(key: key);

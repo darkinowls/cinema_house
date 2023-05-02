@@ -38,7 +38,8 @@ class _CommentFormState extends State<CommentForm> {
         children: [
           TextField(
             controller: _commentEditingController,
-            decoration: const InputDecoration(hintText: "Write your comment"),
+            decoration:
+                const InputDecoration(hintText: "Write your anonymous comment"),
             maxLength: 120,
             minLines: 1,
             maxLines: 4,

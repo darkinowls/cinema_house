@@ -3,7 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/models/movie.dart';
+import '../data/models/movie.dart';
 
 class ZoomableMovieImage extends StatelessWidget {
   const ZoomableMovieImage({

@@ -15,6 +15,8 @@ import '../features/comments/domain/repositories/comments_repository.dart';
 import '../features/lightMode/cubit/light_mode_cubit.dart';
 import '../features/movies/data/movies_api.dart';
 import '../features/movies/repositories/movies_repository.dart';
+import '../features/sessions/data/sessions_api.dart';
+import '../features/sessions/domain/sessions_repository.dart';
 import '../features/tickets/data/tickets_api.dart';
 import '../features/tickets/domain/repositories/tickets_repository.dart';
 import '../features/user/data/user_api.dart';
@@ -51,6 +53,12 @@ Future<void> setupLocator() async {
 
   locator.registerLazySingleton<UserRepository>(
       () => UserRepository(locator<UserApi>()));
+
+  locator.registerLazySingleton<SessionsApi>(
+      () => SessionsApi(locator<DioClient>()));
+
+  locator.registerLazySingleton<SessionsRepository>(
+      () => SessionsRepository(locator<SessionsApi>()));
 }
 
 // ---------------------------------------------------------------------

@@ -2,16 +2,20 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinema_house/features/comments/cubit/comments_cubit.dart';
-import 'package:cinema_house/features/movies/ui/tabs/widgets/zoomable_movie_image.dart';
+import 'package:cinema_house/features/movies/ui/zoomable_movie_image.dart';
+import 'package:cinema_house/features/sessions/cubit/sessions/sessions_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../core/locator.dart';
-import '../../../../comments/data/repositories/i_comments_repository.dart';
-import '../../../../comments/widgets/comments_section.dart';
-import '../../../data/models/movie.dart';
+import '../../../../core/locator.dart';
+import '../../../comments/data/repositories/i_comments_repository.dart';
+import '../../../comments/widgets/comments_section.dart';
+import '../../../sessions/domain/sessions_repository.dart';
+import '../../../sessions/ui/horizontal_session_list_view.dart';
+import '../../../sessions/ui/sessions_section.dart';
+import '../../data/models/movie.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   final Movie movie;
@@ -23,9 +27,18 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CommentsCubit>(
-        create: (context) => CommentsCubit(locator<ICommentsRepository>()),
-        child: _ScrollableMovieDetailsScreen(movie: movie, heroTag: heroTag));
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CommentsCubit>(
+          create: (context) => CommentsCubit(locator<ICommentsRepository>()),
+        ),
+        BlocProvider<SessionsCubit>(
+          create: (context) =>
+              SessionsCubit(locator<SessionsRepository>(), movie.id),
+        ),
+      ],
+      child: _ScrollableMovieDetailsScreen(movie: movie, heroTag: heroTag),
+    );
   }
 }
 
@@ -86,7 +99,6 @@ class _ScrollableMovieDetailsScreenState
           ]),
       body: SingleChildScrollView(
         controller: _scrollController,
-
         child: Column(
           children: [
             Container(
@@ -117,7 +129,7 @@ class _ScrollableMovieDetailsScreenState
               ),
             ),
             const SizedBox(height: 15),
-            Container(
+            SizedBox(
               width: 300,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,10 +174,11 @@ class _ScrollableMovieDetailsScreenState
                 ],
               ),
             ),
+
             const SizedBox(height: 25),
-
+            const SessionsSection(),
+            const SizedBox(height: 25),
             CommentsSection(widget.movie.id),
-
             const SizedBox(height: 50)
           ],
         ),
