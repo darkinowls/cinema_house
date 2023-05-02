@@ -20,7 +20,7 @@ class SeatsState extends Equatable {
     final int totalPrice = seats.values
         .map((e) => e.price)
         .reduce((value, element) => value + element);
-    return "Total price: ${totalPrice.toString()}";
+    return "Total price: ${totalPrice.toString()} UAH";
   }
 
   List<String> toRowsAndSeats() {
