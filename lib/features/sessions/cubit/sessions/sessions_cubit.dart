@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../data/models/session.dart';
-import '../../domain/sessions_repository.dart';
+import '../../domain/repositories/sessions_repository.dart';
 
 part 'sessions_state.dart';
 
@@ -39,5 +39,14 @@ class SessionsCubit extends Cubit<SessionsState> {
       ...nextSessions,
       ...nextAfterNextSessions
     ]));
+  }
+
+  Future<void> updateSessionSeats(int sessionId) async {
+    emit(state.copyWith(status: SessionsStatus.loading));
+    Session newSession = await _sessionsRepository.getSessionById(sessionId);
+    List<Session> sessions = state.sessions.toList();
+    int index = sessions.indexWhere((element) => element.id == newSession.id);
+    sessions[index].room = newSession.room;
+    emit(state.copyWith(sessions: [...sessions], status: SessionsStatus.init));
   }
 }

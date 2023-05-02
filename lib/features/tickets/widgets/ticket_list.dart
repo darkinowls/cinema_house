@@ -85,7 +85,8 @@ class TicketList extends StatelessWidget {
             height: 300,
             child: Center(
               child: QrImage(
-                data: "${ticket.movieId} ${ticket.name} ${ticket.dateTime}",
+                data: "${ticket.movieId} ${ticket.name} ${ticket.dateTime} "
+                    "${ticket.rowIndex} ${ticket.seatIndex}",
                 version: QrVersions.auto,
                 size: 300,
                 foregroundColor: Colors.black,

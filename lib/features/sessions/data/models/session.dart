@@ -13,7 +13,7 @@ class Session {
   late final DateTime date;
   late final String type;
   late final int minPrice;
-  late final Room room;
+  late Room room;
 
   Session.fromJson(Map<String, dynamic> json) {
     id = json['id'];

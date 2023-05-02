@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/locator.dart';
 import '../../../comments/data/repositories/i_comments_repository.dart';
 import '../../../comments/widgets/comments_section.dart';
-import '../../../sessions/domain/sessions_repository.dart';
+import '../../../sessions/domain/repositories/sessions_repository.dart';
 import '../../../sessions/ui/horizontal_session_list_view.dart';
 import '../../../sessions/ui/sessions_section.dart';
 import '../../data/models/movie.dart';

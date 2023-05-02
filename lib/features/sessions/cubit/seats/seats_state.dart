@@ -1,20 +1,15 @@
 part of 'seats_cubit.dart';
 
+enum SeatsStatus { init, loading, failed, success }
+
 class SeatsState extends Equatable {
+  final SeatsStatus status;
   final Map<int, SeatEntity> seats;
 
-  const SeatsState({this.seats = const {}});
+  const SeatsState({this.status = SeatsStatus.init, this.seats = const {}});
 
   @override
-  List<Object> get props => [seats];
-
-  SeatsState copyWith({
-    Map<int, SeatEntity>? seats,
-  }) {
-    return SeatsState(
-      seats: seats ?? this.seats,
-    );
-  }
+  List<Object> get props => [status, seats];
 
   String toTotalPrice() {
     final int totalPrice = seats.values
@@ -29,5 +24,15 @@ class SeatsState extends Equatable {
             "Row: ${e.rowIndex.toString()} + Seat: ${e.index.toString()}")
         .toList();
     return places;
+  }
+
+  SeatsState copyWith({
+    SeatsStatus? status,
+    Map<int, SeatEntity>? seats,
+  }) {
+    return SeatsState(
+      status: status ?? this.status,
+      seats: seats ?? this.seats,
+    );
   }
 }

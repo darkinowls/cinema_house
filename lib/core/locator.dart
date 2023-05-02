@@ -16,7 +16,7 @@ import '../features/lightMode/cubit/light_mode_cubit.dart';
 import '../features/movies/data/movies_api.dart';
 import '../features/movies/repositories/movies_repository.dart';
 import '../features/sessions/data/sessions_api.dart';
-import '../features/sessions/domain/sessions_repository.dart';
+import '../features/sessions/domain/repositories/sessions_repository.dart';
 import '../features/tickets/data/tickets_api.dart';
 import '../features/tickets/domain/repositories/tickets_repository.dart';
 import '../features/user/data/user_api.dart';

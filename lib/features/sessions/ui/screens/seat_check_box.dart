@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/seats/seats_cubit.dart';
-import '../data/models/seat.dart';
-import '../domain/entities/seat_with_row.dart';
+import '../../cubit/seats/seats_cubit.dart';
+import '../../data/models/seat.dart';
+import '../../domain/entities/seat_with_row.dart';
 
 final Map<int, Map<bool, Color>> _seatColorMap = {
   0: {
