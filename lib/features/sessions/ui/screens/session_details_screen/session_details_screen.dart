@@ -1,3 +1,5 @@
+import 'package:cinema_house/core/locator.dart';
+import 'package:cinema_house/features/sessions/cubit/transactions/transaction_cubit.dart';
 import 'package:cinema_house/features/sessions/data/models/session.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import '../../cubit/seats/seats_cubit.dart';
+import '../../../cubit/seats/seats_cubit.dart';
+import '../../../domain/repositories/sessions_repository.dart';
+import '../transaction_screen.dart';
 import 'seat_check_box.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
@@ -121,6 +125,16 @@ class SessionDetailsScreen extends StatelessWidget {
                               ? () async {
                                   BlocProvider.of<SeatsCubit>(context)
                                       .bookSeats(session.id);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => BlocProvider.value(
+                                              value: TransactionCubit(
+                                                  locator<SessionsRepository>(),
+                                                  session.id,
+                                                  state.seats.keys),
+                                              child:
+                                                  const TransactionScreen())));
                                 }
                               : null,
                           child: const Text("Submit"),

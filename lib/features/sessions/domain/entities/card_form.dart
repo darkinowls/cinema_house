@@ -1,19 +1,12 @@
 import 'package:cinema_house/features/sessions/data/models/buy_seats.dart';
 
 class CardForm {
-  final String email;
-  final String cardNumber;
-  final String expirationDate;
-  final String cvv;
+  String email;
+  String cardNumber;
+  String expirationDate;
+  String cvv;
 
-  const CardForm({
-    required this.email,
-    required this.cardNumber,
-    required this.expirationDate,
-    required this.cvv,
-  });
-
-  const CardForm.empty({
+  CardForm({
     this.email = "",
     this.cardNumber = "",
     this.expirationDate = "",

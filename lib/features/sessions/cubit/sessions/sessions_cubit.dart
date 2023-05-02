@@ -41,7 +41,7 @@ class SessionsCubit extends Cubit<SessionsState> {
     ]));
   }
 
-  Future<void> updateSessionSeats(int sessionId) async {
+  Future<void> updateSessionRoom(int sessionId) async {
     emit(state.copyWith(status: SessionsStatus.loading));
     Session newSession = await _sessionsRepository.getSessionById(sessionId);
     List<Session> sessions = state.sessions.toList();

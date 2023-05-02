@@ -24,13 +24,13 @@ class SeatsCubit extends Cubit<SeatsState> {
 
   Future<Iterable<int>> bookSeats(int sessionId) async {
     emit(state.copyWith(status: SeatsStatus.loading));
-    Iterable<int> seatIds = state.seats.values.map((s) => s.id);
+    Iterable<int> seatIds = state.seats.keys;
     bool booked = await _sessionsRepository.bookSeats(
       seatIds,
       sessionId,
     );
     if (booked) {
-      await _sessionsCubit.updateSessionSeats(sessionId);
+      await _sessionsCubit.updateSessionRoom(sessionId);
       emit(const SeatsState(status: SeatsStatus.success));
       return seatIds;
     }
@@ -40,7 +40,7 @@ class SeatsCubit extends Cubit<SeatsState> {
 
   void updateSession(int sessionId) async {
     emit(const SeatsState(status: SeatsStatus.loading));
-    await _sessionsCubit.updateSessionSeats(sessionId);
+    await _sessionsCubit.updateSessionRoom(sessionId);
     emit(const SeatsState());
   }
 

@@ -1,6 +1,6 @@
 import 'package:cinema_house/core/date_format_extention.dart';
 import 'package:cinema_house/features/sessions/cubit/sessions/sessions_cubit.dart';
-import 'package:cinema_house/features/sessions/ui/screens/session_details_screen.dart';
+import 'package:cinema_house/features/sessions/ui/screens/session_details_screen/session_details_screen.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

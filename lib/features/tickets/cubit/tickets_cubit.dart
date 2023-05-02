@@ -12,14 +12,19 @@ class TicketsCubit extends Cubit<TicketsState> {
   final TicketsRepository _ticketsRepository;
   final NetworkCubit _networkCubit;
 
-  TicketsCubit(this._ticketsRepository, this._networkCubit) : super(Loading()) {
-    _getTickets();
-    _networkCubit.stream.listen((_) => _getTickets());
+  TicketsCubit(this._ticketsRepository, this._networkCubit)
+      : super(const TicketsState()) {
+    getTickets();
+    _networkCubit.stream.listen((_) => getTickets());
   }
 
-  Future<void> _getTickets() async {
-    emit(Loaded(await _ticketsRepository
-        .getTickets(_networkCubit.state is NetworkExists)));
+  Future<void> getTickets() async {
+    emit(state.copyWith(status: TicketsStatus.loading));
+    emit(TicketsState(
+        status: TicketsStatus.loaded,
+        tickets: await _ticketsRepository.getTickets(
+          _networkCubit.state is NetworkExists,
+        )));
   }
 
 }

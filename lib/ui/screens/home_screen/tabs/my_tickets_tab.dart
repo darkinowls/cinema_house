@@ -12,14 +12,24 @@ class MyTicketsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("My tickets")),
-      body:
-      BlocProvider(
-        create: (context) =>
-            TicketsCubit(locator<TicketsRepository>(), locator<NetworkCubit>()),
-        child:
-        const TicketList(),
+    return BlocProvider(
+      create: (context) =>
+          TicketsCubit(locator<TicketsRepository>(), locator<NetworkCubit>()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("My tickets"),
+          actions: [
+            BlocBuilder<NetworkCubit, NetworkState>(builder: (context, state) {
+              return IconButton(
+                  onPressed: (state is NetworkExists)
+                      ? () async =>
+                          BlocProvider.of<TicketsCubit>(context).getTickets()
+                      : null,
+                  icon: const Icon(Icons.update));
+            })
+          ],
+        ),
+        body: const TicketList(),
       ),
     );
   }

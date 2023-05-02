@@ -5,7 +5,6 @@ import 'package:cinema_house/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../domain/entities/ticket_entity.dart';
@@ -17,7 +16,7 @@ class TicketList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TicketsCubit, TicketsState>(
       builder: (context, state) {
-        if (state is Loading) {
+        if (state.status == TicketsStatus.loading) {
           return const Loader();
         }
 
@@ -109,7 +108,8 @@ class TicketList extends StatelessWidget {
     return ListTile(
       leading: CachedNetworkImage(
           imageUrl: ticketEntity.smallImage,
-          height: 100, width: 60,
+          height: 100,
+          width: 60,
           fit: BoxFit.contain),
       title: Text(ticketEntity.name),
       subtitle: Text(
