@@ -11,11 +11,11 @@ class SeatsState extends Equatable {
   @override
   List<Object> get props => [status, seats];
 
-  String toTotalPrice() {
+  int getTotalPrice() {
     final int totalPrice = seats.values
         .map((e) => e.price)
         .reduce((value, element) => value + element);
-    return "Total price: ${totalPrice.toString()} UAH";
+    return totalPrice;
   }
 
   List<String> toRowsAndSeats() {

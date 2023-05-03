@@ -9,7 +9,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../../cubit/seats/seats_cubit.dart';
 import '../../../domain/repositories/sessions_repository.dart';
-import '../transaction_screen.dart';
+import '../transaction_screen/transaction_screen.dart';
 import 'seat_check_box.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
@@ -33,7 +33,6 @@ class SessionDetailsScreen extends StatelessWidget {
         body: BlocBuilder<SeatsCubit, SeatsState>(
           builder: (context, state) {
             if (state.status == SeatsStatus.loading) {
-              print("Loading");
               return const Loader();
             }
             if (state.status == SeatsStatus.failed) {
@@ -108,8 +107,8 @@ class SessionDetailsScreen extends StatelessWidget {
                               color: (notEmpty)
                                   ? Theme.of(context).focusColor
                                   : Colors.grey,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(12.0))),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12))),
                         ),
                       ],
                     ),
@@ -118,14 +117,14 @@ class SessionDetailsScreen extends StatelessWidget {
                     ),
                     ListTile(
                         title: notEmpty
-                            ? Text(state.toTotalPrice())
+                            ? Text("Total price: ${state.getTotalPrice()} UAH")
                             : const Text("Choose some seats above!"),
                         trailing: ElevatedButton(
                           onPressed: (notEmpty)
                               ? () async {
                                   BlocProvider.of<SeatsCubit>(context)
                                       .bookSeats(session.id);
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => BlocProvider.value(
@@ -134,7 +133,7 @@ class SessionDetailsScreen extends StatelessWidget {
                                                   session.id,
                                                   state.seats.keys),
                                               child:
-                                                  const TransactionScreen())));
+                                              TransactionScreen(totalPrice: state.getTotalPrice()))));
                                 }
                               : null,
                           child: const Text("Submit"),

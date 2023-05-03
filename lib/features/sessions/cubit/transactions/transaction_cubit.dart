@@ -15,15 +15,13 @@ class TransactionCubit extends Cubit<TransactionState> {
 
   void buySeats(CardForm cardForm) async {
     emit(state.copyWith(status: TransactionStatus.loading));
-    
-    if (cardForm.isEmpty()) {
-      emit(state.copyWith(status: TransactionStatus.failed));
-      return;
-    }
 
-    await _sessionsRepository.buySeats(
+    final bool isBought = await _sessionsRepository.buySeats(
         state.seatIds, state.sessionId, cardForm);
 
-    emit(state.copyWith(status: TransactionStatus.success));
+    if (isBought) {
+      emit(state.copyWith(status: TransactionStatus.success));
+    }
+    emit(state.copyWith(status: TransactionStatus.failed));
   }
 }
