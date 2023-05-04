@@ -3,24 +3,24 @@ import 'package:cinema_house/features/lang/data/lang_interceptor.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../cubit/lang_cubit.dart';
+import '../cubit/lang_state.dart';
 
 class LangRepository {
   final DioClient _dioClient;
-  final BuildContext _context;
+  late BuildContext context;
 
-  LangRepository(this._dioClient, this._context) {
+  LangRepository(this._dioClient) {
     _dioClient.dio.interceptors.add(LangInterceptor(this));
   }
 
   LangStatus getLangStatus() {
-    return LangStatus.getLang(_context.locale.languageCode);
+    return LangStatus.getLang(context.locale.languageCode);
   }
 
   LangStatus switchLang() {
     final LangStatus langStatus =
-        LangStatus.switchLang(_context.locale.languageCode);
-    _context.setLocale(Locale(langStatus.lang));
+        LangStatus.switchLang(context.locale.languageCode);
+    context.setLocale(Locale(langStatus.lang));
     return langStatus;
   }
 }

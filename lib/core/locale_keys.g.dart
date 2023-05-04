@@ -66,5 +66,8 @@ abstract class  LocaleKeys {
   static const expiryMonthIsInvalid = 'expiryMonthIsInvalid';
   static const incorrectCvvLength = 'incorrectCvvLength';
   static const roomRowSeat = 'roomRowSeat';
+  static const today = 'today';
+  static const tomorrow = 'tomorrow';
+  static const rowSeat = 'rowSeat';
 
 }

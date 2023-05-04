@@ -1,5 +1,5 @@
-part of 'lang_cubit.dart';
-
+// part of 'lang_cubit.dart';
+//
 enum LangStatus {
   uk("uk"),
   en("en");
@@ -23,12 +23,12 @@ enum LangStatus {
   }
 
 }
-
-class LangState extends Equatable {
-  final LangStatus status;
-
-  const LangState(this.status);
-
-  @override
-  List<Object> get props => [status];
-}
+//
+// class LangState extends Equatable {
+//   final LangStatus status;
+//
+//   const LangState(this.status);
+//
+//   @override
+//   List<Object> get props => [status];
+// }

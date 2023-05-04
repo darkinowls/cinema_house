@@ -26,6 +26,12 @@ class MoviesApi {
     return (response.data['data'] as List).map((json) => Movie.fromJson(json));
   }
 
+  Future<Movie> getMoviesById(int id) async {
+    final Response response =
+    await _dioClient.dio.get("_moviesUrl/$id");
+    return Movie.fromJson(response.data['data']);
+  }
+
   Future<Iterable<Movie>> getMoviesByPlot(String plot) async {
     Map<String, dynamic> queryParameters = {"query": plot};
     final Response response =

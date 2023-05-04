@@ -46,7 +46,6 @@
   "room": "Кімната: \"{}\"",
   "type": "Тип: {}",
   "minimumPrice": "Мінімальна ціна: {} ГРН",
-
   "someoneElseHasJustBookedTheSeats": "Хтось інший щойно забронював ці місця",
   "totalPrice": "Загальна сума: {} ГРН",
   "chooseSomeSeatsAbove": "Виберіть місця!",
@@ -64,6 +63,8 @@
   "expiryYearIsInvalid": "Рік закінчення недійсний",
   "expiryMonthIsInvalid": "Місяць закінчення недійсний",
   "incorrectCvvLength": "Неправильна довжина CVV",
-
-  "roomRowSeat": "Кімната: {} + ряд: {} + місце: {}"
+  "roomRowSeat": "Кімната: {} + ряд: {} + місце: {}",
+  "today": "Сьогодні, {}",
+  "tomorrow": "Завтра, {}",
+  "rowSeat": "Ряд: {} + Місце: {}"
 }

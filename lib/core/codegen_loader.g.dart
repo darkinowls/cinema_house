@@ -79,7 +79,10 @@ class CodegenLoader extends AssetLoader{
   "expiryYearIsInvalid": "Expiry year is invalid",
   "expiryMonthIsInvalid": "Expiry month is invalid",
   "incorrectCvvLength": "Incorrect CVV length",
-  "roomRowSeat": "Room: {} + Row: {} + Seat: {}"
+  "roomRowSeat": "Room: {} + Row: {} + Seat: {}",
+  "today": "Today, {}",
+  "tomorrow": "tomorrow, {}",
+  "rowSeat": "Row: {} + Seat: {}"
 };
 static const Map<String,dynamic> uk = {
   "logIn": "Увійти",
@@ -146,7 +149,10 @@ static const Map<String,dynamic> uk = {
   "expiryYearIsInvalid": "Рік закінчення недійсний",
   "expiryMonthIsInvalid": "Місяць закінчення недійсний",
   "incorrectCvvLength": "Неправильна довжина CVV",
-  "roomRowSeat": "Кімната: {} + ряд: {} + місце: {}"
+  "roomRowSeat": "Кімната: {} + ряд: {} + місце: {}",
+  "today": "Сьогодні, {}",
+  "tomorrow": "Завтра, {}",
+  "rowSeat": "Ряд: {} + Місце: {}"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "uk": uk};
 }

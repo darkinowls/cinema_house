@@ -2,6 +2,7 @@ import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/core/locator.dart';
 import 'package:cinema_house/features/sessions/cubit/transactions/transaction_cubit.dart';
 import 'package:cinema_house/features/sessions/data/models/session.dart';
+import 'package:cinema_house/features/sessions/domain/entities/seat_with_row.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,12 +26,6 @@ class SessionDetailsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(session.room.name),
-          actions: [
-            IconButton(
-                onPressed: () async => BlocProvider.of<SeatsCubit>(context)
-                    .updateSession(session.id),
-                icon: const Icon(Icons.update))
-          ],
         ),
         body: BlocBuilder<SeatsCubit, SeatsState>(
           builder: (context, state) {
@@ -39,56 +34,63 @@ class SessionDetailsScreen extends StatelessWidget {
             }
             if (state.status == SeatsStatus.failed) {
               return Center(
-                  child: Text(LocaleKeys.someoneElseHasJustBookedTheSeats.tr()));
+                  child:
+                      Text(LocaleKeys.someoneElseHasJustBookedTheSeats.tr()));
             }
             bool notEmpty = state.seats.isNotEmpty;
-            List<String> items = state.toRowsAndSeats();
+            Iterable<SeatEntity> seats = state.seats.values;
             return SlidingUpPanel(
-                body: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 50),
-                          Container(
-                            height: 10,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 7),
-                                  )
-                                ]),
+                body: RefreshIndicator(
+                  onRefresh: () async => BlocProvider.of<SeatsCubit>(context)
+                      .updateSession(session.id),
+                  child: ListView(children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 50),
+                              Container(
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: const Offset(0, 7),
+                                      )
+                                    ]),
+                              ),
+                              const SizedBox(height: 25),
+                              SizedBox(
+                                height: 300,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: session.room.rows
+                                        .map((row) => Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: row.seats
+                                                  .map((seat) => SeatCheckBox(
+                                                      seat: seat
+                                                        ..rowIndex = row.index))
+                                                  .toList(),
+                                            ))
+                                        .toList()),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 25),
-                          SizedBox(
-                            height: 300,
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: session.room.rows
-                                    .map((row) => Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: row.seats
-                                              .map((seat) => SeatCheckBox(
-                                                  seat: seat
-                                                    ..rowIndex = row.index))
-                                              .toList(),
-                                        ))
-                                    .toList()),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ]),
                 ),
                 color:
                     Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
@@ -119,7 +121,8 @@ class SessionDetailsScreen extends StatelessWidget {
                     ),
                     ListTile(
                         title: notEmpty
-                            ? Text(LocaleKeys.totalPrice.tr(args: [state.getTotalPrice().toString()]))
+                            ? Text(LocaleKeys.totalPrice
+                                .tr(args: [state.getTotalPrice().toString()]))
                             : Text(LocaleKeys.chooseSomeSeatsAbove.tr()),
                         trailing: ElevatedButton(
                           onPressed: (notEmpty)
@@ -134,8 +137,9 @@ class SessionDetailsScreen extends StatelessWidget {
                                                   locator<SessionsRepository>(),
                                                   session.id,
                                                   state.seats.keys),
-                                              child:
-                                              TransactionScreen(totalPrice: state.getTotalPrice()))));
+                                              child: TransactionScreen(
+                                                  totalPrice:
+                                                      state.getTotalPrice()))));
                                 }
                               : null,
                           child: Text(LocaleKeys.submit.tr()),
@@ -143,11 +147,16 @@ class SessionDetailsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(LocaleKeys.pickedSeats.tr(), style: const TextStyle(fontSize: 16)),
+                    Text(LocaleKeys.pickedSeats.tr(),
+                        style: const TextStyle(fontSize: 16)),
                     Expanded(
                         child: ListView.separated(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) => Text(items[index]),
+                      itemCount: seats.length,
+                      itemBuilder: (context, index) =>
+                          Text(LocaleKeys.rowSeat.tr(args: [
+                        seats.elementAt(index).rowIndex.toString(),
+                        seats.elementAt(index).index.toString()
+                      ])),
                       separatorBuilder: (_, __) => const SizedBox(height: 5),
                     ))
                   ]),

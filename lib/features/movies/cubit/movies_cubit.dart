@@ -11,10 +11,10 @@ class MoviesCubit extends Cubit<MoviesState> {
   final MoviesRepository _moviesRepository;
 
   MoviesCubit(this._moviesRepository) : super(const MoviesState()) {
-    _getMovies();
+    init();
   }
 
-  void _getMovies() async {
+  Future<void> init() async {
     final List<Movie> movies = await _moviesRepository.getMovies();
 
     DateTime today = DateTime.now();
@@ -61,5 +61,10 @@ class MoviesCubit extends Cubit<MoviesState> {
         await _moviesRepository.getMoviesByPlot(plot);
     emit(state.copyWith(
         status: MoviesStatus.loaded, searchedMovies: searchedMovies));
+  }
+
+
+  void getMoviesById() async{
+
   }
 }

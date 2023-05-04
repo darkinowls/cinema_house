@@ -18,13 +18,13 @@ class SeatsState extends Equatable {
     return totalPrice;
   }
 
-  List<String> toRowsAndSeats() {
-    final List<String> places = seats.values
-        .map((e) =>
-            "Row: ${e.rowIndex.toString()} + Seat: ${e.index.toString()}")
-        .toList();
-    return places;
-  }
+  // List<String> toRowsAndSeats() {
+  //   final List<String> places = seats.values
+  //       .map((e) =>
+  //           "Row: ${e.rowIndex.toString()} + Seat: ${e.index.toString()}")
+  //       .toList();
+  //   return places;
+  // }
 
   SeatsState copyWith({
     SeatsStatus? status,

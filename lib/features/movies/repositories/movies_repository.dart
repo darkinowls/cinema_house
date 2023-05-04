@@ -18,4 +18,8 @@ class MoviesRepository {
   Future<Iterable<Movie>> getMoviesByPlot(String plot) async {
     return _moviesApi.getMoviesByPlot(plot);
   }
+
+  Future<Movie> getMoviesById(int id) async{
+    return _moviesApi.getMoviesById(id);
+  }
 }

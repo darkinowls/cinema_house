@@ -105,7 +105,10 @@ class _HorizontalSessionListViewState extends State<HorizontalSessionListView> {
                     Text(LocaleKeys.type
                         .tr(args: [widget.sessions.elementAt(index).type])),
                     const SizedBox(height: 5),
-                    Text(widget.sessions.elementAt(index).date.formatDate()),
+                    Text(widget.sessions
+                        .elementAt(index)
+                        .date
+                        .formatDate(context.locale)),
                     const SizedBox(height: 5),
                     Text(widget.sessions.elementAt(index).date.formatTime()),
                     const SizedBox(height: 5),

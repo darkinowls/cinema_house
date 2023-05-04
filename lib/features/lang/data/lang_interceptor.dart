@@ -1,6 +1,7 @@
 import 'package:cinema_house/features/lang/cubit/lang_cubit.dart';
 import 'package:dio/dio.dart';
 
+import '../cubit/lang_state.dart';
 import '../repositories/lang_repository.dart';
 
 class LangInterceptor extends Interceptor {

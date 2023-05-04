@@ -46,7 +46,6 @@
   "room": "Room: \"{}\"",
   "type": "Type: {}",
   "minimumPrice": "Minimum price: {} UAH",
-
   "someoneElseHasJustBookedTheSeats": "Someone else has just booked the seats",
   "totalPrice": "Total price: {} UAH",
   "chooseSomeSeatsAbove": "Choose some seats above!",
@@ -64,6 +63,8 @@
   "expiryYearIsInvalid": "Expiry year is invalid",
   "expiryMonthIsInvalid": "Expiry month is invalid",
   "incorrectCvvLength": "Incorrect CVV length",
-
-  "roomRowSeat": "Room: {} + Row: {} + Seat: {}"
+  "roomRowSeat": "Room: {} + Row: {} + Seat: {}",
+  "today": "Today, {}",
+  "tomorrow": "tomorrow, {}",
+  "rowSeat": "Row: {} + Seat: {}"
 }

@@ -39,34 +39,38 @@ class TicketList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: state.tickets.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
+              child: RefreshIndicator(
+                onRefresh: BlocProvider.of<TicketsCubit>(context).getTickets,
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(10),
+                  itemCount: state.tickets.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return Column(
+                        children: [
+                          _generateDateContainer(
+                              context, state.tickets.elementAt(0)),
+                          _generateListTile(context, state.tickets.elementAt(0)),
+                        ],
+                      );
+                    }
+
+                    Widget dateContainer = const SizedBox();
+                    if (index != state.tickets.length - 1 &&
+                        (state.tickets.elementAt(index).dateTime.day !=
+                            state.tickets.elementAt(index + 1).dateTime.day)) {
+                      dateContainer = _generateDateContainer(
+                          context,  state.tickets.elementAt(index + 1));
+                    }
                     return Column(
                       children: [
-                        _generateDateContainer(state.tickets.elementAt(0)),
-                        _generateListTile(context, state.tickets.elementAt(0)),
+                        _generateListTile(
+                            context, state.tickets.elementAt(index)),
+                        dateContainer,
                       ],
                     );
-                  }
-
-                  Widget dateContainer = const SizedBox();
-                  if (index != state.tickets.length - 1 &&
-                      (state.tickets.elementAt(index).dateTime.day !=
-                          state.tickets.elementAt(index + 1).dateTime.day)) {
-                    dateContainer = _generateDateContainer(
-                        state.tickets.elementAt(index + 1));
-                  }
-                  return Column(
-                    children: [
-                      _generateListTile(
-                          context, state.tickets.elementAt(index)),
-                      dateContainer,
-                    ],
-                  );
-                },
+                  },
+                ),
               ),
             ),
           ],
@@ -98,12 +102,13 @@ class TicketList extends StatelessWidget {
     );
   }
 
-  Container _generateDateContainer(TicketEntity ticketEntity) {
+  Container _generateDateContainer(
+      BuildContext context, TicketEntity ticketEntity) {
     DateTime dateTime = ticketEntity.dateTime;
     return Container(
       height: 25,
       color: Colors.black12,
-      child: Center(child: Text(dateTime.formatDate())),
+      child: Center(child: Text(dateTime.formatDate(context.locale))),
     );
   }
 

@@ -20,16 +20,6 @@ class MyTicketsTab extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(LocaleKeys.myTickets.tr() ),
-          actions: [
-            BlocBuilder<NetworkCubit, NetworkState>(builder: (context, state) {
-              return IconButton(
-                  onPressed: (state is NetworkExists)
-                      ? () async =>
-                          BlocProvider.of<TicketsCubit>(context).getTickets()
-                      : null,
-                  icon: const Icon(Icons.update));
-            })
-          ],
         ),
         body: const TicketList(),
       ),

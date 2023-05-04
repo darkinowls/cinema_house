@@ -1,4 +1,5 @@
 import 'package:cinema_house/core/date_format_extention.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,21 +57,24 @@ class _ByDaysTabState extends State<ByDaysTab> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesCubit, MoviesState>(
-        builder: (_, state) => ListView.builder(
-            controller: _scrollController,
-            padding: const EdgeInsets.only(top: 25),
-            itemCount: state.moviesByDay.length,
-            itemBuilder: (context, index) => Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(state.moviesByDay.keys.elementAt(index).formatDate(),
-                        style: const TextStyle(fontSize: 16)),
-                    SizedBox(
-                        height: 350,
-                        child: HorizontalMovieListView(
-                            movies: state.moviesByDay.values.elementAt(index))),
-                    if (index == state.moviesByDay.length - 1) const Loader()
-                  ],
-                )));
+        builder: (_, state) => RefreshIndicator(
+          onRefresh: BlocProvider.of<MoviesCubit>(context).init,
+          child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.only(top: 25),
+              itemCount: state.moviesByDay.length,
+              itemBuilder: (context, index) => Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Text(state.moviesByDay.keys.elementAt(index).formatDate(context.locale),
+                          style: const TextStyle(fontSize: 16)),
+                      SizedBox(
+                          height: 350,
+                          child: HorizontalMovieListView(
+                              movies: state.moviesByDay.values.elementAt(index))),
+                      if (index == state.moviesByDay.length - 1) const Loader()
+                    ],
+                  )),
+        ));
   }
 }

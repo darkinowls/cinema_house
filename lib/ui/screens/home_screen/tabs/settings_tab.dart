@@ -6,7 +6,7 @@ import '../../../../core/dio_client.dart';
 import '../../../../core/locale_keys.g.dart';
 import '../../../../core/locator.dart';
 import '../../../../features/auth/cubit/auth_cubit.dart';
-import '../../../../features/lang/cubit/lang_cubit.dart';
+import '../../../../features/lang/cubit/lang_state.dart';
 import '../../../../features/lightMode/widgets/light_mode_switch.dart';
 
 class SettingsTab extends StatelessWidget {
@@ -25,12 +25,12 @@ class SettingsTab extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.notifications),
+                leading: const Icon(Icons.notifications),
                 title: Text(LocaleKeys.notificationsAndSounds.tr()),
                 onTap: null,
               ),
               ListTile(
-                leading: Icon(Icons.lock),
+                leading: const Icon(Icons.lock),
                 title: Text(LocaleKeys.privacyAndSecurity.tr()),
                 onTap: null,
               ),
@@ -50,7 +50,12 @@ class SettingsTab extends StatelessWidget {
                 leading: const Icon(Icons.language),
                 title: Text(LocaleKeys.switchLanguage.tr()),
                 onTap: () {
-                  BlocProvider.of<LangCubit>(context).switchLang();
+                  final LangStatus langStatus =
+                  LangStatus.switchLang(context.locale.languageCode);
+                  context.setLocale(Locale(langStatus.lang));
+                  locator<DioClient>().dio.options.headers = {
+                        "Accept-Language": langStatus.lang
+                  };
                 },
               ),
               const LightModeSwitch(),

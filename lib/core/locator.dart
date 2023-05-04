@@ -12,6 +12,7 @@ import 'package:hive_flutter/adapters.dart';
 import '../features/comments/data/comments_api.dart';
 import '../features/comments/data/repositories/i_comments_repository.dart';
 import '../features/comments/domain/repositories/comments_repository.dart';
+import '../features/lang/repositories/lang_repository.dart';
 import '../features/lightMode/cubit/light_mode_cubit.dart';
 import '../features/movies/data/movies_api.dart';
 import '../features/movies/repositories/movies_repository.dart';
@@ -85,4 +86,7 @@ Future<void> _setupAtAppStart() async {
       AuthRepository(tokenBox, locator<AuthApi>()));
 
   locator.registerSingleton<AuthCubit>(AuthCubit(locator<AuthRepository>()));
+
+  // locator
+  //     .registerSingleton<LangRepository>(LangRepository(locator<DioClient>()));
 }
