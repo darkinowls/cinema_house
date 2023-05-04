@@ -2,10 +2,12 @@ import 'package:cinema_house/core/date_format_extention.dart';
 import 'package:cinema_house/features/sessions/cubit/sessions/sessions_cubit.dart';
 import 'package:cinema_house/features/sessions/ui/screens/session_details_screen/session_details_screen.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/locale_keys.g.dart';
 import '../../../core/locator.dart';
 import '../cubit/seats/seats_cubit.dart';
 import '../data/models/session.dart';
@@ -97,17 +99,19 @@ class _HorizontalSessionListViewState extends State<HorizontalSessionListView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                        'Room: "${widget.sessions.elementAt(index).room.name}"'),
+                    Text(LocaleKeys.room.tr(
+                        args: [widget.sessions.elementAt(index).room.name])),
                     const SizedBox(height: 5),
-                    Text("Type: ${widget.sessions.elementAt(index).type}"),
+                    Text(LocaleKeys.type
+                        .tr(args: [widget.sessions.elementAt(index).type])),
                     const SizedBox(height: 5),
                     Text(widget.sessions.elementAt(index).date.formatDate()),
                     const SizedBox(height: 5),
                     Text(widget.sessions.elementAt(index).date.formatTime()),
                     const SizedBox(height: 5),
-                    Text(
-                        "Minimum price: ${widget.sessions.elementAt(index).minPrice.toString()} UAH")
+                    Text(LocaleKeys.minimumPrice.tr(args: [
+                      widget.sessions.elementAt(index).minPrice.toString()
+                    ]))
                   ])),
         );
       },

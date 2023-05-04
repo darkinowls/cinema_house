@@ -1,8 +1,10 @@
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/features/network/widgets/no_network_sign.dart';
 import 'package:cinema_house/features/sessions/cubit/transactions/transaction_cubit.dart';
 import 'package:cinema_house/features/sessions/domain/entities/card_form.dart';
 import 'package:cinema_house/features/sessions/ui/screens/transaction_screen/transaction_utils.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +54,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget build(BuildContext context) {
     return NoNetworkSign(
       elseChild: Scaffold(
-        appBar: AppBar(title: Text("${widget.totalPrice} UAH to be payed")),
+        appBar: AppBar(title: Text(LocaleKeys.uahToBePayed.tr(args:[widget.totalPrice.toString()]))),
         body: BlocBuilder<TransactionCubit, TransactionState>(
             builder: (context, state) {
           if (state.status == TransactionStatus.loading) {
@@ -62,10 +64,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.error, size: 50),
-                SizedBox(height: 10),
-                Text("Some error occurred", style: TextStyle(fontSize: 18))
+              children: [
+                const Icon(Icons.error, size: 50),
+                const SizedBox(height: 10),
+                Text(
+                    LocaleKeys.someErrorOccurred.tr()
+                , style: const TextStyle(fontSize: 18))
               ],
             ));
           }
@@ -76,7 +80,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
               children: const [
                 Icon(Icons.gpp_good, size: 50),
                 SizedBox(height: 10),
-                Text('The transaction is done. Check the "My ticket" tab',
+                Text(
+                  LocaleKeys.theTransactionIsDone
+                  ,
                     style: TextStyle(fontSize: 18))
               ],
             ));
@@ -100,8 +106,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           CardNumberInputFormatter()
                         ],
                         validator: TransactionUtils.validateCardNumber,
-                        decoration: const InputDecoration(
-                          hintText: "Card number",
+                        decoration:  InputDecoration(
+                          hintText:
+                          LocaleKeys.cardNumber.tr()
+                          ,
                         ),
                       ),
                       Padding(
@@ -110,7 +118,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           controller: email,
                           validator: TransactionUtils.validateEmail,
                           decoration:
-                              const InputDecoration(hintText: "Your email"),
+                               InputDecoration(hintText:
+                               LocaleKeys.yourEmail.tr()
+                               ),
                         ),
                       ),
                       Row(
@@ -163,7 +173,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 .buySeats(cardForm);
                           }
                         },
-                  child: const Text("Pay via the card"),
+                  child: Text(
+                      LocaleKeys.payViaTheCard.tr()
+                  ),
                 ),
                 const Spacer(),
               ],

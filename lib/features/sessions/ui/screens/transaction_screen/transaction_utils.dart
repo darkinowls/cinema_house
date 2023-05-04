@@ -1,3 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../../../../core/locale_keys.g.dart';
+
 class TransactionUtils {
   static String getCleanedNumber(String text) {
     RegExp regExp = RegExp(r"[^0-9]");
@@ -6,41 +10,41 @@ class TransactionUtils {
 
   static String? validateEmail(String? input) {
     if (input == null || input.isEmpty) {
-      return "This field is required";
+      return LocaleKeys.thisFieldIsRequired.tr();
     }
-    final bool emailValid =
-    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(input);
-    if (!emailValid){
-      return "That's incorrect email";
+    if (!emailValid) {
+      return LocaleKeys.thatsIncorrectEmail.tr();
     }
     return null;
   }
 
   static String? validateCardNumber(String? input) {
     if (input == null || input.isEmpty) {
-      return "This field is required";
+      return LocaleKeys.thisFieldIsRequired.tr();
     }
     input = getCleanedNumber(input);
     if (input.length < 16) {
-      return "Incorrect card number";
+      return LocaleKeys.incorrectCardNumber.tr();
     }
     return null;
   }
 
   static String? validateCVV(String? value) {
     if (value == null || value.isEmpty) {
-      return "This field is required";
+      return LocaleKeys.thisFieldIsRequired.tr();
     }
     if (value.length != 3) {
-      return "Incorrect CVV length";
+      return LocaleKeys.incorrectCvvLength.tr();
     }
     return null;
   }
 
   static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
-      return "This field is required";
+      return LocaleKeys.thisFieldIsRequired.tr();
     }
     int year;
     int month;
@@ -55,16 +59,16 @@ class TransactionUtils {
     }
     if ((month < 1) || (month > 12)) {
       // A valid month is between 1 (January) and 12 (December)
-      return 'Expiry month is invalid';
+      return LocaleKeys.expiryMonthIsInvalid.tr();
     }
     var fourDigitsYear = _convertYearTo4Digits(year);
     if ((fourDigitsYear < 1) || (fourDigitsYear > 2099)) {
       // We are assuming a valid should be between 1 and 2099.
       // Note that, it's valid doesn't mean that it has not expired.
-      return 'Expiry year is invalid';
+      return LocaleKeys.expiryYearIsInvalid.tr();
     }
     if (!_hasDateExpired(month, year)) {
-      return "Card has expired";
+      return LocaleKeys.cardHasExpired.tr();
     }
     return null;
   }

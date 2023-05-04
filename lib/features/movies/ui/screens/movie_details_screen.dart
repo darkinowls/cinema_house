@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/features/comments/cubit/comments_cubit.dart';
 import 'package:cinema_house/features/movies/ui/zoomable_movie_image.dart';
 import 'package:cinema_house/features/sessions/cubit/sessions/sessions_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -13,7 +15,6 @@ import '../../../../core/locator.dart';
 import '../../../comments/data/repositories/i_comments_repository.dart';
 import '../../../comments/widgets/comments_section.dart';
 import '../../../sessions/domain/repositories/sessions_repository.dart';
-import '../../../sessions/ui/horizontal_session_list_view.dart';
 import '../../../sessions/ui/sessions_section.dart';
 import '../../data/models/movie.dart';
 
@@ -105,8 +106,9 @@ class _ScrollableMovieDetailsScreenState
               maxLines: 1, overflow: TextOverflow.ellipsis),
           actions: [
             IconButton(
-                onPressed: () => Share.share(
-                    'I would like to watch ${widget.movie.name} in Cinema House'),
+                onPressed: () => Share.share(LocaleKeys
+                    .iWouldLikeToWatchInCinemaHouse
+                    .tr(args: [widget.movie.name])),
                 icon: const Icon(Icons.share))
           ]),
       body: SingleChildScrollView(
@@ -146,25 +148,29 @@ class _ScrollableMovieDetailsScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Original name: ${widget.movie.originalName}"),
+                  Text(LocaleKeys.originalName
+                      .tr(args: [widget.movie.originalName])),
                   const SizedBox(height: 5),
-                  Text("Language: ${widget.movie.language}"),
+                  Text(LocaleKeys.language.tr(args: [widget.movie.language])),
                   const SizedBox(height: 5),
-                  Text("Genres: ${widget.movie.genre}"),
+                  Text(LocaleKeys.genres.tr(args: [widget.movie.genre])),
                   const SizedBox(height: 5),
-                  Text("Country: ${widget.movie.country}"),
+                  Text(LocaleKeys.country.tr(args: [widget.movie.country])),
                   const SizedBox(height: 5),
-                  Text("Director: ${widget.movie.director}"),
+                  Text(LocaleKeys.director.tr(args: [widget.movie.director])),
                   const SizedBox(height: 5),
-                  Text("Duration: ${widget.movie.duration} minutes"),
+                  Text(LocaleKeys.durationMinutes
+                      .tr(args: [widget.movie.duration.toString()])),
                   const SizedBox(height: 5),
-                  Text("Recomended age: ${widget.movie.age}"),
+                  Text(LocaleKeys.recommendedAge
+                      .tr(args: [widget.movie.age.toString()])),
                   const SizedBox(height: 5),
-                  Text("Main roles: ${widget.movie.starring}"),
+                  Text(LocaleKeys.mainRoles.tr(args: [widget.movie.starring])),
                   const SizedBox(height: 5),
-                  Text("Studio: ${widget.movie.studio}"),
+                  Text(LocaleKeys.studio.tr(args: [widget.movie.studio])),
                   const SizedBox(height: 5),
-                  Text("Release year: ${widget.movie.year}"),
+                  Text(LocaleKeys.releaseYear
+                      .tr(args: [widget.movie.year.toString()])),
                   const SizedBox(height: 5),
                   // Text("Release year: ${movie.trailer}"),
                   SizedBox(
@@ -174,19 +180,22 @@ class _ScrollableMovieDetailsScreenState
                             launchUrl(Uri.parse(widget.movie.trailer)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            Icon(Icons.play_arrow),
-                            Text("Trailer on YouTube"),
+                          children: [
+                            const Icon(Icons.play_arrow),
+                            Text(LocaleKeys.trailerOnYoutube.tr()),
                           ],
                         )),
                   ),
 
                   const SizedBox(height: 5),
-                  Text("Plot: ${widget.movie.plot}"),
+                  Text(
+                      LocaleKeys
+                          .plot
+                          .tr(args: [widget.movie.plot])
+                  ),
                 ],
               ),
             ),
-
             const SizedBox(height: 25),
             const SessionsSection(),
             const SizedBox(height: 25),

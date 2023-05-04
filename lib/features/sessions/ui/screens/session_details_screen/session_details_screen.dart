@@ -1,7 +1,9 @@
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/core/locator.dart';
 import 'package:cinema_house/features/sessions/cubit/transactions/transaction_cubit.dart';
 import 'package:cinema_house/features/sessions/data/models/session.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,8 +38,8 @@ class SessionDetailsScreen extends StatelessWidget {
               return const Loader();
             }
             if (state.status == SeatsStatus.failed) {
-              return const Center(
-                  child: Text("Someone else has just booked the seats"));
+              return Center(
+                  child: Text(LocaleKeys.someoneElseHasJustBookedTheSeats.tr()));
             }
             bool notEmpty = state.seats.isNotEmpty;
             List<String> items = state.toRowsAndSeats();
@@ -117,8 +119,8 @@ class SessionDetailsScreen extends StatelessWidget {
                     ),
                     ListTile(
                         title: notEmpty
-                            ? Text("Total price: ${state.getTotalPrice()} UAH")
-                            : const Text("Choose some seats above!"),
+                            ? Text(LocaleKeys.totalPrice.tr(args: [state.getTotalPrice().toString()]))
+                            : Text(LocaleKeys.chooseSomeSeatsAbove.tr()),
                         trailing: ElevatedButton(
                           onPressed: (notEmpty)
                               ? () async {
@@ -136,12 +138,12 @@ class SessionDetailsScreen extends StatelessWidget {
                                               TransactionScreen(totalPrice: state.getTotalPrice()))));
                                 }
                               : null,
-                          child: const Text("Submit"),
+                          child: Text(LocaleKeys.submit.tr()),
                         )),
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text("Picked seats:", style: TextStyle(fontSize: 16)),
+                    Text(LocaleKeys.pickedSeats.tr(), style: const TextStyle(fontSize: 16)),
                     Expanded(
                         child: ListView.separated(
                       itemCount: items.length,

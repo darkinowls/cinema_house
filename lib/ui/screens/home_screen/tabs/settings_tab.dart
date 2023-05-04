@@ -2,8 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/dio_client.dart';
 import '../../../../core/locale_keys.g.dart';
+import '../../../../core/locator.dart';
 import '../../../../features/auth/cubit/auth_cubit.dart';
+import '../../../../features/lang/cubit/lang_cubit.dart';
 import '../../../../features/lightMode/widgets/light_mode_switch.dart';
 
 class SettingsTab extends StatelessWidget {
@@ -47,11 +50,7 @@ class SettingsTab extends StatelessWidget {
                 leading: const Icon(Icons.language),
                 title: Text(LocaleKeys.switchLanguage.tr()),
                 onTap: () {
-                  if (context.locale.languageCode == "uk") {
-                    context.setLocale(const Locale("en"));
-                  } else {
-                    context.setLocale(const Locale("uk"));
-                  }
+                  BlocProvider.of<LangCubit>(context).switchLang();
                 },
               ),
               const LightModeSwitch(),

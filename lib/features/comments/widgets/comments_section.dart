@@ -1,9 +1,9 @@
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/core/locator.dart';
 import 'package:cinema_house/features/comments/cubit/comments_cubit.dart';
 import 'package:cinema_house/features/comments/domain/entities/comment_entity.dart';
-import 'package:cinema_house/features/user/cubit/user_cubit.dart';
-import 'package:cinema_house/features/user/domain/user_repository.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +18,7 @@ class CommentsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text("Comments section", style: TextStyle(fontSize: 18)),
+        Text(LocaleKeys.commentsSection.tr(), style: TextStyle(fontSize: 18)),
         const SizedBox(height: 15),
         BlocBuilder<CommentsCubit, CommentsState>(
           builder: (context, state) {
@@ -30,7 +30,7 @@ class CommentsSection extends StatelessWidget {
                 CommentForm(movieId),
                 const SizedBox(height: 15),
                 (state.comments.isEmpty)
-                    ? const Text("No comments? Be the first one!")
+                    ? Text(LocaleKeys.noCommentsBeTheFirstOne.tr(),)
                     : Column(
                         children: state.comments
                             .map((comment) =>
@@ -52,8 +52,8 @@ class CommentsSection extends StatelessWidget {
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Anonymous"),
-                if (comment.isMy!) const Text("(Me)"),
+                Text(LocaleKeys.anonymous.tr(),),
+                if (comment.isMy!) Text(LocaleKeys.me.tr(),),
               ],
             ),
             title: Text(comment.content),

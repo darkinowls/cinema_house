@@ -27,7 +27,8 @@ class TicketList extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text( LocaleKeys.noTickets.tr() , style: const TextStyle(fontSize: 28)),
+                Text(LocaleKeys.noTickets.tr(),
+                    style: const TextStyle(fontSize: 28)),
                 const SizedBox(height: 25),
                 Text(LocaleKeys.youCanBuyThemInTheMoviesTab.tr())
               ],
@@ -79,8 +80,8 @@ class TicketList extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text('Cinema house',
-              style: TextStyle(color: Colors.black)),
+          title:
+              const Text('Cinema house', style: TextStyle(color: Colors.black)),
           content: SizedBox(
             width: 300,
             height: 300,
@@ -114,8 +115,11 @@ class TicketList extends StatelessWidget {
           width: 50,
           fit: BoxFit.contain),
       title: Text(ticketEntity.name),
-      subtitle: Text(
-          "Room: ${ticketEntity.roomName} + Row: ${ticketEntity.rowIndex} + Seat: ${ticketEntity.seatIndex}"),
+      subtitle: Text(LocaleKeys.roomRowSeat.tr(args: [
+        ticketEntity.roomName,
+        ticketEntity.rowIndex.toString(),
+        ticketEntity.seatIndex.toString()
+      ])),
       trailing: Text(ticketEntity.dateTime.formatTime()),
       onTap: () => _showQRCode(context, ticketEntity),
     );

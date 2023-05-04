@@ -1,4 +1,6 @@
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/features/comments/cubit/comments_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +41,7 @@ class _CommentFormState extends State<CommentForm> {
           TextField(
             controller: _commentEditingController,
             decoration:
-                const InputDecoration(hintText: "Write your anonymous comment"),
+            InputDecoration(hintText: LocaleKeys.writeYourAnonymousComment.tr() ),
             maxLength: 120,
             minLines: 1,
             maxLines: 4,
@@ -61,7 +63,7 @@ class _CommentFormState extends State<CommentForm> {
                               rating: _rating,
                               content: _commentEditingController.text,
                               movieId: widget.movieId),
-                  child: const Text("Submit"))
+                  child: Text(LocaleKeys.submit.tr()) )
             ],
           ),
         ],

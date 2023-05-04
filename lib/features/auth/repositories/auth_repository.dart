@@ -1,5 +1,4 @@
 import 'package:cinema_house/features/auth/data/token_interceptor.dart';
-import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 
 import '../data/models/phone_number.dart';

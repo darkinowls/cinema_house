@@ -1,3 +1,5 @@
+import 'package:cinema_house/core/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +27,7 @@ class NoNetworkSign extends StatelessWidget {
                   size: 100,
                 ),
                 const SizedBox(height: 25),
-                const Text("No internet connection"),
+                Text(LocaleKeys.noInternetConnection.tr()),
               ],
             );
           }

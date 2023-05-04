@@ -7,6 +7,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'core/dio_client.dart';
+import 'features/lang/cubit/lang_cubit.dart';
+import 'features/lang/repositories/lang_repository.dart';
 import 'ui/screens/login_screen/login_screen.dart';
 import 'features/network/cubit/network_cubit.dart';
 import 'features/lightMode/widgets/app_theme.dart';
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
       assetLoader: const CodegenLoader(),
       supportedLocales: const [Locale('en'), Locale('uk')],
       path: 'assets/translations',
-      fallbackLocale: const Locale('uk'),
+      fallbackLocale: const Locale('en'),
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: locator<NetworkCubit>()),
@@ -44,8 +47,11 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  MaterialApp buildAppWithTheme(BuildContext context, bool state) =>
-      MaterialApp(
+  BlocProvider<LangCubit> buildAppWithTheme(BuildContext context, bool state) =>
+      BlocProvider(
+          create: (_) =>
+              LangCubit(LangRepository(locator<DioClient>(), context)),
+        child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
@@ -62,5 +68,6 @@ class MyApp extends StatelessWidget {
               BlocProvider.of<NetworkCubit>(context).state is NetworkExists),
           // global named routes
         },
-      );
+      )
+  );
 }
