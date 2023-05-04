@@ -65,6 +65,6 @@
   "incorrectCvvLength": "Incorrect CVV length",
   "roomRowSeat": "Room: {} + Row: {} + Seat: {}",
   "today": "Today, {}",
-  "tomorrow": "tomorrow, {}",
+  "tomorrow": "Tomorrow, {}",
   "rowSeat": "Row: {} + Seat: {}"
 }

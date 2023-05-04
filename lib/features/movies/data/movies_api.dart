@@ -28,7 +28,7 @@ class MoviesApi {
 
   Future<Movie> getMoviesById(int id) async {
     final Response response =
-    await _dioClient.dio.get("_moviesUrl/$id");
+    await _dioClient.dio.get("$_moviesUrl/$id");
     return Movie.fromJson(response.data['data']);
   }
 

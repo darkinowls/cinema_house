@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/movies_cubit.dart';
+import '../../../cubit/movies/movies_cubit.dart';
 
 class TopChartsTab extends StatelessWidget {
   const TopChartsTab({Key? key}) : super(key: key);

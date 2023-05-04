@@ -1,8 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cinema_house/features/movies/cubit/movies/movies_cubit.dart';
+import 'package:cinema_house/features/movies/repositories/movies_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../../core/locator.dart';
+import '../../../cubit/movie/movie_cubit.dart';
 import '../../../data/models/movie.dart';
 import '../../screens/movie_details_screen.dart';
 
@@ -24,8 +29,13 @@ class HorizontalMovieListView extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => MovieDetailsScreen(
-                        heroTag: heroTag, movie: movies.elementAt(index))));
+                    builder: (_) => BlocProvider<MovieCubit>(
+                      create: (_) => MovieCubit(
+                        movies.elementAt(index),
+                        locator<MoviesRepository>()
+                      ),
+                      child: MovieDetailsScreen(heroTag: heroTag),
+                    )));
           },
           borderRadius: BorderRadius.circular(15),
           child: Container(

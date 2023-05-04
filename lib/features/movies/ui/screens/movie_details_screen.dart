@@ -16,29 +16,33 @@ import '../../../comments/data/repositories/i_comments_repository.dart';
 import '../../../comments/widgets/comments_section.dart';
 import '../../../sessions/domain/repositories/sessions_repository.dart';
 import '../../../sessions/ui/sessions_section.dart';
+import '../../cubit/movie/movie_cubit.dart';
 import '../../data/models/movie.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
-  final Movie movie;
   final String heroTag;
 
-  const MovieDetailsScreen(
-      {Key? key, required this.movie, required this.heroTag})
-      : super(key: key);
+  const MovieDetailsScreen({Key? key, required this.heroTag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CommentsCubit>(
-          create: (context) => CommentsCubit(locator<ICommentsRepository>()),
-        ),
-        BlocProvider<SessionsCubit>(
-          create: (context) =>
-              SessionsCubit(locator<SessionsRepository>(), movie.id),
-        ),
-      ],
-      child: _ScrollableMovieDetailsScreen(movie: movie, heroTag: heroTag),
+    return BlocBuilder<MovieCubit, MovieState>(
+      builder: (context, state) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<CommentsCubit>(
+              create: (context) =>
+                  CommentsCubit(locator<ICommentsRepository>()),
+            ),
+            BlocProvider<SessionsCubit>(
+              create: (context) =>
+                  SessionsCubit(locator<SessionsRepository>(), state.movie.id),
+            ),
+          ],
+          child: _ScrollableMovieDetailsScreen(
+              movie: state.movie, heroTag: heroTag),
+        );
+      },
     );
   }
 }
@@ -89,6 +93,7 @@ class _ScrollableMovieDetailsScreenState
         duration: const Duration(milliseconds: 100),
         curve: Curves.linear,
       );
+      _scrollController.removeListener(_scrollTillEnd);
     }
   }
 
@@ -111,97 +116,96 @@ class _ScrollableMovieDetailsScreenState
                     .tr(args: [widget.movie.name])),
                 icon: const Icon(Icons.share))
           ]),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                      widget.movie.image,
-                    ),
-                    fit: BoxFit.fill),
-              ),
-              padding: const EdgeInsets.all(25),
-              height: 400,
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                child: Center(
-                  child: Hero(
-                      tag: widget.heroTag,
-                      child: GestureDetector(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ZoomableMovieImage(
-                                      heroTag: widget.heroTag,
-                                      movie: widget.movie))),
-                          child: CachedNetworkImage(
-                              imageUrl: widget.movie.image))),
+      body: RefreshIndicator(
+        onRefresh: BlocProvider.of<MovieCubit>(context).updateMovie,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: CachedNetworkImageProvider(
+                        widget.movie.image,
+                      ),
+                      fit: BoxFit.fill),
+                ),
+                padding: const EdgeInsets.all(25),
+                height: 400,
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                  child: Center(
+                    child: Hero(
+                        tag: widget.heroTag,
+                        child: GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ZoomableMovieImage(
+                                        heroTag: widget.heroTag,
+                                        movie: widget.movie))),
+                            child: CachedNetworkImage(
+                                imageUrl: widget.movie.image))),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 15),
-            SizedBox(
-              width: 300,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(LocaleKeys.originalName
-                      .tr(args: [widget.movie.originalName])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.language.tr(args: [widget.movie.language])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.genres.tr(args: [widget.movie.genre])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.country.tr(args: [widget.movie.country])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.director.tr(args: [widget.movie.director])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.durationMinutes
-                      .tr(args: [widget.movie.duration.toString()])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.recommendedAge
-                      .tr(args: [widget.movie.age.toString()])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.mainRoles.tr(args: [widget.movie.starring])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.studio.tr(args: [widget.movie.studio])),
-                  const SizedBox(height: 5),
-                  Text(LocaleKeys.releaseYear
-                      .tr(args: [widget.movie.year.toString()])),
-                  const SizedBox(height: 5),
-                  // Text("Release year: ${movie.trailer}"),
-                  SizedBox(
-                    width: 200,
-                    child: ElevatedButton(
-                        onPressed: () =>
-                            launchUrl(Uri.parse(widget.movie.trailer)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Icon(Icons.play_arrow),
-                            Text(LocaleKeys.trailerOnYoutube.tr()),
-                          ],
-                        )),
-                  ),
+              const SizedBox(height: 15),
+              SizedBox(
+                width: 300,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(LocaleKeys.originalName
+                        .tr(args: [widget.movie.originalName])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.language.tr(args: [widget.movie.language])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.genres.tr(args: [widget.movie.genre])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.country.tr(args: [widget.movie.country])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.director.tr(args: [widget.movie.director])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.durationMinutes
+                        .tr(args: [widget.movie.duration.toString()])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.recommendedAge
+                        .tr(args: [widget.movie.age.toString()])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.mainRoles.tr(args: [widget.movie.starring])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.studio.tr(args: [widget.movie.studio])),
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.releaseYear
+                        .tr(args: [widget.movie.year.toString()])),
+                    const SizedBox(height: 5),
+                    // Text("Release year: ${movie.trailer}"),
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                          onPressed: () =>
+                              launchUrl(Uri.parse(widget.movie.trailer)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Icon(Icons.play_arrow),
+                              Text(LocaleKeys.trailerOnYoutube.tr()),
+                            ],
+                          )),
+                    ),
 
-                  const SizedBox(height: 5),
-                  Text(
-                      LocaleKeys
-                          .plot
-                          .tr(args: [widget.movie.plot])
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(LocaleKeys.plot.tr(args: [widget.movie.plot])),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 25),
-            const SessionsSection(),
-            const SizedBox(height: 25),
-            CommentsSection(widget.movie.id),
-            const SizedBox(height: 50)
-          ],
+              const SizedBox(height: 25),
+              const SessionsSection(),
+              const SizedBox(height: 25),
+              CommentsSection(widget.movie.id),
+              const SizedBox(height: 50)
+            ],
+          ),
         ),
       ),
     );

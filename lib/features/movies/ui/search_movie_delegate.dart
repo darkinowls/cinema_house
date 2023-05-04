@@ -1,10 +1,9 @@
-import 'package:cinema_house/features/movies/ui/screens/movie_details_screen.dart';
 import 'package:cinema_house/features/movies/ui/tabs/top_charts_tab/vertical_movie_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../ui/widgets/loader.dart';
-import '../cubit/movies_cubit.dart';
+import '../cubit/movies/movies_cubit.dart';
 
 class SearchMovieDelegate extends SearchDelegate {
   MoviesCubit moviesCubit;
@@ -40,7 +39,7 @@ class SearchMovieDelegate extends SearchDelegate {
     return BlocBuilder<MoviesCubit, MoviesState>(
         bloc: moviesCubit,
         builder: (context, state) {
-          if (state.status == MoviesStatus.loading) {
+          if (state.status == Status.loading) {
             return const Loader();
           }
           return VerticalMovieListView(movies: state.searchedMovies);

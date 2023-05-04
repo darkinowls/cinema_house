@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/status.dart';
 import '../../data/models/session.dart';
 import '../../domain/repositories/sessions_repository.dart';
 
@@ -16,6 +17,7 @@ class SessionsCubit extends Cubit<SessionsState> {
 
   void _initLoad() async {
     _loadNewSessions(DateTime.now());
+    emit(state.copyWith(status: Status.loaded));
   }
 
   void loadMoreSessions() async {
@@ -39,14 +41,5 @@ class SessionsCubit extends Cubit<SessionsState> {
       ...nextSessions,
       ...nextAfterNextSessions
     ]));
-  }
-
-  Future<void> updateSessionRoom(int sessionId) async {
-    emit(state.copyWith(status: SessionsStatus.loading));
-    Session newSession = await _sessionsRepository.getSessionById(sessionId);
-    List<Session> sessions = state.sessions.toList();
-    int index = sessions.indexWhere((element) => element.id == newSession.id);
-    sessions[index].room = newSession.room;
-    emit(state.copyWith(sessions: [...sessions], status: SessionsStatus.init));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/features/network/widgets/no_network_sign.dart';
-import 'package:cinema_house/features/sessions/cubit/transactions/transaction_cubit.dart';
 import 'package:cinema_house/features/sessions/domain/entities/card_form.dart';
 import 'package:cinema_house/features/sessions/ui/screens/transaction_screen/transaction_utils.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
@@ -9,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/status.dart';
+import '../../../cubit/transaction/transaction_cubit.dart';
 import 'formatters/card_month_input_formatter.dart';
 import 'formatters/card_number_input_formatter.dart';
 
@@ -54,36 +55,35 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget build(BuildContext context) {
     return NoNetworkSign(
       elseChild: Scaffold(
-        appBar: AppBar(title: Text(LocaleKeys.uahToBePayed.tr(args:[widget.totalPrice.toString()]))),
+        appBar: AppBar(
+            title: Text(LocaleKeys.uahToBePayed
+                .tr(args: [widget.totalPrice.toString()]))),
         body: BlocBuilder<TransactionCubit, TransactionState>(
             builder: (context, state) {
-          if (state.status == TransactionStatus.loading) {
+          if (state.status == Status.loading) {
             return const Loader();
           }
-          if (state.status == TransactionStatus.failed) {
+          if (state.status == Status.failed) {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(Icons.error, size: 50),
                 const SizedBox(height: 10),
-                Text(
-                    LocaleKeys.someErrorOccurred.tr()
-                , style: const TextStyle(fontSize: 18))
+                Text(LocaleKeys.someErrorOccurred.tr(),
+                    style: const TextStyle(fontSize: 18))
               ],
             ));
           }
-          if (state.status == TransactionStatus.success) {
+          if (state.status == Status.success) {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.gpp_good, size: 50),
-                SizedBox(height: 10),
-                Text(
-                  LocaleKeys.theTransactionIsDone
-                  ,
-                    style: TextStyle(fontSize: 18))
+              children:  [
+                const Icon(Icons.gpp_good, size: 50),
+                const SizedBox(height: 10),
+                Text(LocaleKeys.theTransactionIsDone.tr(),
+                    style: const TextStyle(fontSize: 18))
               ],
             ));
           }
@@ -106,10 +106,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           CardNumberInputFormatter()
                         ],
                         validator: TransactionUtils.validateCardNumber,
-                        decoration:  InputDecoration(
-                          hintText:
-                          LocaleKeys.cardNumber.tr()
-                          ,
+                        decoration: InputDecoration(
+                          hintText: LocaleKeys.cardNumber.tr(),
                         ),
                       ),
                       Padding(
@@ -117,10 +115,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         child: TextFormField(
                           controller: email,
                           validator: TransactionUtils.validateEmail,
-                          decoration:
-                               InputDecoration(hintText:
-                               LocaleKeys.yourEmail.tr()
-                               ),
+                          decoration: InputDecoration(
+                              hintText: LocaleKeys.yourEmail.tr()),
                         ),
                       ),
                       Row(
@@ -173,9 +169,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 .buySeats(cardForm);
                           }
                         },
-                  child: Text(
-                      LocaleKeys.payViaTheCard.tr()
-                  ),
+                  child: Text(LocaleKeys.payViaTheCard.tr()),
                 ),
                 const Spacer(),
               ],

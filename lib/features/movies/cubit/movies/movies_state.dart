@@ -1,16 +1,16 @@
 part of 'movies_cubit.dart';
 
-enum MoviesStatus { loading, loaded }
+enum Status { loading, loaded }
 
 @immutable
 class MoviesState extends Equatable {
-  final MoviesStatus status;
+  final Status status;
   final Iterable<Movie> searchedMovies;
   final Map<DateTime, Iterable<Movie>> moviesByDay;
   final Iterable<Movie> topMovies;
 
   const MoviesState({
-    this.status = MoviesStatus.loading,
+    this.status = Status.loading,
     this.searchedMovies = const [],
     this.topMovies = const [],
     this.moviesByDay = const {},
@@ -25,7 +25,7 @@ class MoviesState extends Equatable {
       ];
 
   MoviesState copyWith({
-    MoviesStatus? status,
+    Status? status,
     Iterable<Movie>? searchedMovies,
     Map<DateTime, Iterable<Movie>>? moviesByDay,
     Iterable<Movie>? topMovies,

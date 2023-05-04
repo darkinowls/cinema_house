@@ -1,3 +1,5 @@
+import 'package:cinema_house/core/status.dart';
+import 'package:cinema_house/ui/widgets/loader.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +21,9 @@ class SessionsSection extends StatelessWidget {
           height: 175,
           child: BlocBuilder<SessionsCubit, SessionsState>(
             builder: (context, state) {
+              if (state.status == Status.loading) {
+                return const Loader();
+              }
               return HorizontalSessionListView(sessions: state.sessions);
             },
           ),

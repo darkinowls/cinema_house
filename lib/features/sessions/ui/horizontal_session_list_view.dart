@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/locale_keys.g.dart';
 import '../../../core/locator.dart';
-import '../cubit/seats/seats_cubit.dart';
+import '../cubit/session/session_cubit.dart';
 import '../data/models/session.dart';
 import '../domain/repositories/sessions_repository.dart';
 
@@ -79,12 +79,12 @@ class _HorizontalSessionListViewState extends State<HorizontalSessionListView> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => BlocProvider.value(
-                          value: SeatsCubit(
-                              BlocProvider.of<SessionsCubit>(outer),
-                              locator<SessionsRepository>()),
-                          child: SessionDetailsScreen(
-                              session: widget.sessions.elementAt(index)),
+                    builder: (_) => BlocProvider<SessionCubit>(
+                          create: (_) => SessionCubit(
+                            widget.sessions.elementAt(index),
+                            locator<SessionsRepository>()
+                          ),
+                          child: const SessionDetailsScreen(),
                         )));
           },
           borderRadius: BorderRadius.circular(15),

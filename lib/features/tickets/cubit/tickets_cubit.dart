@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/status.dart';
 import '../../network/cubit/network_cubit.dart';
 import '../domain/entities/ticket_entity.dart';
 import '../domain/repositories/tickets_repository.dart';
@@ -19,12 +20,9 @@ class TicketsCubit extends Cubit<TicketsState> {
   }
 
   Future<void> getTickets() async {
-    emit(state.copyWith(status: TicketsStatus.loading));
-    emit(TicketsState(
-        status: TicketsStatus.loaded,
-        tickets: await _ticketsRepository.getTickets(
-          _networkCubit.state is NetworkExists,
-        )));
+    Iterable<TicketEntity> tickets = await _ticketsRepository.getTickets(
+      _networkCubit.state is NetworkExists,
+    );
+    emit(state.copyWith(status: Status.loaded, tickets: [...tickets]));
   }
-
 }

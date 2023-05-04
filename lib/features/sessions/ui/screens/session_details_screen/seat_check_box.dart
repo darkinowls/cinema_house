@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/seats/seats_cubit.dart';
-import '../../../data/models/seat.dart';
+import '../../../cubit/session/session_cubit.dart';
 import '../../../domain/entities/seat_with_row.dart';
 
 final Map<int, Map<bool, Color>> _seatColorMap = {
@@ -49,7 +48,7 @@ class _SeatCheckBoxState extends State<SeatCheckBox> {
                   ?
               (bool? value) {
             setState(() => isChecked = !isChecked);
-            BlocProvider.of<SeatsCubit>(context).toggleSeat(widget.seat);
+            BlocProvider.of<SessionCubit>(context).toggleSeat(widget.seat);
           }
           : null
           ),

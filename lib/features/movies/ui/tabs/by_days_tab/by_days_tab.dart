@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../ui/widgets/loader.dart';
-import '../../../cubit/movies_cubit.dart';
+import '../../../cubit/movies/movies_cubit.dart';
 import 'horizontal_movie_list_view.dart';
 
 class ByDaysTab extends StatefulWidget {
@@ -58,7 +58,7 @@ class _ByDaysTabState extends State<ByDaysTab> {
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesCubit, MoviesState>(
         builder: (_, state) => RefreshIndicator(
-          onRefresh: BlocProvider.of<MoviesCubit>(context).init,
+          onRefresh: BlocProvider.of<MoviesCubit>(context).loadMovies,
           child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.only(top: 25),

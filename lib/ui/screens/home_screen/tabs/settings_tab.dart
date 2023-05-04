@@ -58,7 +58,7 @@ class SettingsTab extends StatelessWidget {
                   };
                 },
               ),
-              const LightModeSwitch(),
+              LightModeSwitch(),
             ],
           ),
         ),

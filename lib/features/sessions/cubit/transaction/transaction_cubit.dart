@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/status.dart';
 import '../../domain/entities/card_form.dart';
 import '../../domain/repositories/sessions_repository.dart';
 
@@ -14,15 +15,15 @@ class TransactionCubit extends Cubit<TransactionState> {
       : super(TransactionState(sessionId: sessionId, seatIds: seatIds));
 
   void buySeats(CardForm cardForm) async {
-    emit(state.copyWith(status: TransactionStatus.loading));
+    emit(state.copyWith(status: Status.loading));
 
     final bool isBought = await _sessionsRepository.buySeats(
         state.seatIds, state.sessionId, cardForm);
 
     if (isBought) {
-      emit(state.copyWith(status: TransactionStatus.success));
+      emit(state.copyWith(status: Status.success));
       return;
     }
-    emit(state.copyWith(status: TransactionStatus.failed));
+    emit(state.copyWith(status: Status.failed));
   }
 }

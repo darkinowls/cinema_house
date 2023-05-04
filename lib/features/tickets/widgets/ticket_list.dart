@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../core/locale_keys.g.dart';
+import '../../../core/status.dart';
 import '../domain/entities/ticket_entity.dart';
 
 class TicketList extends StatelessWidget {
@@ -18,7 +19,7 @@ class TicketList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TicketsCubit, TicketsState>(
       builder: (context, state) {
-        if (state.status == TicketsStatus.loading) {
+        if (state.status == Status.loading) {
           return const Loader();
         }
 
@@ -50,7 +51,8 @@ class TicketList extends StatelessWidget {
                         children: [
                           _generateDateContainer(
                               context, state.tickets.elementAt(0)),
-                          _generateListTile(context, state.tickets.elementAt(0)),
+                          _generateListTile(
+                              context, state.tickets.elementAt(0)),
                         ],
                       );
                     }
@@ -60,7 +62,7 @@ class TicketList extends StatelessWidget {
                         (state.tickets.elementAt(index).dateTime.day !=
                             state.tickets.elementAt(index + 1).dateTime.day)) {
                       dateContainer = _generateDateContainer(
-                          context,  state.tickets.elementAt(index + 1));
+                          context, state.tickets.elementAt(index + 1));
                     }
                     return Column(
                       children: [

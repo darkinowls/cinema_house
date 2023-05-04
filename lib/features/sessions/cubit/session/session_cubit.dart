@@ -1,17 +1,18 @@
 import 'package:bloc/bloc.dart';
-import 'package:cinema_house/features/sessions/cubit/sessions/sessions_cubit.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/status.dart';
+import '../../data/models/session.dart';
 import '../../domain/entities/seat_with_row.dart';
 import '../../domain/repositories/sessions_repository.dart';
 
-part 'seats_state.dart';
+part 'session_state.dart';
 
-class SeatsCubit extends Cubit<SeatsState> {
-  final SessionsCubit _sessionsCubit;
+class SessionCubit extends Cubit<SessionState> {
   final SessionsRepository _sessionsRepository;
 
-  SeatsCubit(this._sessionsCubit, this._sessionsRepository) : super(const SeatsState());
+  SessionCubit(Session session, this._sessionsRepository)
+      : super(SessionState(session: session));
 
   void toggleSeat(SeatEntity seat) {
     Map<int, SeatEntity> seats = {...state.seats};
@@ -23,25 +24,23 @@ class SeatsCubit extends Cubit<SeatsState> {
   }
 
   Future<Iterable<int>> bookSeats(int sessionId) async {
-    emit(state.copyWith(status: SeatsStatus.loading));
+    emit(state.copyWith(status: Status.loading));
     Iterable<int> seatIds = state.seats.keys;
     bool booked = await _sessionsRepository.bookSeats(
       seatIds,
       sessionId,
     );
     if (booked) {
-      await _sessionsCubit.updateSessionRoom(sessionId);
-      emit(const SeatsState(status: SeatsStatus.success));
+      emit(state.copyWith(status: Status.success, seats: {}));
       return seatIds;
     }
-    emit(const SeatsState(status: SeatsStatus.failed));
+    emit(state.copyWith(status: Status.failed, seats: {}));
     return [];
   }
 
   void updateSession(int sessionId) async {
-    emit(const SeatsState(status: SeatsStatus.loading));
-    await _sessionsCubit.updateSessionRoom(sessionId);
-    emit(const SeatsState());
+    emit(state.copyWith(status: Status.loading, seats: {}));
+    Session session = await _sessionsRepository.getSessionById(sessionId);
+    emit(state.copyWith(session: session, status: Status.loaded));
   }
-
 }

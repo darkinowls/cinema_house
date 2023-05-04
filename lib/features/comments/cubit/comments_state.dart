@@ -1,14 +1,13 @@
 part of 'comments_cubit.dart';
 
-enum CommentsStatus {loading, loaded }
 
 @immutable
 class CommentsState extends Equatable {
-  final CommentsStatus status;
+  final Status status;
   final Iterable<CommentEntity> comments;
 
   const CommentsState({
-    this.status = CommentsStatus.loading,
+    this.status = Status.loading,
     this.comments = const [],
   });
 
@@ -16,7 +15,7 @@ class CommentsState extends Equatable {
   List<Object> get props => [status, comments];
 
   CommentsState copyWith({
-    CommentsStatus? status,
+    Status? status,
     Iterable<CommentEntity>? comments,
   }) {
     return CommentsState(

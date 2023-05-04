@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/locale_keys.g.dart';
 import '../../../../core/locator.dart';
-import '../../../../features/movies/cubit/movies_cubit.dart';
+import '../../../../features/movies/cubit/movies/movies_cubit.dart';
 import '../../../../features/movies/ui/search_movie_delegate.dart';
 import '../../../../features/movies/ui/tabs/by_days_tab/by_days_tab.dart';
 import '../../../../features/movies/ui/tabs/top_charts_tab/top_charts_tab.dart';
@@ -43,7 +43,7 @@ class MoviesTab extends StatelessWidget {
               ),
               body: BlocBuilder<MoviesCubit, MoviesState>(
                 builder: (_, state) {
-                  if (state.status == MoviesStatus.loading) {
+                  if (state.status == Status.loading) {
                     return const Loader();
                   }
                   return const TabBarView(

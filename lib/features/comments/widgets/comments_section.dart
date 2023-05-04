@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/status.dart';
 import 'comment_form.dart';
 
 class CommentsSection extends StatelessWidget {
@@ -18,11 +19,12 @@ class CommentsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(LocaleKeys.commentsSection.tr(), style: TextStyle(fontSize: 18)),
+        Text(LocaleKeys.commentsSection.tr(),
+            style: const TextStyle(fontSize: 18)),
         const SizedBox(height: 15),
         BlocBuilder<CommentsCubit, CommentsState>(
           builder: (context, state) {
-            if (state.status == CommentsStatus.loading) {
+            if (state.status == Status.loading) {
               return const Loader();
             }
             return Column(
@@ -30,7 +32,9 @@ class CommentsSection extends StatelessWidget {
                 CommentForm(movieId),
                 const SizedBox(height: 15),
                 (state.comments.isEmpty)
-                    ? Text(LocaleKeys.noCommentsBeTheFirstOne.tr(),)
+                    ? Text(
+                        LocaleKeys.noCommentsBeTheFirstOne.tr(),
+                      )
                     : Column(
                         children: state.comments
                             .map((comment) =>
@@ -52,8 +56,13 @@ class CommentsSection extends StatelessWidget {
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(LocaleKeys.anonymous.tr(),),
-                if (comment.isMy!) Text(LocaleKeys.me.tr(),),
+                Text(
+                  LocaleKeys.anonymous.tr(),
+                ),
+                if (comment.isMy!)
+                  Text(
+                    LocaleKeys.me.tr(),
+                  ),
               ],
             ),
             title: Text(comment.content),

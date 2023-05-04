@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/status.dart';
 import '../data/repositories/i_comments_repository.dart';
 import '../domain/entities/comment_entity.dart';
 
@@ -13,10 +14,10 @@ class CommentsCubit extends Cubit<CommentsState> {
   CommentsCubit(this._commentsRepository) : super(const CommentsState());
 
   void loadComments(int movieId) async {
-    emit(state.copyWith(status: CommentsStatus.loading));
+    emit(state.copyWith(status: Status.loading));
     Iterable<CommentEntity> comments =
         await _commentsRepository.getCommentsByMovieId(movieId);
-    emit(state.copyWith(status: CommentsStatus.loaded, comments: comments));
+    emit(state.copyWith(status: Status.loaded, comments: comments));
   }
 
   void addComment(

@@ -1,17 +1,15 @@
 part of 'tickets_cubit.dart';
 
-enum TicketsStatus { loading, loaded }
-
 @immutable
 class TicketsState extends Equatable {
-  final TicketsStatus status;
+  final Status status;
   final Iterable<TicketEntity> tickets;
 
   const TicketsState(
-      {this.status = TicketsStatus.loading, this.tickets = const []});
+      {this.status = Status.loading, this.tickets = const []});
 
   TicketsState copyWith({
-    TicketsStatus? status,
+    Status? status,
     Iterable<TicketEntity>? tickets,
   }) {
     return TicketsState(

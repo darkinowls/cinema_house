@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../../core/locator.dart';
+import '../../../cubit/movie/movie_cubit.dart';
+import '../../../cubit/movies/movies_cubit.dart';
 import '../../../data/models/movie.dart';
+import '../../../repositories/movies_repository.dart';
 import '../../screens/movie_details_screen.dart';
 
 class VerticalMovieListView extends StatelessWidget {
@@ -25,8 +30,13 @@ class VerticalMovieListView extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => MovieDetailsScreen(
-                        heroTag: heroTag, movie: movies.elementAt(index))));
+                    builder: (_) => BlocProvider<MovieCubit>(
+                      create: (_) => MovieCubit(
+                          movies.elementAt(index),
+                          locator<MoviesRepository>()
+                      ),
+                      child: MovieDetailsScreen(heroTag: heroTag),
+                    )));
           },
           leading: Row(
             mainAxisSize: MainAxisSize.min,
@@ -36,7 +46,8 @@ class VerticalMovieListView extends StatelessWidget {
               if (showCounter) const SizedBox(width: 5),
               Hero(
                 tag: heroTag,
-                child: CachedNetworkImage(imageUrl:movies.elementAt(index).smallImage),
+                child: CachedNetworkImage(
+                    imageUrl: movies.elementAt(index).smallImage),
               )
             ],
           ),

@@ -1,14 +1,12 @@
 part of 'sessions_cubit.dart';
 
-enum SessionsStatus { init, loading, failed, success }
-
 class SessionsState extends Equatable {
-  final SessionsStatus status;
+  final Status status;
   final Iterable<Session> sessions;
   final int movieId;
 
   const SessionsState(
-      {this.status = SessionsStatus.init,
+      {this.status = Status.loading,
       required this.movieId,
       this.sessions = const []});
 
@@ -16,7 +14,7 @@ class SessionsState extends Equatable {
   List<Object> get props => [status, sessions, movieId];
 
   SessionsState copyWith({
-    SessionsStatus? status,
+    Status? status,
     Iterable<Session>? sessions,
     int? movieId,
   }) {

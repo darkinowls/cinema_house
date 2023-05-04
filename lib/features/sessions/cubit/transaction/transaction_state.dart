@@ -1,21 +1,20 @@
 part of 'transaction_cubit.dart';
 
-enum TransactionStatus { init, loading, failed, success }
 
 class TransactionState extends Equatable {
-  final TransactionStatus status;
+  final Status status;
   final int sessionId;
   final Iterable<int> seatIds;
   final String errorMessage;
 
   const TransactionState(
-      {this.status = TransactionStatus.init,
+      {this.status = Status.loaded,
       this.errorMessage = "",
       required this.sessionId,
       required this.seatIds});
 
   TransactionState copyWith({
-    TransactionStatus? status,
+    Status? status,
     int? sessionId,
     Iterable<int>? seatIds,
     String? errorMessage,

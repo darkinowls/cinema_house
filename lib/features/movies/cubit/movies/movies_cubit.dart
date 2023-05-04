@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../data/models/movie.dart';
-import '../repositories/movies_repository.dart';
+import '../../data/models/movie.dart';
+import '../../repositories/movies_repository.dart';
 
 part 'movies_state.dart';
 
@@ -11,10 +11,10 @@ class MoviesCubit extends Cubit<MoviesState> {
   final MoviesRepository _moviesRepository;
 
   MoviesCubit(this._moviesRepository) : super(const MoviesState()) {
-    init();
+    loadMovies();
   }
 
-  Future<void> init() async {
+  Future<void> loadMovies() async {
     final List<Movie> movies = await _moviesRepository.getMovies();
 
     DateTime today = DateTime.now();
@@ -28,7 +28,7 @@ class MoviesCubit extends Cubit<MoviesState> {
     final Iterable<Movie> topMovies = _sortMoviesByRating(movies.toList());
 
     emit(state.copyWith(
-        status: MoviesStatus.loaded,
+        status: Status.loaded,
         moviesByDay: moviesByDay,
         topMovies: topMovies));
   }
@@ -56,15 +56,10 @@ class MoviesCubit extends Cubit<MoviesState> {
   }
 
   void searchMovieByPlot(String plot) async {
-    emit(state.copyWith(status: MoviesStatus.loading));
+    emit(state.copyWith(status: Status.loading));
     Iterable<Movie> searchedMovies =
         await _moviesRepository.getMoviesByPlot(plot);
     emit(state.copyWith(
-        status: MoviesStatus.loaded, searchedMovies: searchedMovies));
-  }
-
-
-  void getMoviesById() async{
-
+        status: Status.loaded, searchedMovies: searchedMovies));
   }
 }

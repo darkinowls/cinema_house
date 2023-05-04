@@ -35,16 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (BlocProvider.of<NetworkCubit>(context).state is NoNetwork) {
-  //     _selectedIndex = 1;
-  //   } else {
-  //     _selectedIndex = 0;
-  //   }
-  //   super.didChangeDependencies();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
