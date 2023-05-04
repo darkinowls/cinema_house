@@ -124,7 +124,7 @@ class SessionDetailsScreen extends StatelessWidget {
                               ? () async {
                                   BlocProvider.of<SeatsCubit>(context)
                                       .bookSeats(session.id);
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => BlocProvider.value(

@@ -24,13 +24,14 @@ class TicketEntityAdapter extends TypeAdapter<TicketEntity> {
       smallImage: fields[4] as String,
       seatIndex: fields[5] as int,
       rowIndex: fields[6] as int,
+      roomName: fields[7] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, TicketEntity obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.movieId)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class TicketEntityAdapter extends TypeAdapter<TicketEntity> {
       ..writeByte(5)
       ..write(obj.seatIndex)
       ..writeByte(6)
-      ..write(obj.rowIndex);
+      ..write(obj.rowIndex)
+      ..writeByte(7)
+      ..write(obj.roomName);
   }
 
   @override

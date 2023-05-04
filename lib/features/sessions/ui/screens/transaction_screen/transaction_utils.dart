@@ -23,7 +23,7 @@ class TransactionUtils {
     }
     input = getCleanedNumber(input);
     if (input.length < 16) {
-      return "Incorrect card number length";
+      return "Incorrect card number";
     }
     return null;
   }

@@ -24,13 +24,26 @@ class _ByDaysTabState extends State<ByDaysTab> {
 
   @override
   void didChangeDependencies() {
-    _scrollController.addListener(_scrollListener);
+    _scrollController.addListener(_loadMore);
+    _scrollController.addListener(_scrollTillEnd);
     super.didChangeDependencies();
   }
 
-  void _scrollListener() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+  void _loadMore() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       BlocProvider.of<MoviesCubit>(context).loadMoreMoviesByDate();
+    }
+  }
+
+  void _scrollTillEnd() {
+    if (_scrollController.position.pixels >
+        _scrollController.position.maxScrollExtent - 200) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.linear,
+      );
     }
   }
 

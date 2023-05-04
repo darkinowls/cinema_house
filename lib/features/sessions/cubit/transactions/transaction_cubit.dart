@@ -21,6 +21,7 @@ class TransactionCubit extends Cubit<TransactionState> {
 
     if (isBought) {
       emit(state.copyWith(status: TransactionStatus.success));
+      return;
     }
     emit(state.copyWith(status: TransactionStatus.failed));
   }

@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinema_house/core/date_format_extention.dart';
 import 'package:cinema_house/features/tickets/cubit/tickets_cubit.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../core/locale_keys.g.dart';
 import '../domain/entities/ticket_entity.dart';
 
 class TicketList extends StatelessWidget {
@@ -24,10 +26,10 @@ class TicketList extends StatelessWidget {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("No tickets", style: TextStyle(fontSize: 28)),
-                SizedBox(height: 25),
-                Text("You can buy them in the Movies tab")
+              children: [
+                Text( LocaleKeys.noTickets.tr() , style: const TextStyle(fontSize: 28)),
+                const SizedBox(height: 25),
+                Text(LocaleKeys.youCanBuyThemInTheMoviesTab.tr())
               ],
             ),
           );
@@ -77,7 +79,7 @@ class TicketList extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text('Cinema house ticket',
+          title: const Text('Cinema house',
               style: TextStyle(color: Colors.black)),
           content: SizedBox(
             width: 300,
@@ -109,11 +111,11 @@ class TicketList extends StatelessWidget {
       leading: CachedNetworkImage(
           imageUrl: ticketEntity.smallImage,
           height: 100,
-          width: 60,
+          width: 50,
           fit: BoxFit.contain),
       title: Text(ticketEntity.name),
       subtitle: Text(
-          "Row: ${ticketEntity.rowIndex} + Seat: ${ticketEntity.seatIndex}"),
+          "Room: ${ticketEntity.roomName} + Row: ${ticketEntity.rowIndex} + Seat: ${ticketEntity.seatIndex}"),
       trailing: Text(ticketEntity.dateTime.formatTime()),
       onTap: () => _showQRCode(context, ticketEntity),
     );

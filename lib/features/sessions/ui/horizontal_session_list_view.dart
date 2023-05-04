@@ -33,6 +33,7 @@ class _HorizontalSessionListViewState extends State<HorizontalSessionListView> {
   @override
   void didChangeDependencies() {
     _scrollController.addListener(_scrollListener);
+    _scrollController.addListener(_scrollTillEnd);
     super.didChangeDependencies();
   }
 
@@ -41,6 +42,23 @@ class _HorizontalSessionListViewState extends State<HorizontalSessionListView> {
         _scrollController.position.maxScrollExtent) {
       BlocProvider.of<SessionsCubit>(context).loadMoreSessions();
     }
+  }
+
+  void _scrollTillEnd() {
+    if (_scrollController.position.pixels >
+        _scrollController.position.maxScrollExtent - 200) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.linear,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override

@@ -29,7 +29,6 @@ class SeatsCubit extends Cubit<SeatsState> {
       seatIds,
       sessionId,
     );
-    print(seatIds);
     if (booked) {
       await _sessionsCubit.updateSessionRoom(sessionId);
       emit(const SeatsState(status: SeatsStatus.success));

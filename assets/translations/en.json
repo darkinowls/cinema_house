@@ -1,0 +1,26 @@
+{
+  "logIn": "Log in",
+  "enterYourPhoneNumberToLoginViaSms": "Enter your phone number to login via SMS",
+  "enterYourPhone": "Enter your phone",
+  "numbersAreRequired": "Numbers are required",
+  "enterThePinYouHaveGottenViaSms": "Enter the pin you have gotten via SMS",
+  "attempts" : "Attempts: {}",
+  "resendPin" : "Resend pin",
+  "ifYouDidntReceiveOne": " if you didn't receive one",
+  "wrongPhoneNumber": "Wrong phone number? ",
+  "goBack": "Go back",
+  "loading": "Loading...",
+  "movies" : "Movies",
+  "myTickets" : "My tickets",
+  "settings": "Settings",
+  "noTickets": "No tickets",
+  "youCanBuyThemInTheMoviesTab": "You can buy them in the Movies tab",
+  "notificationsAndSounds": "Notifications and sounds",
+  "privacyAndSecurity": "Privacy and security",
+  "switchLanguage": "Switch language",
+  "logout": "Logout",
+  "byDays": "By days",
+  "topCharts": "Top charts"
+
+
+}

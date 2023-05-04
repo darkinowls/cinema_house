@@ -28,20 +28,28 @@ class SessionsApi {
   }
 
   Future<Session> getSessionById(int sessionId) async {
-    final Response response = await _dioClient.dio
-        .get("$_url/sessions/$sessionId");
+    final Response response =
+        await _dioClient.dio.get("$_url/sessions/$sessionId");
     return Session.fromJson(response.data['data']);
   }
 
   Future<bool> bookSeats(BookSeats bookSeats) async {
+    try {
     final Response response =
         await _dioClient.dio.post("$_url/book", data: jsonEncode(bookSeats));
     return response.data['success'];
+    } on DioError catch (e) {
+      return false;
+    }
   }
 
   Future<bool> buySeats(BuySeats buySeats) async {
-    final Response response =
-        await _dioClient.dio.post("$_url/buy", data: jsonEncode(buySeats));
-    return response.data['success'];
+    try {
+      final Response response =
+          await _dioClient.dio.post("$_url/buy", data: jsonEncode(buySeats));
+      return response.data['success'];
+    } on DioError catch (e) {
+      return false;
+    }
   }
 }

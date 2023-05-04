@@ -1,8 +1,10 @@
 import 'package:cinema_house/features/movies/repositories/movies_repository.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/locale_keys.g.dart';
 import '../../../../core/locator.dart';
 import '../../../../features/movies/cubit/movies_cubit.dart';
 import '../../../../features/movies/ui/search_movie_delegate.dart';
@@ -23,11 +25,11 @@ class MoviesTab extends StatelessWidget {
           length: 2,
           child: Scaffold(
               appBar: AppBar(
-                title: const Text("Movies"),
-                bottom: const TabBar(
+                title: Text(LocaleKeys.movies.tr()),
+                bottom: TabBar(
                   tabs: [
-                    Tab(text: "By days"),
-                    Tab(text: "Top charts"),
+                    Tab(text: LocaleKeys.byDays.tr() ),
+                    Tab(text: LocaleKeys.topCharts.tr()),
                   ],
                 ),
                 actions: [

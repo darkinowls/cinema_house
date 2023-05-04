@@ -18,6 +18,9 @@ class TicketEntity {
   late final int seatIndex;
   @HiveField(6)
   late final int rowIndex;
+  @HiveField(7)
+  late final String roomName;
+
 
   TicketEntity({
     required this.movieId,
@@ -27,5 +30,6 @@ class TicketEntity {
     required this.smallImage,
     required this.seatIndex,
     required this.rowIndex,
+    required this.roomName,
   });
 }

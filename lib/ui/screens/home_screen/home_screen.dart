@@ -1,7 +1,9 @@
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/ui/screens/home_screen/tabs/movies_tab.dart';
 import 'package:cinema_house/ui/screens/home_screen/tabs/settings_tab.dart';
 import 'package:cinema_house/ui/screens/home_screen/tabs/my_tickets_tab.dart';
 import 'package:cinema_house/ui/screens/login_screen/login_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _selectedIndex = (widget.hasNetwork)? 0 : 1;
+    _selectedIndex = (widget.hasNetwork) ? 0 : 1;
     innerRoutes = [
       InnerRoute(tab: const MoviesTab(), _navigatorKeys),
       InnerRoute(tab: const MyTicketsTab(), _navigatorKeys),
@@ -62,13 +64,16 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
                 fixedColor: Theme.of(context).primaryColor,
-                items: const [
+                items: [
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.movie_sharp), label: "Movies"),
+                      icon: const Icon(Icons.movie_sharp),
+                      label: LocaleKeys.movies.tr()),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.qr_code), label: "My tickets"),
+                      icon: const Icon(Icons.qr_code),
+                      label: LocaleKeys.myTickets.tr()),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.settings), label: "Settings"),
+                      icon: const Icon(Icons.settings),
+                      label: LocaleKeys.settings.tr()),
                 ],
                 currentIndex: _selectedIndex,
                 onTap: (int index) {

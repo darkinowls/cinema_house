@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+import '../../../../core/locale_keys.g.dart';
 import '../../cubit/auth_cubit.dart';
 
 class PhoneForm extends StatelessWidget {
@@ -15,7 +17,7 @@ class PhoneForm extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Enter your phone number to login via SMS"),
+        Text(LocaleKeys.enterYourPhoneNumberToLoginViaSms.tr()),
         const SizedBox(height: 25),
         InternationalPhoneNumberInput(
           validator: (String? value) {
@@ -24,13 +26,14 @@ class PhoneForm extends StatelessWidget {
                   "Set {autoValidateMode: AutovalidateMode.onUserInteraction}");
             }
             if (value.isEmpty) {
-              return "Enter your phone";
+              return LocaleKeys.enterYourPhone.tr() ;
             }
             if (int.tryParse(value.replaceAll(" ", "")) == null) {
-              return "Numbers are required";
+              return LocaleKeys.numbersAreRequired.tr();
             }
             return null;
           },
+          keyboardType: TextInputType.number,
           selectorConfig: const SelectorConfig(
               selectorType: PhoneInputSelectorType.DROPDOWN,
               trailingSpace: false),

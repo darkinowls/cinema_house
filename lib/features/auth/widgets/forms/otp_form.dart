@@ -1,9 +1,12 @@
 import 'package:cinema_house/features/auth/cubit/auth_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import '../../../../core/locale_keys.g.dart';
 
 class OtpForm extends StatelessWidget {
   final AuthState authState;
@@ -15,7 +18,7 @@ class OtpForm extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Enter the pin you have gotten via SMS"),
+        Text(LocaleKeys.enterThePinYouHaveGottenViaSms.tr()),
         const SizedBox(height: 15),
         PinCodeTextField(
           appContext: context,
@@ -27,12 +30,12 @@ class OtpForm extends StatelessWidget {
             BlocProvider.of<AuthCubit>(context).login(pin);
           },
         ),
-        Text("Attempts: ${authState.pinAttempts}"),
+        Text(LocaleKeys.attempts.tr(args: [authState.pinAttempts.toString()])),
         const SizedBox(height: 25),
         RichText(
           text: TextSpan(children: [
             TextSpan(
-                text: 'Resend pin',
+                text: LocaleKeys.resendPin.tr() ,
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     decoration: TextDecoration.underline),
@@ -41,7 +44,7 @@ class OtpForm extends StatelessWidget {
                       .sendPinOnPhoneNumber(authState.phoneNumber)),
             TextSpan(
               style: TextStyle(color: Theme.of(context).focusColor),
-              text: " if you didn't receive one",
+              text: LocaleKeys.ifYouDidntReceiveOne.tr() ,
             ),
           ]),
         ),
@@ -50,10 +53,10 @@ class OtpForm extends StatelessWidget {
           text: TextSpan(children: [
             TextSpan(
               style: TextStyle(color: Theme.of(context).focusColor),
-              text: 'Wrong phone number? ',
+              text: LocaleKeys.wrongPhoneNumber.tr() ,
             ),
             TextSpan(
-                text: 'Go back',
+                text: LocaleKeys.goBack.tr() ,
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                   color: Theme.of(context).primaryColor,

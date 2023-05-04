@@ -68,6 +68,7 @@ class _ScrollableMovieDetailsScreenState
   @override
   void didChangeDependencies() {
     _scrollController.addListener(_scrollListener);
+    _scrollController.addListener(_scrollTillEnd);
     super.didChangeDependencies();
   }
 
@@ -76,6 +77,17 @@ class _ScrollableMovieDetailsScreenState
         _scrollController.position.maxScrollExtent) {
       BlocProvider.of<CommentsCubit>(context).loadComments(widget.movie.id);
       _scrollController.removeListener(_scrollListener);
+    }
+  }
+
+  void _scrollTillEnd() {
+    if (_scrollController.position.pixels >
+        _scrollController.position.maxScrollExtent - 200) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.linear,
+      );
     }
   }
 

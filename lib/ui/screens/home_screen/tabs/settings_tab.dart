@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/locale_keys.g.dart';
 import '../../../../features/auth/cubit/auth_cubit.dart';
 import '../../../../features/lightMode/widgets/light_mode_switch.dart';
 
@@ -11,22 +13,22 @@ class SettingsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: Text(LocaleKeys.settings.tr()),
       ),
       body: ListView(children: [
         Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               ListTile(
                 leading: Icon(Icons.notifications),
-                title: Text("Notifications and sounds"),
+                title: Text(LocaleKeys.notificationsAndSounds.tr()),
                 onTap: null,
               ),
               ListTile(
                 leading: Icon(Icons.lock),
-                title: Text("Privacy and security"),
+                title: Text(LocaleKeys.privacyAndSecurity.tr()),
                 onTap: null,
               ),
             ],
@@ -40,13 +42,19 @@ class SettingsTab extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               ListTile(
-                leading: Icon(Icons.language),
-                title: Text("Switch language"),
-                onTap: null,
+                leading: const Icon(Icons.language),
+                title: Text(LocaleKeys.switchLanguage.tr()),
+                onTap: () {
+                  if (context.locale.languageCode == "uk") {
+                    context.setLocale(const Locale("en"));
+                  } else {
+                    context.setLocale(const Locale("uk"));
+                  }
+                },
               ),
-              LightModeSwitch(),
+              const LightModeSwitch(),
             ],
           ),
         ),
@@ -61,7 +69,7 @@ class SettingsTab extends StatelessWidget {
             children: [
               ListTile(
                 leading: const Icon(Icons.logout, color: Colors.red),
-                title: const Text("Logout"),
+                title: Text(LocaleKeys.logout.tr()),
                 onTap: () => BlocProvider.of<AuthCubit>(context).logout(),
               ),
             ],

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/intl.dart';
 
 extension DataFormatExtention on DateTime {
@@ -13,7 +14,7 @@ extension DataFormatExtention on DateTime {
     if (aDate == tomorrow) {
       return "Tomorrow, ${DateFormat('yyyy MMMM(MM) dd').format(this)}";
     }
-    return DateFormat('EEEE, yyyy MMMM(MM) dd').format(this);
+    return DateFormat('EEEE, yyyy MMMM(MM) dd').format(this).tr();
   }
 
   String formatTime() {

@@ -14,6 +14,7 @@ class TicketModel extends TicketEntity {
     required super.smallImage,
     required super.seatIndex,
     required super.rowIndex,
+    required super.roomName,
   });
 
   factory TicketModel.fromJson(Map<String, dynamic> json) {
@@ -25,7 +26,8 @@ class TicketModel extends TicketEntity {
         image: json['image'],
         smallImage: json['smallImage'],
         seatIndex: json['seatIndex'],
-        rowIndex: json['rowIndex']);
+        rowIndex: json['rowIndex'],
+        roomName: json['roomName']);
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +40,7 @@ class TicketModel extends TicketEntity {
     data['smallImage'] = smallImage;
     data['seatIndex'] = seatIndex;
     data['rowIndex'] = rowIndex;
+    data['roomName'] = roomName;
     return data;
   }
 }
