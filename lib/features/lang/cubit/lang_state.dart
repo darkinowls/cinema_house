@@ -1,5 +1,7 @@
 // part of 'lang_cubit.dart';
 //
+import 'dart:ui';
+
 enum LangStatus {
   uk("uk"),
   en("en");
@@ -8,15 +10,15 @@ enum LangStatus {
 
   const LangStatus(this.lang);
 
-  static LangStatus getLang(String lang) {
-    if (LangStatus.en.lang == lang) {
+  static LangStatus getLang(Locale locale) {
+    if (LangStatus.en.lang == locale.languageCode) {
       return LangStatus.en;
     }
     return LangStatus.uk;
   }
 
-  static LangStatus switchLang(String lang){
-    if (LangStatus.en.lang == lang) {
+  static LangStatus switchLang(Locale locale){
+    if (LangStatus.en.lang == locale.languageCode) {
       return LangStatus.uk;
     }
     return LangStatus.en;

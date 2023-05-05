@@ -64,28 +64,13 @@ class _TransactionScreenState extends State<TransactionScreen> {
             return const Loader();
           }
           if (state.status == Status.failed) {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error, size: 50),
-                const SizedBox(height: 10),
-                Text(LocaleKeys.someErrorOccurred.tr(),
-                    style: const TextStyle(fontSize: 18))
-              ],
-            ));
+            return ResultSign(
+                iconData: Icons.error, text: LocaleKeys.someErrorOccurred.tr());
           }
           if (state.status == Status.success) {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:  [
-                const Icon(Icons.gpp_good, size: 50),
-                const SizedBox(height: 10),
-                Text(LocaleKeys.theTransactionIsDone.tr(),
-                    style: const TextStyle(fontSize: 18))
-              ],
-            ));
+            return ResultSign(
+                iconData: Icons.gpp_good,
+                text: LocaleKeys.theTransactionIsDone.tr());
           }
 
           return Padding(
@@ -178,5 +163,33 @@ class _TransactionScreenState extends State<TransactionScreen> {
         }),
       ),
     );
+  }
+}
+
+class ResultSign extends StatelessWidget {
+  final IconData iconData;
+  final String text;
+
+  const ResultSign({
+    super.key,
+    required this.iconData,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: SizedBox(
+      width: 300,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(iconData, size: 100),
+          const SizedBox(height: 10),
+          Text(text,
+              style: const TextStyle(fontSize: 18), textAlign: TextAlign.center)
+        ],
+      ),
+    ));
   }
 }

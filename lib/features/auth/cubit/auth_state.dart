@@ -36,7 +36,6 @@ class OTPRequired extends AuthState {
 class OTPError extends AuthState {
   const OTPError(
       {required super.phoneNumber,
-      required super.errorMessage,
       required super.pinAttempts});
 }
 

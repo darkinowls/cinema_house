@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../../../../core/status.dart';
+import '../../../../network/widgets/no_network_sign.dart';
 import '../../../cubit/transaction/transaction_cubit.dart';
 import '../../../domain/repositories/sessions_repository.dart';
 import '../transaction_screen/transaction_screen.dart';
@@ -20,28 +21,30 @@ class SessionDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SessionCubit, SessionState>(
-      builder: (context, state) {
-        return Scaffold(
-            appBar: AppBar(
-              title: Text(state.session.room.name),
-            ),
-            body: Builder(
-              builder: (context) {
-                if (state.status == Status.loading) {
-                  return const Loader();
-                }
-                if (state.status == Status.failed) {
-                  return Center(
-                      child: Text(
-                          LocaleKeys.someoneElseHasJustBookedTheSeats.tr()));
-                }
-                bool notEmpty = state.seats.isNotEmpty;
-                Iterable<SeatEntity> seats = state.seats.values;
-                return _buildSeats(context, state, notEmpty, seats);
-              },
-            ));
-      },
+    return NoNetworkSign(
+      elseChild: BlocBuilder<SessionCubit, SessionState>(
+        builder: (context, state) {
+          return Scaffold(
+              appBar: AppBar(
+                title: Text(state.session.room.name),
+              ),
+              body: Builder(
+                builder: (context) {
+                  if (state.status == Status.loading) {
+                    return const Loader();
+                  }
+                  if (state.status == Status.failed) {
+                    return Center(
+                        child: Text(
+                            LocaleKeys.someoneElseHasJustBookedTheSeats.tr()));
+                  }
+                  bool notEmpty = state.seats.isNotEmpty;
+                  Iterable<SeatEntity> seats = state.seats.values;
+                  return _buildSeats(context, state, notEmpty, seats);
+                },
+              ));
+        },
+      ),
     );
   }
 

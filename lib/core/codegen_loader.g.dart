@@ -33,7 +33,7 @@ class CodegenLoader extends AssetLoader{
   "youCanBuyThemInTheMoviesTab": "You can buy them in the Movies tab",
   "notificationsAndSounds": "Notifications and sounds",
   "privacyAndSecurity": "Privacy and security",
-  "switchLanguage": "Switch language",
+  "switchLanguage": "Switch language to Української мови",
   "logout": "Logout",
   "byDays": "By days",
   "topCharts": "Top charts",
@@ -81,8 +81,11 @@ class CodegenLoader extends AssetLoader{
   "incorrectCvvLength": "Incorrect CVV length",
   "roomRowSeat": "Room: {} + Row: {} + Seat: {}",
   "today": "Today, {}",
-  "tomorrow": "tomorrow, {}",
-  "rowSeat": "Row: {} + Seat: {}"
+  "tomorrow": "Tomorrow, {}",
+  "rowSeat": "Row: {} + Seat: {}",
+  "incorrect3PinsWereWritten": "Incorrect 3 pins were written. Try another phone number",
+  "phoneNumber": "Phone number",
+  "incorrectPhoneNumber": "Incorrect phone number"
 };
 static const Map<String,dynamic> uk = {
   "logIn": "Увійти",
@@ -93,7 +96,7 @@ static const Map<String,dynamic> uk = {
   "attempts": "Спроби: {}",
   "resendPin": "Переслати пін",
   "ifYouDidntReceiveOne": " якщо не був отриманим",
-  "wrongPhoneNumber": "Неправильний номер телефону? ",
+  "wrongPhoneNumber": "Інший номер телефону? ",
   "goBack": "Повернутися",
   "loading": "Завантаження...",
   "movies": "Кіно",
@@ -103,7 +106,7 @@ static const Map<String,dynamic> uk = {
   "youCanBuyThemInTheMoviesTab": "Ви можите купити їх у вкладці Кіно",
   "notificationsAndSounds": "Повідомлення та звуки",
   "privacyAndSecurity": "Приватність та безпека",
-  "switchLanguage": "Змінити мову",
+  "switchLanguage": "Змінити мову на English",
   "logout": "Вийти з аккаунта",
   "byDays": "За днями",
   "topCharts": "Популярне",
@@ -152,7 +155,10 @@ static const Map<String,dynamic> uk = {
   "roomRowSeat": "Кімната: {} + ряд: {} + місце: {}",
   "today": "Сьогодні, {}",
   "tomorrow": "Завтра, {}",
-  "rowSeat": "Ряд: {} + Місце: {}"
+  "rowSeat": "Ряд: {} + Місце: {}",
+  "incorrect3PinsWereWritten": "Некоректні 3 піни введено. Спробуйте інший номер телефону",
+  "phoneNumber": "Номер телефону",
+  "incorrectPhoneNumber": "Некоректний номер телефону"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "uk": uk};
 }

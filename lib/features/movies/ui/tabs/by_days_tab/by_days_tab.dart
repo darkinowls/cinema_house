@@ -39,7 +39,7 @@ class _ByDaysTabState extends State<ByDaysTab> {
 
   void _scrollTillEnd() {
     if (_scrollController.position.pixels >
-        _scrollController.position.maxScrollExtent - 200) {
+        _scrollController.position.maxScrollExtent - 100) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 100),

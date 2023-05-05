@@ -69,5 +69,8 @@ abstract class  LocaleKeys {
   static const today = 'today';
   static const tomorrow = 'tomorrow';
   static const rowSeat = 'rowSeat';
+  static const incorrect3PinsWereWritten = 'incorrect3PinsWereWritten';
+  static const phoneNumber = 'phoneNumber';
+  static const incorrectPhoneNumber = 'incorrectPhoneNumber';
 
 }

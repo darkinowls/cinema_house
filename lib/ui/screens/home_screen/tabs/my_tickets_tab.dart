@@ -19,7 +19,11 @@ class MyTicketsTab extends StatelessWidget {
           TicketsCubit(locator<TicketsRepository>(), locator<NetworkCubit>()),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(LocaleKeys.myTickets.tr() ),
+          title: BlocBuilder<TicketsCubit, TicketsState>(
+            builder: (__, _) {
+              return Text(LocaleKeys.myTickets.tr());
+            },
+          ),
         ),
         body: const TicketList(),
       ),

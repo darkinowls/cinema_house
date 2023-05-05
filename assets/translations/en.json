@@ -17,7 +17,7 @@
   "youCanBuyThemInTheMoviesTab": "You can buy them in the Movies tab",
   "notificationsAndSounds": "Notifications and sounds",
   "privacyAndSecurity": "Privacy and security",
-  "switchLanguage": "Switch language",
+  "switchLanguage": "Switch language to Української мови",
   "logout": "Logout",
   "byDays": "By days",
   "topCharts": "Top charts",
@@ -66,5 +66,9 @@
   "roomRowSeat": "Room: {} + Row: {} + Seat: {}",
   "today": "Today, {}",
   "tomorrow": "Tomorrow, {}",
-  "rowSeat": "Row: {} + Seat: {}"
+  "rowSeat": "Row: {} + Seat: {}",
+
+  "incorrect3PinsWereWritten": "Incorrect 3 pins were written. Try another phone number",
+  "phoneNumber": "Phone number",
+  "incorrectPhoneNumber": "Incorrect phone number"
 }

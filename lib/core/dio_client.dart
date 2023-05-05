@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
+
+import '../features/lang/cubit/lang_state.dart';
 
 class DioClient {
   final Dio dio = Dio();
@@ -11,4 +15,13 @@ class DioClient {
       receiveTimeout: const Duration(seconds: 8),
     );
   }
+
+  void setLanguage(Locale locale){
+    final LangStatus langStatus = LangStatus.getLang(locale);
+    dio.options.headers = {
+      "Accept-Language": langStatus.lang
+    };
+  }
+
+
 }

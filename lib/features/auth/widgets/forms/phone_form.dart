@@ -44,6 +44,9 @@ class PhoneForm extends StatelessWidget {
                   .sendPinOnPhoneNumber(value.phoneNumber!);
             }
           },
+          inputDecoration: InputDecoration(
+            hintText: LocaleKeys.phoneNumber.tr(),
+          ),
           spaceBetweenSelectorAndTextField: 10,
           ignoreBlank: true,
           countries: const ["UA"],

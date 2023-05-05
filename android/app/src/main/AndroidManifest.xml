@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cinema.cinema_house">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="cinema_house"
+        android:label="Cinema House"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

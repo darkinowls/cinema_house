@@ -7,7 +7,7 @@
   "attempts": "Спроби: {}",
   "resendPin": "Переслати пін",
   "ifYouDidntReceiveOne": " якщо не був отриманим",
-  "wrongPhoneNumber": "Неправильний номер телефону? ",
+  "wrongPhoneNumber": "Інший номер телефону? ",
   "goBack": "Повернутися",
   "loading": "Завантаження...",
   "movies": "Кіно",
@@ -17,7 +17,7 @@
   "youCanBuyThemInTheMoviesTab": "Ви можите купити їх у вкладці Кіно",
   "notificationsAndSounds": "Повідомлення та звуки",
   "privacyAndSecurity": "Приватність та безпека",
-  "switchLanguage": "Змінити мову",
+  "switchLanguage": "Змінити мову на English",
   "logout": "Вийти з аккаунта",
   "byDays": "За днями",
   "topCharts": "Популярне",
@@ -66,5 +66,9 @@
   "roomRowSeat": "Кімната: {} + ряд: {} + місце: {}",
   "today": "Сьогодні, {}",
   "tomorrow": "Завтра, {}",
-  "rowSeat": "Ряд: {} + Місце: {}"
+  "rowSeat": "Ряд: {} + Місце: {}",
+
+  "incorrect3PinsWereWritten": "Некоректні 3 піни введено. Спробуйте інший номер телефону",
+  "phoneNumber": "Номер телефону",
+  "incorrectPhoneNumber": "Некоректний номер телефону"
 }

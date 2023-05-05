@@ -104,31 +104,37 @@ class TicketList extends StatelessWidget {
     );
   }
 
-  Container _generateDateContainer(
+  Widget _generateDateContainer(
       BuildContext context, TicketEntity ticketEntity) {
     DateTime dateTime = ticketEntity.dateTime;
-    return Container(
-      height: 25,
-      color: Colors.black12,
-      child: Center(child: Text(dateTime.formatDate(context.locale))),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        height: 25,
+        color: Colors.black12,
+        child: Center(child: Text(dateTime.formatDate(context.locale))),
+      ),
     );
   }
 
   Widget _generateListTile(BuildContext context, TicketEntity ticketEntity) {
-    return ListTile(
-      leading: CachedNetworkImage(
-          imageUrl: ticketEntity.smallImage,
-          height: 100,
-          width: 50,
-          fit: BoxFit.contain),
-      title: Text(ticketEntity.name),
-      subtitle: Text(LocaleKeys.roomRowSeat.tr(args: [
-        ticketEntity.roomName,
-        ticketEntity.rowIndex.toString(),
-        ticketEntity.seatIndex.toString()
-      ])),
-      trailing: Text(ticketEntity.dateTime.formatTime()),
-      onTap: () => _showQRCode(context, ticketEntity),
+    return Padding(
+      padding: const EdgeInsets.only(top:5),
+      child: ListTile(
+        leading: CachedNetworkImage(
+            imageUrl: ticketEntity.smallImage,
+            height: 100,
+            width: 50,
+            fit: BoxFit.contain),
+        title: Text(ticketEntity.name),
+        subtitle: Text(LocaleKeys.roomRowSeat.tr(args: [
+          ticketEntity.roomName,
+          ticketEntity.rowIndex.toString(),
+          ticketEntity.seatIndex.toString()
+        ])),
+        trailing: Text(ticketEntity.dateTime.formatTime()),
+        onTap: () => _showQRCode(context, ticketEntity),
+      ),
     );
   }
 }

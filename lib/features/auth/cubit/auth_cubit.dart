@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -21,7 +23,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(OTPRequired(phoneNumber: phoneNumber));
       return;
     }
-    emit(const PhoneNumberError(errorMessage: "Incorrect phone number"));
+    emit(PhoneNumberError(errorMessage: LocaleKeys.incorrectPhoneNumber.tr() ));
   }
 
   void login(String otp) async {
@@ -32,12 +34,12 @@ class AuthCubit extends Cubit<AuthState> {
     } on DioError catch (e) {
       if (state.pinAttempts == 1) {
         returnToPhonePrompt(
-            "Incorrect 3 pins were written. Try another phone number");
+            LocaleKeys.incorrect3PinsWereWritten.tr()
+            );
         return;
       }
       emit(OTPError(
           phoneNumber: state.phoneNumber,
-          errorMessage: "Incorrect pin",
           pinAttempts: state.pinAttempts - 1));
     }
   }

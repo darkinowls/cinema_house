@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/features/comments/cubit/comments_cubit.dart';
 import 'package:cinema_house/features/movies/ui/zoomable_movie_image.dart';
+import 'package:cinema_house/features/network/widgets/no_network_sign.dart';
 import 'package:cinema_house/features/sessions/cubit/sessions/sessions_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -26,23 +27,25 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieCubit, MovieState>(
-      builder: (context, state) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<CommentsCubit>(
-              create: (context) =>
-                  CommentsCubit(locator<ICommentsRepository>()),
-            ),
-            BlocProvider<SessionsCubit>(
-              create: (context) =>
-                  SessionsCubit(locator<SessionsRepository>(), state.movie.id),
-            ),
-          ],
-          child: _ScrollableMovieDetailsScreen(
-              movie: state.movie, heroTag: heroTag),
-        );
-      },
+    return NoNetworkSign(
+      elseChild: BlocBuilder<MovieCubit, MovieState>(
+        builder: (context, state) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<CommentsCubit>(
+                create: (context) =>
+                    CommentsCubit(locator<ICommentsRepository>()),
+              ),
+              BlocProvider<SessionsCubit>(
+                create: (context) =>
+                    SessionsCubit(locator<SessionsRepository>(), state.movie.id),
+              ),
+            ],
+            child: _ScrollableMovieDetailsScreen(
+                movie: state.movie, heroTag: heroTag),
+          );
+        },
+      ),
     );
   }
 }
@@ -200,7 +203,7 @@ class _ScrollableMovieDetailsScreenState
                 ),
               ),
               const SizedBox(height: 25),
-              const SessionsSection(),
+              SessionsSection(),
               const SizedBox(height: 25),
               CommentsSection(widget.movie.id),
               const SizedBox(height: 50)

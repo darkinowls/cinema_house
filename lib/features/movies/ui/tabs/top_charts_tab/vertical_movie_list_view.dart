@@ -20,47 +20,50 @@ class VerticalMovieListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(25),
-      itemCount: movies.length,
-      itemBuilder: (_, index) {
-        String heroTag = const Uuid().v4();
-        return ListTile(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => BlocProvider<MovieCubit>(
-                      create: (_) => MovieCubit(
-                          movies.elementAt(index),
-                          locator<MoviesRepository>()
-                      ),
-                      child: MovieDetailsScreen(heroTag: heroTag),
-                    )));
-          },
-          leading: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (showCounter)
-                SizedBox(width: 25, child: Text((index + 1).toString())),
-              if (showCounter) const SizedBox(width: 5),
-              Hero(
-                tag: heroTag,
-                child: CachedNetworkImage(
-                    imageUrl: movies.elementAt(index).smallImage),
-              )
-            ],
-          ),
-          title: Text(movies.elementAt(index).name),
-          subtitle: Row(
-            children: [
-              Text(movies.elementAt(index).rating),
-              const Icon(Icons.star, size: 14),
-            ],
-          ),
-        );
-      },
-      separatorBuilder: (_, __) => const SizedBox(height: 10),
+    return RefreshIndicator(
+      onRefresh: BlocProvider.of<MoviesCubit>(context).loadMovies,
+      child: ListView.separated(
+        padding: const EdgeInsets.all(25),
+        itemCount: movies.length,
+        itemBuilder: (_, index) {
+          String heroTag = const Uuid().v4();
+          return ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => BlocProvider<MovieCubit>(
+                        create: (_) => MovieCubit(
+                            movies.elementAt(index),
+                            locator<MoviesRepository>()
+                        ),
+                        child: MovieDetailsScreen(heroTag: heroTag),
+                      )));
+            },
+            leading: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (showCounter)
+                  SizedBox(width: 25, child: Text((index + 1).toString())),
+                if (showCounter) const SizedBox(width: 5),
+                Hero(
+                  tag: heroTag,
+                  child: CachedNetworkImage(
+                      imageUrl: movies.elementAt(index).smallImage),
+                )
+              ],
+            ),
+            title: Text(movies.elementAt(index).name),
+            subtitle: Row(
+              children: [
+                Text(movies.elementAt(index).rating),
+                const Icon(Icons.star, size: 14),
+              ],
+            ),
+          );
+        },
+        separatorBuilder: (_, __) => const SizedBox(height: 10),
+      ),
     );
   }
 }

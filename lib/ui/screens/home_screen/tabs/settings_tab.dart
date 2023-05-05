@@ -51,11 +51,8 @@ class SettingsTab extends StatelessWidget {
                 title: Text(LocaleKeys.switchLanguage.tr()),
                 onTap: () {
                   final LangStatus langStatus =
-                  LangStatus.switchLang(context.locale.languageCode);
+                  LangStatus.switchLang(context.locale);
                   context.setLocale(Locale(langStatus.lang));
-                  locator<DioClient>().dio.options.headers = {
-                        "Accept-Language": langStatus.lang
-                  };
                 },
               ),
               LightModeSwitch(),

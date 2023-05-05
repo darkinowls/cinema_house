@@ -17,47 +17,52 @@ class MoviesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext _) {
-    return NoNetworkSign(
-        elseChild: BlocProvider<MoviesCubit>(
-      create: (context) => MoviesCubit(locator<MoviesRepository>()),
-      child: Builder(builder: (context) {
-        return DefaultTabController(
-          length: 2,
-          child: Scaffold(
-              appBar: AppBar(
-                title: Text(LocaleKeys.movies.tr()),
-                bottom: TabBar(
-                  tabs: [
-                    Tab(text: LocaleKeys.byDays.tr() ),
-                    Tab(text: LocaleKeys.topCharts.tr()),
-                  ],
-                ),
-                actions: [
-                  IconButton(
-                      onPressed: () => showSearch(
-                          context: context,
-                          delegate: SearchMovieDelegate(
-                              BlocProvider.of<MoviesCubit>(context))),
-                      icon: const Icon(Icons.search))
-                ],
-              ),
-              body: BlocBuilder<MoviesCubit, MoviesState>(
-                builder: (_, state) {
-                  if (state.status == Status.loading) {
-                    return const Loader();
-                  }
-                  return const TabBarView(
-                    children: [
-                      ByDaysTab(),
-                      TopChartsTab(),
-                    ],
-                  );
+    return
+      NoNetworkSign(elseChild:
+      BlocProvider<MoviesCubit>(
+            create: (context) => MoviesCubit(locator<MoviesRepository>()),
+            child: DefaultTabController(
+              length: 2,
+              child: BlocBuilder<MoviesCubit, MoviesState>(
+                builder: (context, state) {
+                  return Scaffold(
+                      appBar: AppBar(
+                        title: Text(LocaleKeys.movies.tr()),
+                        bottom: TabBar(
+                          tabs: [
+                            Tab(text: LocaleKeys.byDays.tr()),
+                            Tab(text: LocaleKeys.topCharts.tr()),
+                          ],
+                        ),
+                        actions: [
+                          Builder(builder: (context) {
+                            return IconButton(
+                                onPressed: () => showSearch(
+                                    context: context,
+                                    delegate: SearchMovieDelegate(
+                                        BlocProvider.of<MoviesCubit>(context))),
+                                icon: const Icon(Icons.search));
+                          })
+                        ],
+                      ),
+                      body: Builder(
+                        builder: (_) {
+                          if (state.status == Status.loading) {
+                            return const Loader();
+                          }
+                          return const TabBarView(
+                            children: [
+                              ByDaysTab(),
+                              TopChartsTab(),
+                            ],
+                          );
+                        },
+                      ));
                 },
-              )),
-        );
-      }),
-    ));
+              ),
+
+            )
+    )
+    );
   }
 }
-
-
