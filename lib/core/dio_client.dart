@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 
-import '../features/lang/cubit/lang_state.dart';
+import '../features/lang/cubit/lang/lang_cubit.dart';
+
 
 class DioClient {
   final Dio dio = Dio();
@@ -16,12 +17,12 @@ class DioClient {
     );
   }
 
-  void setLanguage(Locale locale){
-    final LangStatus langStatus = LangStatus.getLang(locale);
-    dio.options.headers = {
-      "Accept-Language": langStatus.lang
-    };
-  }
+  // void setLanguage(Locale locale){
+  //   final LangStatus langStatus = LangStatus.getLang(locale);
+  //   dio.options.headers = {
+  //     "Accept-Language": langStatus.lang
+  //   };
+  // }
 
 
 }

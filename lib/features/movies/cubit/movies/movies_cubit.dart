@@ -10,7 +10,8 @@ part 'movies_state.dart';
 class MoviesCubit extends Cubit<MoviesState> {
   final MoviesRepository _moviesRepository;
 
-  MoviesCubit(this._moviesRepository) : super(const MoviesState()) {
+  MoviesCubit(this._moviesRepository)
+      : super(const MoviesState()) {
     loadMovies();
   }
 
@@ -28,9 +29,7 @@ class MoviesCubit extends Cubit<MoviesState> {
     final Iterable<Movie> topMovies = _sortMoviesByRating(movies.toList());
 
     emit(state.copyWith(
-        status: Status.loaded,
-        moviesByDay: moviesByDay,
-        topMovies: topMovies));
+        status: Status.loaded, moviesByDay: moviesByDay, topMovies: topMovies));
   }
 
   void loadMoreMoviesByDate() async {
@@ -59,7 +58,6 @@ class MoviesCubit extends Cubit<MoviesState> {
     emit(state.copyWith(status: Status.loading));
     Iterable<Movie> searchedMovies =
         await _moviesRepository.getMoviesByPlot(plot);
-    emit(state.copyWith(
-        status: Status.loaded, searchedMovies: searchedMovies));
+    emit(state.copyWith(status: Status.loaded, searchedMovies: searchedMovies));
   }
 }

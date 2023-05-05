@@ -1,6 +1,5 @@
 import 'package:cinema_house/core/codegen_loader.g.dart';
 import 'package:cinema_house/features/auth/cubit/auth_cubit.dart';
-import 'package:cinema_house/features/lang/cubit/lang_state.dart';
 import 'package:cinema_house/features/lightMode/cubit/light_mode_cubit.dart';
 import 'package:cinema_house/ui/screens/home_screen/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/dio_client.dart';
+import 'features/lang/cubit/lang/lang_cubit.dart';
 import 'features/lang/repositories/lang_repository.dart';
 import 'ui/screens/login_screen/login_screen.dart';
 import 'features/network/cubit/network_cubit.dart';
@@ -28,26 +28,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return EasyLocalization(
       assetLoader: const CodegenLoader(),
-      supportedLocales: const [Locale('en'), Locale('uk')],
+      supportedLocales: [
+        Locale(LangStatus.en.text),
+        Locale(LangStatus.uk.text)
+      ],
       path: 'assets/translations',
-      fallbackLocale: const Locale('en'),
-      child: Builder(
-        builder: (context) {
-          locator<DioClient>().setLanguage(context.locale);
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: locator<NetworkCubit>()),
-              BlocProvider.value(
-                value: locator<LightModeCubit>(),
-              ),
-              BlocProvider.value(
-                value: locator<AuthCubit>(),
-              ),
-            ],
-            child: BlocBuilder<LightModeCubit, bool>(builder: buildAppWithTheme),
-          );
-        }
-      ),
+      fallbackLocale: Locale(LangStatus.en.text),
+      child: Builder(builder: (context) {
+        locator<LangRepository>().context = context;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: locator<NetworkCubit>()),
+            BlocProvider.value(
+              value: locator<LightModeCubit>(),
+            ),
+            BlocProvider.value(
+              value: locator<AuthCubit>(),
+            ),
+            BlocProvider<LangCubit>(
+              create: (_) => LangCubit(locator<LangRepository>()),
+            ),
+          ],
+          child: BlocBuilder<LightModeCubit, bool>(builder: buildAppWithTheme),
+        );
+      }),
     );
   }
 

@@ -10,6 +10,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../core/locale_keys.g.dart';
 import '../../../core/status.dart';
+import '../../lang/cubit/lang/lang_cubit.dart';
 import '../domain/entities/ticket_entity.dart';
 
 class TicketList extends StatelessWidget {
@@ -25,14 +26,18 @@ class TicketList extends StatelessWidget {
 
         if (state.tickets.isEmpty) {
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(LocaleKeys.noTickets.tr(),
-                    style: const TextStyle(fontSize: 28)),
-                const SizedBox(height: 25),
-                Text(LocaleKeys.youCanBuyThemInTheMoviesTab.tr())
-              ],
+            child: BlocBuilder<LangCubit, LangState>(
+              builder: (__, _) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(LocaleKeys.noTickets.tr(),
+                        style: const TextStyle(fontSize: 28)),
+                    const SizedBox(height: 25),
+                    Text(LocaleKeys.youCanBuyThemInTheMoviesTab.tr())
+                  ],
+                );
+              },
             ),
           );
         }
@@ -119,7 +124,7 @@ class TicketList extends StatelessWidget {
 
   Widget _generateListTile(BuildContext context, TicketEntity ticketEntity) {
     return Padding(
-      padding: const EdgeInsets.only(top:5),
+      padding: const EdgeInsets.only(top: 5),
       child: ListTile(
         leading: CachedNetworkImage(
             imageUrl: ticketEntity.smallImage,

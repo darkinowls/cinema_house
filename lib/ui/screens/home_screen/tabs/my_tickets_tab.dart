@@ -1,3 +1,4 @@
+import 'package:cinema_house/features/lang/cubit/lang/lang_cubit.dart';
 import 'package:cinema_house/features/network/cubit/network_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,12 @@ class MyTicketsTab extends StatelessWidget {
           TicketsCubit(locator<TicketsRepository>(), locator<NetworkCubit>()),
       child: Scaffold(
         appBar: AppBar(
-          title: BlocBuilder<TicketsCubit, TicketsState>(
+          title:
+          BlocBuilder<LangCubit, LangState>(
             builder: (__, _) {
-              return Text(LocaleKeys.myTickets.tr());
+              return
+                Text(LocaleKeys.myTickets.tr())
+            ;
             },
           ),
         ),
