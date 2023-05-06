@@ -72,5 +72,7 @@ abstract class  LocaleKeys {
   static const incorrect3PinsWereWritten = 'incorrect3PinsWereWritten';
   static const phoneNumber = 'phoneNumber';
   static const incorrectPhoneNumber = 'incorrectPhoneNumber';
+  static const noMovies = 'noMovies';
+  static const noSessions = 'noSessions';
 
 }

@@ -1,4 +1,5 @@
 import 'package:cinema_house/core/date_format_extention.dart';
+import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,9 +60,9 @@ class _ByDaysTabState extends State<ByDaysTab> {
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesCubit, MoviesState>(builder: (_, state) {
       if (state.moviesByDay.isEmpty) {
-        return const ResultSign(
+        return ResultSign(
           iconData: Icons.error,
-          text: "No movies",
+          text: LocaleKeys.noMovies.tr(),
         );
       }
       return Stack(

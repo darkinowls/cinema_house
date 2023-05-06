@@ -70,5 +70,8 @@
 
   "incorrect3PinsWereWritten": "Некоректні 3 піни введено. Спробуйте інший номер телефону",
   "phoneNumber": "Номер телефону",
-  "incorrectPhoneNumber": "Некоректний номер телефону"
+  "incorrectPhoneNumber": "Некоректний номер телефону",
+
+  "noMovies": "Немає кіно",
+  "noSessions": "Немає сесій"
 }

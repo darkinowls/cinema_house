@@ -85,7 +85,9 @@ class CodegenLoader extends AssetLoader{
   "rowSeat": "Row: {} + Seat: {}",
   "incorrect3PinsWereWritten": "Incorrect 3 pins were written. Try another phone number",
   "phoneNumber": "Phone number",
-  "incorrectPhoneNumber": "Incorrect phone number"
+  "incorrectPhoneNumber": "Incorrect phone number",
+  "noMovies": "No movies",
+  "noSessions": "No sessions"
 };
 static const Map<String,dynamic> uk = {
   "logIn": "Увійти",
@@ -158,7 +160,9 @@ static const Map<String,dynamic> uk = {
   "rowSeat": "Ряд: {} + Місце: {}",
   "incorrect3PinsWereWritten": "Некоректні 3 піни введено. Спробуйте інший номер телефону",
   "phoneNumber": "Номер телефону",
-  "incorrectPhoneNumber": "Некоректний номер телефону"
+  "incorrectPhoneNumber": "Некоректний номер телефону",
+  "noMovies": "Немає кіно",
+  "noSessions": "Немає сесій"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "uk": uk};
 }

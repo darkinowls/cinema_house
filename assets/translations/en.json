@@ -70,5 +70,8 @@
 
   "incorrect3PinsWereWritten": "Incorrect 3 pins were written. Try another phone number",
   "phoneNumber": "Phone number",
-  "incorrectPhoneNumber": "Incorrect phone number"
+  "incorrectPhoneNumber": "Incorrect phone number",
+
+  "noMovies": "No movies",
+  "noSessions": "No sessions"
 }

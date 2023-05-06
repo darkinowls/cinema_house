@@ -45,9 +45,9 @@ class SessionsSection extends StatelessWidget {
                 return const Loader();
               }
               if (state.sessions.isEmpty) {
-                return const ResultSign(
+                return ResultSign(
                   iconData: Icons.error,
-                  text: "No sessions",
+                  text: LocaleKeys.noSessions.tr(),
                 );
               }
 
