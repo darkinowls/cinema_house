@@ -50,32 +50,36 @@ class CommentsSection extends StatelessWidget {
 
   Widget _buildCommentTile(BuildContext context, CommentEntity comment) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: ListTile(
-            tileColor: Colors.black12,
-            leading: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  LocaleKeys.anonymous.tr(),
-                ),
-                if (comment.isMy!)
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10), color: Colors.black12),
+          child: ListTile(
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
-                    LocaleKeys.me.tr(),
+                    LocaleKeys.anonymous.tr(),
                   ),
-              ],
-            ),
-            title: Text(comment.content),
-            subtitle: Row(children: [
-              Text(comment.rating.toString()),
-              const SizedBox(width: 5),
-              const Icon(Icons.star, size: 14),
-            ]),
-            trailing: (comment.isMy!)
-                ? IconButton(
-                    icon: const Icon(Icons.delete_forever),
-                    onPressed: () => BlocProvider.of<CommentsCubit>(context)
-                        .removeComment(comment))
-                : null));
+                  if (comment.isMy!)
+                    Text(
+                      LocaleKeys.me.tr(),
+                    ),
+                ],
+              ),
+              title: Text(comment.content),
+              subtitle: Row(children: [
+                Text(comment.rating.toString()),
+                const SizedBox(width: 5),
+                const Icon(Icons.star, size: 14),
+              ]),
+              trailing: (comment.isMy!)
+                  ? IconButton(
+                      icon: const Icon(Icons.delete_forever),
+                      onPressed: () => BlocProvider.of<CommentsCubit>(context)
+                          .removeComment(comment))
+                  : null)),
+    );
   }
 }

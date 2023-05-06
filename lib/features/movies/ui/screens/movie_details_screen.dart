@@ -125,30 +125,35 @@ class _ScrollableMovieDetailsScreenState
           controller: _scrollController,
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        widget.movie.image,
-                      ),
-                      fit: BoxFit.fill),
-                ),
-                padding: const EdgeInsets.all(25),
-                height: 400,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: Center(
-                    child: Hero(
-                        tag: widget.heroTag,
-                        child: GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ZoomableMovieImage(
-                                        heroTag: widget.heroTag,
-                                        movie: widget.movie))),
-                            child: CachedNetworkImage(
-                                imageUrl: widget.movie.image))),
+              ClipRRect(
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: CachedNetworkImageProvider(
+                          widget.movie.image,
+                        ),
+                        fit: BoxFit.fill),
+                  ),
+                  padding: const EdgeInsets.all(25),
+                  height: 400,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: Center(
+                      child: Hero(
+                          tag: widget.heroTag,
+                          child: GestureDetector(
+                              onTap:
+                                  () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ZoomableMovieImage(
+                                          heroTag: widget.heroTag,
+                                          movie: widget.movie))
+
+                              ),
+                              child: CachedNetworkImage(
+                                  imageUrl: widget.movie.image))),
+                    ),
                   ),
                 ),
               ),

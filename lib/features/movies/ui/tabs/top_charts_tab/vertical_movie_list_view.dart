@@ -22,7 +22,7 @@ class VerticalMovieListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: BlocProvider.of<MoviesCubit>(context).loadMovies,
+      onRefresh: BlocProvider.of<MoviesCubit>(context).initLoad,
       child: ListView.separated(
         padding: const EdgeInsets.all(25),
         itemCount: movies.length,

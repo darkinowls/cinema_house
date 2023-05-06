@@ -11,13 +11,14 @@ part 'movies_state.dart';
 
 class MoviesCubit extends TranslatableCubit<MoviesState> {
   final MoviesRepository _moviesRepository;
+
   MoviesCubit(this._moviesRepository, LangCubit langCubit)
       : super(initialState: const MoviesState(), langCubit: langCubit) {
-    langSubscription = langCubit.stream.listen((event) => loadMovies());
-    loadMovies();
+    langSubscription = langCubit.stream.listen((event) => initLoad());
+    initLoad();
   }
 
-  Future<void> loadMovies() async {
+  Future<void> initLoad() async {
     final List<Movie> movies = await _moviesRepository.getMovies();
 
     DateTime today = DateTime.now();
@@ -45,6 +46,19 @@ class MoviesCubit extends TranslatableCubit<MoviesState> {
     };
 
     emit(state.copyWith(moviesByDay: {...state.moviesByDay, ...map}));
+  }
+
+  void loadByDate(DateTime? dateTime) async {
+    if (dateTime == null) {
+      return;
+    }
+    emit(state.copyWith(status: Status.loading));
+    DateTime next = dateTime.add(const Duration(days: 1));
+    final Map<DateTime, Iterable<Movie>> map = {
+      dateTime: await _moviesRepository.getMoviesByDay(dateTime),
+      next: await _moviesRepository.getMoviesByDay(next),
+    };
+    emit(state.copyWith(moviesByDay: {...map}, status: Status.loaded));
   }
 
   Iterable<Movie> _sortMoviesByRating(List<Movie> movies) {

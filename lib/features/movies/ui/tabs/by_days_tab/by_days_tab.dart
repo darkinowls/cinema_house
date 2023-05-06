@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../ui/widgets/loader.dart';
+import '../../../../../ui/widgets/result_sign.dart';
 import '../../../cubit/movies/movies_cubit.dart';
 import 'horizontal_movie_list_view.dart';
 
@@ -56,25 +57,58 @@ class _ByDaysTabState extends State<ByDaysTab> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MoviesCubit, MoviesState>(
-        builder: (_, state) => RefreshIndicator(
-          onRefresh: BlocProvider.of<MoviesCubit>(context).loadMovies,
-          child: ListView.builder(
-              controller: _scrollController,
-              padding: const EdgeInsets.only(top: 25),
-              itemCount: state.moviesByDay.length,
-              itemBuilder: (context, index) => Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Text(state.moviesByDay.keys.elementAt(index).formatDate(context.locale),
-                          style: const TextStyle(fontSize: 16)),
-                      SizedBox(
-                          height: 350,
-                          child: HorizontalMovieListView(
-                              movies: state.moviesByDay.values.elementAt(index))),
-                      if (index == state.moviesByDay.length - 1) const Loader()
-                    ],
-                  )),
-        ));
+    return BlocBuilder<MoviesCubit, MoviesState>(builder: (_, state) {
+      if (state.moviesByDay.isEmpty) {
+        return const ResultSign(
+          iconData: Icons.error,
+          text: "No movies",
+        );
+      }
+      return Stack(
+        children: [
+          RefreshIndicator(
+            onRefresh: BlocProvider.of<MoviesCubit>(context).initLoad,
+            child: ListView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.only(top: 25),
+                itemCount: state.moviesByDay.length,
+                itemBuilder: (context, index) => Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Text(
+                            state.moviesByDay.keys
+                                .elementAt(index)
+                                .formatDate(context.locale),
+                            style: const TextStyle(fontSize: 16)),
+                        SizedBox(
+                            height: 350,
+                            child: HorizontalMovieListView(
+                                movies:
+                                    state.moviesByDay.values.elementAt(index))),
+                        if (index == state.moviesByDay.length - 1)
+                          const Loader()
+                      ],
+                    )),
+          ),
+          Positioned(
+              bottom: 20,
+              left: 20,
+              child: FloatingActionButton(
+                foregroundColor: Theme.of(context).scaffoldBackgroundColor,
+                onPressed: () async {
+                  showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 30)))
+                      .then((date) => BlocProvider.of<MoviesCubit>(context)
+                          .loadByDate(date));
+                },
+                child: const Icon(Icons.date_range),
+              ))
+        ],
+      );
+    });
   }
 }

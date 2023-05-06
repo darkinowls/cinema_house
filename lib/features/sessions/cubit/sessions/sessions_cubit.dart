@@ -12,18 +12,21 @@ class SessionsCubit extends Cubit<SessionsState> {
 
   SessionsCubit(this._sessionsRepository, int movieId)
       : super(SessionsState(movieId: movieId)) {
-    _initLoad();
-  }
-
-  void _initLoad() async {
     _loadNewSessions(DateTime.now());
-    emit(state.copyWith(status: Status.loaded));
   }
 
   void loadMoreSessions() async {
     DateTime lastDateTime =
         state.sessions.last.date.add(const Duration(days: 1));
     await _loadNewSessions(lastDateTime);
+  }
+
+  void loadByDate(DateTime? lastDateTime) {
+    if (lastDateTime == null) {
+      return;
+    }
+    emit(state.copyWith(status: Status.loading, sessions: []));
+    _loadNewSessions(lastDateTime);
   }
 
   Future<void> _loadNewSessions(DateTime lastDateTime) async {
@@ -40,6 +43,6 @@ class SessionsCubit extends Cubit<SessionsState> {
       ...state.sessions,
       ...nextSessions,
       ...nextAfterNextSessions
-    ]));
+    ], status: Status.loaded));
   }
 }

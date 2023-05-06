@@ -41,7 +41,8 @@ class MoviesTab extends StatelessWidget {
                                   context: context,
                                   delegate: SearchMovieDelegate(
                                       BlocProvider.of<MoviesCubit>(context))),
-                              icon: const Icon(Icons.search))
+                              icon: const Icon(Icons.search)),
+                          SizedBox(width: 10),
                         ],
                       ),
                       body: BlocBuilder<MoviesCubit, MoviesState>(
