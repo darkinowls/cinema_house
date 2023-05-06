@@ -42,7 +42,8 @@ class _HorizontalSessionListViewState extends State<HorizontalSessionListView> {
   void _scrollListener() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      BlocProvider.of<SessionsCubit>(context).loadMoreSessions();
+      BlocProvider.of<SessionsCubit>(context).loadMoreSessions()
+          .then((_) => _scrollController.addListener(_scrollTillEnd));
     }
   }
 
@@ -54,6 +55,7 @@ class _HorizontalSessionListViewState extends State<HorizontalSessionListView> {
         duration: const Duration(milliseconds: 100),
         curve: Curves.linear,
       );
+      _scrollController.removeListener(_scrollTillEnd);
     }
   }
 

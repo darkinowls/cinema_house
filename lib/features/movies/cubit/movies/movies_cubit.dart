@@ -35,7 +35,7 @@ class MoviesCubit extends TranslatableCubit<MoviesState> {
         status: Status.loaded, moviesByDay: moviesByDay, topMovies: topMovies));
   }
 
-  void loadMoreMoviesByDate() async {
+  Future<void> loadMoreMoviesByDate() async {
     DateTime lastDateTime = state.moviesByDay.keys.last.copyWith();
 
     DateTime next = lastDateTime.add(const Duration(days: 1));

@@ -15,7 +15,7 @@ class SessionsCubit extends Cubit<SessionsState> {
     _loadNewSessions(DateTime.now());
   }
 
-  void loadMoreSessions() async {
+  Future<void> loadMoreSessions() async {
     DateTime lastDateTime =
         state.sessions.last.date.add(const Duration(days: 1));
     await _loadNewSessions(lastDateTime);

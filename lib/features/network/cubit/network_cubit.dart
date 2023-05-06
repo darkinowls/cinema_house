@@ -10,7 +10,8 @@ class NetworkCubit extends Cubit<NetworkState> {
   static const networkList = [
     ConnectivityResult.ethernet,
     ConnectivityResult.wifi,
-    ConnectivityResult.vpn
+    ConnectivityResult.vpn,
+    ConnectivityResult.mobile
   ];
 
   NetworkCubit() : super(NoNetwork()) {

@@ -35,7 +35,8 @@ class _ByDaysTabState extends State<ByDaysTab> {
   void _loadMore() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      BlocProvider.of<MoviesCubit>(context).loadMoreMoviesByDate();
+      BlocProvider.of<MoviesCubit>(context).loadMoreMoviesByDate()
+          .then((_) => _scrollController.addListener(_scrollTillEnd));
     }
   }
 
@@ -47,6 +48,7 @@ class _ByDaysTabState extends State<ByDaysTab> {
         duration: const Duration(milliseconds: 100),
         curve: Curves.linear,
       );
+      _scrollController.removeListener(_scrollTillEnd);
     }
   }
 

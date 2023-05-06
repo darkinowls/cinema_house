@@ -50,7 +50,7 @@ class CommentsSection extends StatelessWidget {
 
   Widget _buildCommentTile(BuildContext context, CommentEntity comment) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(

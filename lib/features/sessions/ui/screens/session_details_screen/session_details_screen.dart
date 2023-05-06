@@ -155,10 +155,13 @@ class SessionDetailsScreen extends StatelessWidget {
                   child: Text(LocaleKeys.submit.tr()),
                 )),
             const SizedBox(
-              height: 10,
+              height: 25,
             ),
             Text(LocaleKeys.pickedSeats.tr(),
                 style: const TextStyle(fontSize: 16)),
+            const SizedBox(
+              height: 10,
+            ),
             Expanded(
                 child: ListView.separated(
               itemCount: seats.length,
