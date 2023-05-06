@@ -54,7 +54,7 @@
   "yourEmail": "Ваша електрона пошта",
   "cardNumber": "Номер карти",
   "theTransactionIsDone": "Транзакція пройшла успішно. Перевірте вкладку \"Мої білети\"",
-  "someErrorOccurred": "Виникла якась помилка",
+  "someErrorOccurred": "Виникла якась помилка підчас сплати",
   "uahToBePayed": "{} грн до сплати",
   "thisFieldIsRequired": "Заповніть це поле",
   "thatsIncorrectEmail": "Неправильна електрона пошта",

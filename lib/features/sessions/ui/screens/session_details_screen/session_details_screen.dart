@@ -3,6 +3,7 @@ import 'package:cinema_house/core/locator.dart';
 import 'package:cinema_house/features/sessions/cubit/session/session_cubit.dart';
 import 'package:cinema_house/features/sessions/domain/entities/seat_with_row.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
+import 'package:cinema_house/ui/widgets/result_sign.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,9 @@ class SessionDetailsScreen extends StatelessWidget {
                     return const Loader();
                   }
                   if (state.status == Status.failed) {
-                    return Center(
-                        child: Text(
-                            LocaleKeys.someoneElseHasJustBookedTheSeats.tr()));
+                    return ResultSign(
+                        iconData: Icons.error,
+                        text: LocaleKeys.someoneElseHasJustBookedTheSeats.tr());
                   }
                   bool notEmpty = state.seats.isNotEmpty;
                   Iterable<SeatEntity> seats = state.seats.values;
