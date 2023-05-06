@@ -16,16 +16,13 @@ class MyTicketsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          TicketsCubit(locator<TicketsRepository>(), locator<NetworkCubit>()),
+      create: (context) => TicketsCubit(locator<TicketsRepository>(),
+          locator<NetworkCubit>(), BlocProvider.of<LangCubit>(context)),
       child: Scaffold(
         appBar: AppBar(
-          title:
-          BlocBuilder<LangCubit, LangState>(
+          title: BlocBuilder<LangCubit, LangState>(
             builder: (__, _) {
-              return
-                Text(LocaleKeys.myTickets.tr())
-            ;
+              return Text(LocaleKeys.myTickets.tr());
             },
           ),
         ),

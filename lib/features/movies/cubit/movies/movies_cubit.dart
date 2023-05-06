@@ -2,16 +2,18 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import '../../../lang/cubit/lang/lang_cubit.dart';
+import '../../../lang/cubit/translatable/translatable_cubit.dart';
 import '../../data/models/movie.dart';
 import '../../repositories/movies_repository.dart';
 
 part 'movies_state.dart';
 
-class MoviesCubit extends Cubit<MoviesState> {
+class MoviesCubit extends TranslatableCubit<MoviesState> {
   final MoviesRepository _moviesRepository;
-
-  MoviesCubit(this._moviesRepository)
-      : super(const MoviesState()) {
+  MoviesCubit(this._moviesRepository, LangCubit langCubit)
+      : super(initialState: const MoviesState(), langCubit: langCubit) {
+    langSubscription = langCubit.stream.listen((event) => loadMovies());
     loadMovies();
   }
 

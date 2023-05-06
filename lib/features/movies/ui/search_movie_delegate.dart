@@ -35,6 +35,9 @@ class SearchMovieDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    if (query.isEmpty){
+      return ListView();
+    }
     moviesCubit.searchMovieByPlot(query);
     return BlocBuilder<MoviesCubit, MoviesState>(
         bloc: moviesCubit,
@@ -42,7 +45,10 @@ class SearchMovieDelegate extends SearchDelegate {
           if (state.status == Status.loading) {
             return const Loader();
           }
-          return VerticalMovieListView(movies: state.searchedMovies);
+          return BlocProvider.value(
+            value: moviesCubit,
+            child: VerticalMovieListView(movies: state.searchedMovies),
+          );
         });
   }
 

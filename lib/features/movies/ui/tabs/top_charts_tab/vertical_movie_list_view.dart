@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../../core/locator.dart';
+import '../../../../lang/cubit/lang/lang_cubit.dart';
 import '../../../cubit/movie/movie_cubit.dart';
 import '../../../cubit/movies/movies_cubit.dart';
 import '../../../data/models/movie.dart';
@@ -35,7 +36,8 @@ class VerticalMovieListView extends StatelessWidget {
                       builder: (_) => BlocProvider<MovieCubit>(
                         create: (_) => MovieCubit(
                             movies.elementAt(index),
-                            locator<MoviesRepository>()
+                            locator<MoviesRepository>(),
+                            BlocProvider.of<LangCubit>(context)
                         ),
                         child: MovieDetailsScreen(heroTag: heroTag),
                       )));
