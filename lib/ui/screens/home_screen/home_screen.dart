@@ -7,8 +7,14 @@ import 'package:cinema_house/ui/screens/login_screen/login_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
+import '../../../core/locator.dart';
 import '../../../features/auth/cubit/auth_cubit.dart';
+import '../../../features/movies/data/movies_api.dart';
+import '../../../features/movies/repositories/movies_repository.dart';
+import '../../../features/user/domain/entities/user_entity.dart';
+import '../../../features/user/domain/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool hasNetwork;
@@ -27,6 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    locator.registerLazySingletonAsync<MoviesRepository>(
+            () async {
+          UserEntity userEntity = await locator<UserRepository>().getCurrentUser();
+          Box<int> favouriteIds = await Hive.openBox<int>("favouriteIds${userEntity.id}");
+          return MoviesRepository(locator<MoviesApi>(), favouriteIds);
+        });
     _selectedIndex = (widget.hasNetwork) ? 0 : 1;
     innerRoutes = [
       InnerRoute(tab: const MoviesTab(), _navigatorKeys),
@@ -34,6 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
       InnerRoute(tab: const SettingsTab(), _navigatorKeys),
     ];
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    locator.unregister<MoviesRepository>();
+    super.dispose();
   }
 
   @override

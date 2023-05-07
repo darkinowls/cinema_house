@@ -35,7 +35,7 @@ class HorizontalMovieListView extends StatelessWidget {
                       create: (_) => MovieCubit(
                         moviesCubit: BlocProvider.of<MoviesCubit>(context),
                         movie: movies.elementAt(index),
-                        moviesRepository:  locator<MoviesRepository>(),
+                        moviesRepository: locator<MoviesRepository>(),
                         langCubit:  BlocProvider.of<LangCubit>(context)
                       ),
                       child: MovieDetailsScreen(heroTag: heroTag),

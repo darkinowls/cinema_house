@@ -46,16 +46,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<UserApi>(() => UserApi(locator<DioClient>()));
 
   locator.registerLazySingleton<UserRepository>(
-          () => UserRepository(locator<UserApi>()));
-
-
-  locator.registerLazySingletonAsync<MoviesRepository>(
-      () async {
-        UserEntity userEntity = await locator<UserRepository>().getCurrentUser();
-        print(userEntity.id);
-        Box<int> favouriteIds = await Hive.openBox<int>("favouriteIds${userEntity.id}");
-        return MoviesRepository(locator<MoviesApi>(), favouriteIds);
-      });
+      () => UserRepository(locator<UserApi>()));
 
   locator.registerLazySingleton<CommentsApi>(
       () => CommentsApi(locator<DioClient>()));
