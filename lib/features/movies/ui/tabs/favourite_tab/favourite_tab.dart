@@ -16,9 +16,9 @@ class FavouriteTab extends StatelessWidget {
     return BlocBuilder<MoviesCubit, MoviesState>(
       builder: (context, state) {
         if (state.favouriteMovies.isEmpty) {
-          return const ResultSign(
+          return ResultSign(
             iconData: Icons.favorite_border_outlined,
-            text: "No favourite",
+            text: LocaleKeys.noFavouriteMovies.tr() ,
           );
         }
         return VerticalMovieListView(movies: state.favouriteMovies.values);

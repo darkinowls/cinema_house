@@ -87,7 +87,9 @@ class CodegenLoader extends AssetLoader{
   "phoneNumber": "Phone number",
   "incorrectPhoneNumber": "Incorrect phone number",
   "noMovies": "No movies",
-  "noSessions": "No sessions"
+  "noSessions": "No sessions",
+  "favourite": "Favourite",
+  "noFavouriteMovies": "No favourite movies"
 };
 static const Map<String,dynamic> uk = {
   "logIn": "Увійти",
@@ -162,7 +164,9 @@ static const Map<String,dynamic> uk = {
   "phoneNumber": "Номер телефону",
   "incorrectPhoneNumber": "Некоректний номер телефону",
   "noMovies": "Немає кіно",
-  "noSessions": "Немає сесій"
+  "noSessions": "Немає сесій",
+  "favourite": "Улюблене",
+  "noFavouriteMovies": "Нема улюбленого кіно"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "uk": uk};
 }

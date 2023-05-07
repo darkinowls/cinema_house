@@ -5,7 +5,7 @@ import 'entities/movie_entity.dart';
 
 class MoviesRepository {
   final MoviesApi _moviesApi;
-  final Box<int> favouriteMovieIds;
+  Box<int> favouriteMovieIds;
 
   MoviesRepository(this._moviesApi, this.favouriteMovieIds);
 

@@ -35,7 +35,7 @@ class MoviesTab extends StatelessWidget {
                           tabs: [
                             Tab(text: LocaleKeys.byDays.tr()),
                             Tab(text: LocaleKeys.topCharts.tr()),
-                            const Tab(text: "Favourite")
+                            Tab(text: LocaleKeys.favourite.tr() )
                           ],
                         ),
                         actions: [

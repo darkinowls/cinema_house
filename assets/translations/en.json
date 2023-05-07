@@ -73,5 +73,8 @@
   "incorrectPhoneNumber": "Incorrect phone number",
 
   "noMovies": "No movies",
-  "noSessions": "No sessions"
+  "noSessions": "No sessions",
+
+  "favourite": "Favourite",
+  "noFavouriteMovies": "No favourite movies"
 }

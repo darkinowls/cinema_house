@@ -74,5 +74,7 @@ abstract class  LocaleKeys {
   static const incorrectPhoneNumber = 'incorrectPhoneNumber';
   static const noMovies = 'noMovies';
   static const noSessions = 'noSessions';
+  static const favourite = 'favourite';
+  static const noFavouriteMovies = 'noFavouriteMovies';
 
 }

@@ -10,7 +10,7 @@ part 'translatable_state.dart';
 
 abstract class TranslatableCubit<State> extends Cubit<State> {
   final LangCubit langCubit;
-  late final StreamSubscription<LangState> langSubscription;
+  StreamSubscription<LangState>? langSubscription;
 
   TranslatableCubit({required State initialState, required this.langCubit})
       : super(initialState);
@@ -18,7 +18,7 @@ abstract class TranslatableCubit<State> extends Cubit<State> {
 
   @override
   Future<void> close() {
-    langSubscription.cancel();
+    langSubscription?.cancel();
     return super.close();
   }
 
