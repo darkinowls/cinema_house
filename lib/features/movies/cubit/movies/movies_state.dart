@@ -6,14 +6,14 @@ class MoviesState extends Equatable {
   final Iterable<MovieEntity> searchedMovies;
   final Map<DateTime, Iterable<MovieEntity>> moviesByDay;
   final Iterable<MovieEntity> topMovies;
-  final Iterable<MovieEntity> favouriteMovies;
+  final Map<int, MovieEntity> favouriteMovies;
 
   const MoviesState({
     this.status = Status.loading,
     this.searchedMovies = const [],
     this.topMovies = const [],
     this.moviesByDay = const {},
-    this.favouriteMovies = const [],
+    this.favouriteMovies = const {},
   });
 
   MoviesState copyWith({
@@ -21,7 +21,7 @@ class MoviesState extends Equatable {
     Iterable<MovieEntity>? searchedMovies,
     Map<DateTime, Iterable<MovieEntity>>? moviesByDay,
     Iterable<MovieEntity>? topMovies,
-    Iterable<MovieEntity>? favouriteMovies,
+    Map<int, MovieEntity>? favouriteMovies,
   }) {
     return MoviesState(
       status: status ?? this.status,

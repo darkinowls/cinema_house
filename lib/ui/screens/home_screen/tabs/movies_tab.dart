@@ -22,7 +22,7 @@ class MoviesTab extends StatelessWidget {
   Widget build(BuildContext _) {
     return NoNetworkSign(
         elseChild: BlocProvider<MoviesCubit>(
-            create: (context) => MoviesCubit(locator<MoviesRepository>(),
+            create: (context) => MoviesCubit(locator.getAsync<MoviesRepository>(),
                 BlocProvider.of<LangCubit>(context)),
             child: DefaultTabController(
               length: 3,

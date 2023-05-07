@@ -10,29 +10,30 @@ import '../../repositories/movies_repository.dart';
 part 'movies_state.dart';
 
 class MoviesCubit extends TranslatableCubit<MoviesState> {
-  final MoviesRepository _moviesRepository;
+  final Future<MoviesRepository> futureMoviesRepo;
 
-  MoviesCubit(this._moviesRepository, LangCubit langCubit)
+  MoviesCubit(this.futureMoviesRepo, LangCubit langCubit)
       : super(initialState: const MoviesState(), langCubit: langCubit) {
-    langSubscription = langCubit.stream.listen((event) => initLoad());
+    langCubit.stream.listen((event) => initLoad());
     initLoad();
   }
 
   Future<void> initLoad() async {
-    final List<MovieEntity> movies = await _moviesRepository.getMovies();
+    MoviesRepository moviesRepository = await futureMoviesRepo;
+    final List<MovieEntity> movies = await moviesRepository.getMovies();
 
     DateTime today = DateTime.now();
     DateTime tomorrow = today.add(const Duration(days: 1));
 
     final Map<DateTime, Iterable<MovieEntity>> moviesByDay = {
-      today: await _moviesRepository.getMoviesByDay(today),
-      tomorrow: await _moviesRepository.getMoviesByDay(tomorrow),
+      today: await moviesRepository.getMoviesByDay(today),
+      tomorrow: await moviesRepository.getMoviesByDay(tomorrow),
     };
 
     final Iterable<MovieEntity> topMovies =
         _sortMoviesByRating(movies.toList());
-    final Iterable<MovieEntity> favouriteMovies =
-        _moviesRepository.getFavouriteMovies();
+    final Map<int , MovieEntity> favouriteMovies =
+        await moviesRepository.getFavouriteMovies();
 
     emit(state.copyWith(
         status: Status.loaded,
@@ -42,13 +43,14 @@ class MoviesCubit extends TranslatableCubit<MoviesState> {
   }
 
   Future<void> loadMoreMoviesByDate() async {
+    MoviesRepository moviesRepository = await futureMoviesRepo;
     DateTime lastDateTime = state.moviesByDay.keys.last.copyWith();
 
     DateTime next = lastDateTime.add(const Duration(days: 1));
     DateTime nextAfterNext = next.add(const Duration(days: 1));
     Map<DateTime, Iterable<MovieEntity>> map = {
-      next: await _moviesRepository.getMoviesByDay(next),
-      nextAfterNext: await _moviesRepository.getMoviesByDay(nextAfterNext)
+      next: await moviesRepository.getMoviesByDay(next),
+      nextAfterNext: await moviesRepository.getMoviesByDay(nextAfterNext)
     };
 
     emit(state.copyWith(moviesByDay: {...state.moviesByDay, ...map}));
@@ -58,11 +60,12 @@ class MoviesCubit extends TranslatableCubit<MoviesState> {
     if (dateTime == null) {
       return;
     }
+    MoviesRepository moviesRepository = await futureMoviesRepo;
     emit(state.copyWith(status: Status.loading));
     DateTime next = dateTime.add(const Duration(days: 1));
     final Map<DateTime, Iterable<MovieEntity>> map = {
-      dateTime: await _moviesRepository.getMoviesByDay(dateTime),
-      next: await _moviesRepository.getMoviesByDay(next),
+      dateTime: await moviesRepository.getMoviesByDay(dateTime),
+      next: await moviesRepository.getMoviesByDay(next),
     };
     emit(state.copyWith(moviesByDay: {...map}, status: Status.loaded));
   }
@@ -77,19 +80,24 @@ class MoviesCubit extends TranslatableCubit<MoviesState> {
   }
 
   void searchMovieByPlot(String plot) async {
+    MoviesRepository moviesRepository = await futureMoviesRepo;
     emit(state.copyWith(status: Status.loading));
     Iterable<MovieEntity> searchedMovies =
-        await _moviesRepository.getMoviesByPlot(plot);
+        await moviesRepository.getMoviesByPlot(plot);
     emit(state.copyWith(status: Status.loaded, searchedMovies: searchedMovies));
   }
 
-  void addToFavouriteMovies(MovieEntity movie) {
-    _moviesRepository.addToFavourite(movie);
-    emit(state.copyWith(favouriteMovies: [...state.favouriteMovies, movie]));
+  void addToFavouriteMovies(MovieEntity movie) async {
+    MoviesRepository moviesRepository = await futureMoviesRepo;
+    await moviesRepository.addToFavourite(movie);
+    state.favouriteMovies[movie.id] = movie;
+    emit(state.copyWith(favouriteMovies: {...state.favouriteMovies}));
   }
 
   void removeFromFavouriteMovies(MovieEntity movie) async {
-    Iterable<MovieEntity> fMovies = await _moviesRepository.removeFromFavourite(movie);
-    emit(state.copyWith(favouriteMovies: [...fMovies]));
+    MoviesRepository moviesRepository = await futureMoviesRepo;
+    moviesRepository.removeFromFavourite(movie);
+    state.favouriteMovies.remove(movie.id);
+    emit(state.copyWith(favouriteMovies: {...state.favouriteMovies}));
   }
 }

@@ -22,6 +22,7 @@ import '../features/sessions/domain/repositories/sessions_repository.dart';
 import '../features/tickets/data/tickets_api.dart';
 import '../features/tickets/domain/repositories/tickets_repository.dart';
 import '../features/user/data/user_api.dart';
+import '../features/user/domain/entities/user_entity.dart';
 import '../features/user/domain/user_repository.dart';
 
 final locator = GetIt.instance;
@@ -47,12 +48,13 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<UserRepository>(
           () => UserRepository(locator<UserApi>()));
 
-  Hive.registerAdapter<MovieEntity>(MovieEntityAdapter());
 
-  Box<MovieEntity> favouriteMovies = await Hive.openBox<MovieEntity>("favourite");
-
-  locator.registerLazySingleton<MoviesRepository>(
-      () => MoviesRepository(locator<MoviesApi>(), favouriteMovies));
+  locator.registerLazySingletonAsync<MoviesRepository>(
+      () async {
+        UserEntity userEntity = await locator<UserRepository>().getCurrentUser();
+        Box<int> favouriteIds = await Hive.openBox<int>("favouriteIds${userEntity.id}");
+        return MoviesRepository(locator<MoviesApi>(), favouriteIds);
+      });
 
   locator.registerLazySingleton<CommentsApi>(
       () => CommentsApi(locator<DioClient>()));

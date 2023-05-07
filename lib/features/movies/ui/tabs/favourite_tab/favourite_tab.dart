@@ -21,7 +21,7 @@ class FavouriteTab extends StatelessWidget {
             text: "No favourite",
           );
         }
-        return VerticalMovieListView(movies: state.favouriteMovies);
+        return VerticalMovieListView(movies: state.favouriteMovies.values);
       },
     );
   }

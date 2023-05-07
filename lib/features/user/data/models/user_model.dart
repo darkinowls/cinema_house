@@ -1,13 +1,12 @@
 import '../../domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
-  final int id;
   final String phoneNumber;
   final int createdAt;
   final int updatedAt;
 
   UserModel(
-      {required this.id,
+      {required super.id,
       required super.name,
       required this.phoneNumber,
       required this.createdAt,
