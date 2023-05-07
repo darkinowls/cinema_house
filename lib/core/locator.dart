@@ -3,18 +3,18 @@ import 'package:cinema_house/features/auth/cubit/auth_cubit.dart';
 import 'package:cinema_house/features/auth/data/auth_api.dart';
 import 'package:cinema_house/features/auth/repositories/auth_repository.dart';
 import 'package:cinema_house/features/lightMode/repository/light_mode_repository.dart';
+import 'package:cinema_house/features/movies/repositories/entities/movie_entity.dart';
 import 'package:cinema_house/features/network/cubit/network_cubit.dart';
 import 'package:cinema_house/features/tickets/domain/entities/ticket_entity.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../features/comments/data/comments_api.dart';
 import '../features/comments/data/repositories/i_comments_repository.dart';
 import '../features/comments/domain/repositories/comments_repository.dart';
-import '../features/lang/cubit/lang/lang_cubit.dart';
 import '../features/lang/repositories/lang_repository.dart';
 import '../features/lightMode/cubit/light_mode_cubit.dart';
+import '../features/movies/data/models/movie_model.dart';
 import '../features/movies/data/movies_api.dart';
 import '../features/movies/repositories/movies_repository.dart';
 import '../features/sessions/data/sessions_api.dart';
@@ -42,19 +42,23 @@ Future<void> setupLocator() async {
   locator
       .registerLazySingleton<MoviesApi>(() => MoviesApi(locator<DioClient>()));
 
+  locator.registerLazySingleton<UserApi>(() => UserApi(locator<DioClient>()));
+
+  locator.registerLazySingleton<UserRepository>(
+          () => UserRepository(locator<UserApi>()));
+
+  Hive.registerAdapter<MovieEntity>(MovieEntityAdapter());
+
+  Box<MovieEntity> favouriteMovies = await Hive.openBox<MovieEntity>("favourite");
+
   locator.registerLazySingleton<MoviesRepository>(
-      () => MoviesRepository(locator<MoviesApi>()));
+      () => MoviesRepository(locator<MoviesApi>(), favouriteMovies));
 
   locator.registerLazySingleton<CommentsApi>(
       () => CommentsApi(locator<DioClient>()));
 
   locator.registerLazySingleton<ICommentsRepository>(
       () => CommentsRepository(locator<CommentsApi>()));
-
-  locator.registerLazySingleton<UserApi>(() => UserApi(locator<DioClient>()));
-
-  locator.registerLazySingleton<UserRepository>(
-      () => UserRepository(locator<UserApi>()));
 
   locator.registerLazySingleton<SessionsApi>(
       () => SessionsApi(locator<DioClient>()));

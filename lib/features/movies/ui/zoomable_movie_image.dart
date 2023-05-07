@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-import '../data/models/movie.dart';
+import '../data/models/movie_model.dart';
+import '../repositories/entities/movie_entity.dart';
 
 class ZoomableMovieImage extends StatelessWidget {
   const ZoomableMovieImage({
@@ -12,7 +13,7 @@ class ZoomableMovieImage extends StatelessWidget {
   });
 
   final String heroTag;
-  final Movie movie;
+  final MovieEntity movie;
 
   @override
   Widget build(BuildContext context) {

@@ -8,12 +8,13 @@ import '../../../../../core/locator.dart';
 import '../../../../lang/cubit/lang/lang_cubit.dart';
 import '../../../cubit/movie/movie_cubit.dart';
 import '../../../cubit/movies/movies_cubit.dart';
-import '../../../data/models/movie.dart';
+import '../../../data/models/movie_model.dart';
+import '../../../repositories/entities/movie_entity.dart';
 import '../../../repositories/movies_repository.dart';
 import '../../screens/movie_details_screen.dart';
 
 class VerticalMovieListView extends StatelessWidget {
-  final Iterable<Movie> movies;
+  final Iterable<MovieEntity> movies;
   final bool showCounter;
 
   const VerticalMovieListView(
@@ -35,9 +36,10 @@ class VerticalMovieListView extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (_) => BlocProvider<MovieCubit>(
                         create: (_) => MovieCubit(
-                            movies.elementAt(index),
-                            locator<MoviesRepository>(),
-                            BlocProvider.of<LangCubit>(context)
+                            moviesCubit: BlocProvider.of<MoviesCubit>(context),
+                            movie: movies.elementAt(index),
+                            moviesRepository:  locator<MoviesRepository>(),
+                            langCubit:  BlocProvider.of<LangCubit>(context)
                         ),
                         child: MovieDetailsScreen(heroTag: heroTag),
                       )));

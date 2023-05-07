@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/locale_keys.g.dart';
 import '../../../../core/locator.dart';
+import '../../../../core/status.dart';
 import '../../../../features/lang/cubit/lang/lang_cubit.dart';
 import '../../../../features/movies/cubit/movies/movies_cubit.dart';
 import '../../../../features/movies/ui/search_movie_delegate.dart';
 import '../../../../features/movies/ui/tabs/by_days_tab/by_days_tab.dart';
+import '../../../../features/movies/ui/tabs/favourite_tab/favourite_tab.dart';
 import '../../../../features/movies/ui/tabs/top_charts_tab/top_charts_tab.dart';
 import '../../../../features/network/widgets/no_network_sign.dart';
 
@@ -23,7 +25,7 @@ class MoviesTab extends StatelessWidget {
             create: (context) => MoviesCubit(locator<MoviesRepository>(),
                 BlocProvider.of<LangCubit>(context)),
             child: DefaultTabController(
-              length: 2,
+              length: 3,
               child: BlocBuilder<LangCubit, LangState>(
                 builder: (context, state) {
                   return Scaffold(
@@ -33,6 +35,7 @@ class MoviesTab extends StatelessWidget {
                           tabs: [
                             Tab(text: LocaleKeys.byDays.tr()),
                             Tab(text: LocaleKeys.topCharts.tr()),
+                            const Tab(text: "Favourite")
                           ],
                         ),
                         actions: [
@@ -54,6 +57,7 @@ class MoviesTab extends StatelessWidget {
                             children: [
                               ByDaysTab(),
                               TopChartsTab(),
+                              FavouriteTab()
                             ],
                           );
                         },

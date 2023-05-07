@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinema_house/core/locale_keys.g.dart';
 import 'package:cinema_house/features/comments/cubit/comments_cubit.dart';
+import 'package:cinema_house/features/movies/repositories/entities/movie_entity.dart';
 import 'package:cinema_house/features/movies/ui/zoomable_movie_image.dart';
 import 'package:cinema_house/features/network/widgets/no_network_sign.dart';
 import 'package:cinema_house/features/sessions/cubit/sessions/sessions_cubit.dart';
@@ -18,7 +19,7 @@ import '../../../comments/widgets/comments_section.dart';
 import '../../../sessions/domain/repositories/sessions_repository.dart';
 import '../../../sessions/ui/sessions_section.dart';
 import '../../cubit/movie/movie_cubit.dart';
-import '../../data/models/movie.dart';
+import '../../data/models/movie_model.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   final String heroTag;
@@ -42,7 +43,7 @@ class MovieDetailsScreen extends StatelessWidget {
               ),
             ],
             child: _ScrollableMovieDetailsScreen(
-                movie: state.movie, heroTag: heroTag),
+                movie: state.movie, isFavorite:state.isFavourite, heroTag: heroTag),
           );
         },
       ),
@@ -51,11 +52,12 @@ class MovieDetailsScreen extends StatelessWidget {
 }
 
 class _ScrollableMovieDetailsScreen extends StatefulWidget {
-  final Movie movie;
+  final MovieEntity movie;
   final String heroTag;
+  final bool isFavorite;
 
   const _ScrollableMovieDetailsScreen(
-      {Key? key, required this.movie, required this.heroTag})
+      {Key? key, required this.movie, required this.isFavorite, required this.heroTag})
       : super(key: key);
 
   @override
@@ -117,7 +119,16 @@ class _ScrollableMovieDetailsScreenState
                 onPressed: () => Share.share(LocaleKeys
                     .iWouldLikeToWatchInCinemaHouse
                     .tr(args: [widget.movie.name])),
-                icon: const Icon(Icons.share))
+                icon: const Icon(Icons.share)),
+            const SizedBox(width: 5),
+            IconButton(
+                onPressed: () {
+                  BlocProvider.of<MovieCubit>(context).toggleIsFavourite();
+                },
+                icon: (widget.isFavorite)?
+                    const Icon(Icons.favorite)
+                    :
+                const Icon(Icons.favorite_border)),
           ]),
       body: RefreshIndicator(
         onRefresh: BlocProvider.of<MovieCubit>(context).updateMovie,

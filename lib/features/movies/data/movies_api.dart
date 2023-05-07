@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/dio_client.dart';
-import 'models/movie.dart';
+import 'models/movie_model.dart';
 
 class MoviesApi {
   final DioClient _dioClient;
@@ -10,32 +10,32 @@ class MoviesApi {
 
   MoviesApi(this._dioClient);
 
-  Future<List<Movie>> getMovies() async {
+  Future<List<MovieModel>> getMovies() async {
     final Response response = await _dioClient.dio.get(_moviesUrl);
     return (response.data['data'] as List)
-        .map((json) => Movie.fromJson(json))
+        .map((json) => MovieModel.fromJson(json))
         .toList();
   }
 
-  Future<Iterable<Movie>> getMoviesByDate(DateTime date) async {
+  Future<Iterable<MovieModel>> getMoviesByDate(DateTime date) async {
     Map<String, dynamic> queryParameters = {
       "date": DateFormat('yyyy-MM-dd').format(date)
     };
     final Response response =
         await _dioClient.dio.get(_moviesUrl, queryParameters: queryParameters);
-    return (response.data['data'] as List).map((json) => Movie.fromJson(json));
+    return (response.data['data'] as List).map((json) => MovieModel.fromJson(json));
   }
 
-  Future<Movie> getMoviesById(int id) async {
+  Future<MovieModel> getMoviesById(int id) async {
     final Response response =
     await _dioClient.dio.get("$_moviesUrl/$id");
-    return Movie.fromJson(response.data['data']);
+    return MovieModel.fromJson(response.data['data']);
   }
 
-  Future<Iterable<Movie>> getMoviesByPlot(String plot) async {
+  Future<Iterable<MovieModel>> getMoviesByPlot(String plot) async {
     Map<String, dynamic> queryParameters = {"query": plot};
     final Response response =
         await _dioClient.dio.get(_moviesUrl, queryParameters: queryParameters);
-    return (response.data['data'] as List).map((json) => Movie.fromJson(json));
+    return (response.data['data'] as List).map((json) => MovieModel.fromJson(json));
   }
 }
