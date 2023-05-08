@@ -5,33 +5,32 @@ import 'entities/movie_entity.dart';
 
 class MoviesRepository {
   final MoviesApi _moviesApi;
-  Box<int> favouriteMovieIds;
+  final Box<int> _favouriteMovieIds;
 
-  MoviesRepository(this._moviesApi, this.favouriteMovieIds);
+  MoviesRepository(this._moviesApi, this._favouriteMovieIds);
 
   Future<List<MovieEntity>> getMovies() async {
     return _moviesApi.getMovies();
   }
 
   Future<MovieEntity> addToFavourite(MovieEntity movie) async {
-    await favouriteMovieIds.put(movie.id, movie.id);
-    return getMoviesById(movie.id);
+    await _favouriteMovieIds.put(movie.id, movie.id);
+    return movie;
   }
 
   Future<void> removeFromFavourite(MovieEntity movie) async {
-    await favouriteMovieIds.delete(movie.id);
+    await _favouriteMovieIds.delete(movie.id);
   }
 
   bool checkIsFavourite(MovieEntity movie) {
-    return favouriteMovieIds.containsKey(movie.id);
+    return _favouriteMovieIds.containsKey(movie.id);
   }
 
-  Future<Map<int, MovieEntity>> getFavouriteMovies() async {
-    Map<int, MovieEntity> favourite = {};
-    for (int id in favouriteMovieIds.values) {
-      favourite[id] = await getMoviesById(id);
-    }
-    return favourite;
+  Map<int, MovieEntity> getFavouriteFromAllMovies(
+      Iterable<MovieEntity> movies) {
+    return Map.fromIterable(
+        movies.where((m) => _favouriteMovieIds.keys.contains(m.id)),
+        key: (m) => m.id);
   }
 
   Future<Iterable<MovieEntity>> getMoviesByDay(DateTime dateTime) async {

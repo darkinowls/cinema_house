@@ -32,8 +32,8 @@ class MoviesCubit extends TranslatableCubit<MoviesState> {
 
     final Iterable<MovieEntity> topMovies =
         _sortMoviesByRating(movies.toList());
-    final Map<int , MovieEntity> favouriteMovies =
-        await moviesRepository.getFavouriteMovies();
+    final Map<int, MovieEntity> favouriteMovies =
+        moviesRepository.getFavouriteFromAllMovies(movies);
 
     emit(state.copyWith(
         status: Status.loaded,
