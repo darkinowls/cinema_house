@@ -38,12 +38,14 @@ class MovieDetailsScreen extends StatelessWidget {
                     CommentsCubit(locator<ICommentsRepository>()),
               ),
               BlocProvider<SessionsCubit>(
-                create: (context) =>
-                    SessionsCubit(locator<SessionsRepository>(), state.movie.id),
+                create: (context) => SessionsCubit(
+                    locator<SessionsRepository>(), state.movie.id),
               ),
             ],
             child: _ScrollableMovieDetailsScreen(
-                movie: state.movie, isFavorite:state.isFavourite, heroTag: heroTag),
+                movie: state.movie,
+                isFavorite: state.isFavourite,
+                heroTag: heroTag),
           );
         },
       ),
@@ -57,7 +59,10 @@ class _ScrollableMovieDetailsScreen extends StatefulWidget {
   final bool isFavorite;
 
   const _ScrollableMovieDetailsScreen(
-      {Key? key, required this.movie, required this.isFavorite, required this.heroTag})
+      {Key? key,
+      required this.movie,
+      required this.isFavorite,
+      required this.heroTag})
       : super(key: key);
 
   @override
@@ -113,23 +118,7 @@ class _ScrollableMovieDetailsScreenState
     return Scaffold(
       appBar: AppBar(
           title: Text(widget.movie.name,
-              maxLines: 1, overflow: TextOverflow.ellipsis),
-          actions: [
-            IconButton(
-                onPressed: () => Share.share(LocaleKeys
-                    .iWouldLikeToWatchInCinemaHouse
-                    .tr(args: [widget.movie.name])),
-                icon: const Icon(Icons.share)),
-            const SizedBox(width: 5),
-            IconButton(
-                onPressed: () {
-                  BlocProvider.of<MovieCubit>(context).toggleIsFavourite();
-                },
-                icon: (widget.isFavorite)?
-                    const Icon(Icons.favorite)
-                    :
-                const Icon(Icons.favorite_border)),
-          ]),
+              maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: RefreshIndicator(
         onRefresh: BlocProvider.of<MovieCubit>(context).updateMovie,
         child: SingleChildScrollView(
@@ -153,15 +142,12 @@ class _ScrollableMovieDetailsScreenState
                       child: Hero(
                           tag: widget.heroTag,
                           child: GestureDetector(
-                              onTap:
-                                  () => Navigator.push(
+                              onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ZoomableMovieImage(
                                           heroTag: widget.heroTag,
-                                          movie: widget.movie))
-
-                              ),
+                                          movie: widget.movie))),
                               child: CachedNetworkImage(
                                   imageUrl: widget.movie.image))),
                     ),
@@ -174,6 +160,29 @@ class _ScrollableMovieDetailsScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue),
+                            onPressed: () => Share.share(LocaleKeys
+                                .iWouldLikeToWatchInCinemaHouse
+                                .tr(args: [widget.movie.name])),
+                            child: const Icon(Icons.share)),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.pinkAccent),
+                            onPressed: () {
+                              BlocProvider.of<MovieCubit>(context)
+                                  .toggleIsFavourite();
+                            },
+                            child: (widget.isFavorite)
+                                ? const Icon(Icons.favorite)
+                                : const Icon(Icons.favorite_border))
+                      ],
+                    ),
+                    SizedBox(height: 5),
                     Text(LocaleKeys.originalName
                         .tr(args: [widget.movie.originalName])),
                     const SizedBox(height: 5),
@@ -191,34 +200,36 @@ class _ScrollableMovieDetailsScreenState
                     Text(LocaleKeys.recommendedAge
                         .tr(args: [widget.movie.age.toString()])),
                     const SizedBox(height: 5),
-                    Text(LocaleKeys.mainRoles.tr(args: [widget.movie.starring])),
+                    Text(
+                        LocaleKeys.mainRoles.tr(args: [widget.movie.starring])),
                     const SizedBox(height: 5),
                     Text(LocaleKeys.studio.tr(args: [widget.movie.studio])),
                     const SizedBox(height: 5),
                     Text(LocaleKeys.releaseYear
                         .tr(args: [widget.movie.year.toString()])),
                     const SizedBox(height: 5),
-                    // Text("Release year: ${movie.trailer}"),
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                          onPressed: () =>
-                              launchUrl(Uri.parse(widget.movie.trailer)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Icon(Icons.play_arrow),
-                              Text(LocaleKeys.trailerOnYoutube.tr()),
-                            ],
-                          )),
+                    Center(
+                      child: SizedBox(
+                        width: 200,
+                        child: ElevatedButton(
+                            onPressed: () =>
+                                launchUrl(Uri.parse(widget.movie.trailer)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const Icon(Icons.play_arrow),
+                                Text(LocaleKeys.trailerOnYoutube.tr()),
+                              ],
+                            )),
+                      ),
                     ),
-
                     const SizedBox(height: 5),
                     Text(LocaleKeys.plot.tr(args: [widget.movie.plot])),
+                    const SizedBox(height: 5),
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
               SessionsSection(),
               const SizedBox(height: 25),
               CommentsSection(widget.movie.id),
