@@ -1,6 +1,6 @@
 class CommentEntity {
   final int? id;
-  final String content;
+  final String? content;
   final bool? isMy;
   final int rating;
   final String? author;

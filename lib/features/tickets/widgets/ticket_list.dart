@@ -26,18 +26,23 @@ class TicketList extends StatelessWidget {
 
         if (state.tickets.isEmpty) {
           return Center(
-            child: BlocBuilder<LangCubit, LangState>(
-              builder: (__, _) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(LocaleKeys.noTickets.tr(),
-                        style: const TextStyle(fontSize: 28)),
-                    const SizedBox(height: 25),
-                    Text(LocaleKeys.youCanBuyThemInTheMoviesTab.tr())
-                  ],
-                );
-              },
+            child: RefreshIndicator(
+              onRefresh: BlocProvider.of<TicketsCubit>(context).getTickets,
+              child: SingleChildScrollView(
+                child: BlocBuilder<LangCubit, LangState>(
+                  builder: (__, _) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(LocaleKeys.noTickets.tr(),
+                            style: const TextStyle(fontSize: 28)),
+                        const SizedBox(height: 25),
+                        Text(LocaleKeys.youCanBuyThemInTheMoviesTab.tr())
+                      ],
+                    );
+                  },
+                ),
+              ),
             ),
           );
         }

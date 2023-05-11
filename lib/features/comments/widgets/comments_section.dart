@@ -1,5 +1,4 @@
 import 'package:cinema_house/core/locale_keys.g.dart';
-import 'package:cinema_house/core/locator.dart';
 import 'package:cinema_house/features/comments/cubit/comments_cubit.dart';
 import 'package:cinema_house/features/comments/domain/entities/comment_entity.dart';
 import 'package:cinema_house/ui/widgets/loader.dart';
@@ -68,7 +67,7 @@ class CommentsSection extends StatelessWidget {
                     ),
                 ],
               ),
-              title: Text(comment.content),
+              title: Text(comment.content?? ""),
               subtitle: Row(children: [
                 Text(comment.rating.toString()),
                 const SizedBox(width: 5),

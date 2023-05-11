@@ -1,5 +1,4 @@
 import 'package:cinema_house/core/locale_keys.g.dart';
-import 'package:cinema_house/features/network/widgets/no_network_sign.dart';
 import 'package:cinema_house/ui/screens/home_screen/tabs/movies_tab.dart';
 import 'package:cinema_house/ui/screens/home_screen/tabs/settings_tab.dart';
 import 'package:cinema_house/ui/screens/home_screen/tabs/my_tickets_tab.dart';
@@ -106,15 +105,11 @@ class InnerRoute extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => Localizations(
-        locale: context.locale,
-        delegates: context.localizationDelegates,
-        child: HeroControllerScope(
-          controller: MaterialApp.createMaterialHeroController(),
-          child: Navigator(
-              key: globalKey,
-              onGenerateRoute: (RouteSettings settings) => MaterialPageRoute(
-                  settings: settings, builder: (BuildContext _) => tab)),
-        ),
+  Widget build(BuildContext context) => HeroControllerScope(
+        controller: MaterialApp.createMaterialHeroController(),
+        child: Navigator(
+            key: globalKey,
+            onGenerateRoute: (RouteSettings settings) => MaterialPageRoute(
+                settings: settings, builder: (BuildContext _) => tab)),
       );
 }
