@@ -5,7 +5,7 @@ import 'package:cinema_house/features/auth/repositories/auth_repository.dart';
 import 'package:cinema_house/features/lightMode/repository/light_mode_repository.dart';
 import 'package:cinema_house/features/network/cubit/network_cubit.dart';
 import 'package:cinema_house/features/tickets/domain/entities/ticket_entity.dart';
-import 'package:get_it/get_it.dart';
+
 import 'package:hive_flutter/adapters.dart';
 
 import '../features/comments/data/comments_api.dart';
@@ -20,6 +20,7 @@ import '../features/tickets/data/tickets_api.dart';
 import '../features/tickets/domain/repositories/tickets_repository.dart';
 import '../features/user/data/user_api.dart';
 import '../features/user/domain/user_repository.dart';
+import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
 

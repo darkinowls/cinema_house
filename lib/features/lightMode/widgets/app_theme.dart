@@ -8,7 +8,7 @@ final Map<bool, ThemeData> appThemes = {
       scaffoldBackgroundColor: Colors.blueGrey.shade900,
       splashColor: Colors.green,
       indicatorColor: Colors.green,
-      accentColor: Colors.green,
+      // accentColor: Colors.green,
       // cardColor: Colors.green,
       focusColor: Colors.white),
   true: ThemeData(
@@ -17,6 +17,6 @@ final Map<bool, ThemeData> appThemes = {
       primaryColor: Colors.green,
       scaffoldBackgroundColor: Colors.white,
       indicatorColor: Colors.green,
-      accentColor: Colors.green,
+      // accentColor: Colors.green,
       focusColor: Colors.blueGrey.shade900),
 };
